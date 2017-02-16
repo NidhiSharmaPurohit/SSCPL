@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin" android:orientation="vertical"
+    tools:context="srmicrosystems.cnote.SearchCNNoteActivity">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+        <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" android:id="@+id/CnoteID" android:paddingRight="40dp"     />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:id="@+id/read_barcode"
+        android:background="@android:drawable/ic_menu_camera" android:layout_alignRight="@+id/CnoteID"/>
+
+</RelativeLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/btnSearchCNNote" android:text="Search" android:layout_below="@+id/CnoteID"  />
+
+   <!-- <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;OR-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        />
+-->
+   <!-- <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/barcode_value"
+
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="110dp"
+         />-->
+
+   <!-- <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="read_barcode"
+        android:id="@+id/read_barcode"
+
+        android:layout_centerHorizontal="true" />-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/barcode_header"
+        android:id="@+id/status_message"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="#848484" />
+
+</LinearLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="srmicrosystems.cnote.GetManifestActivity"
+    android:weightSum="1">
+<EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:id="@+id/MenifestId" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/btnSearchMenifest" android:text="Search" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/viewImg" android:text="See" />
+    <ImageView
+        android:layout_width="331dp"
+        android:layout_height="150dp" android:id="@+id/img1"
+        android:layout_weight="0.82"
+        android:background="#bc0707" />
+</LinearLayout>

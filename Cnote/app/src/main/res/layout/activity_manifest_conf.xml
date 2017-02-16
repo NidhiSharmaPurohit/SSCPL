@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:background="@drawable/manifest">
+
+    
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="srmicrosystems.cnote.ManifestConfActivity"
+    android:orientation="vertical"
+    android:background="#8b040404">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+android:text="Start Date"
+        android:textSize="25sp"
+
+        android:onClick="showDatePickerDialog"
+        android:textColor="#00ffa1"
+        android:background="#e2000000"
+        android:autoText="false" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:onClick="showDatePickerDialog"
+        android:id="@+id/Manidate"
+        android:textColor="#0aface"
+        android:textSize="25sp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="End Date"
+        android:textSize="25sp"
+
+        android:onClick="showEndDatePickerDialog"
+        android:textColor="#00ffa1"
+        android:background="#e2000000"
+        android:autoText="false" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:onClick="showEndDatePickerDialog"
+        android:id="@+id/ManiEnddate"
+        android:textColor="#0aface"
+        android:textSize="25sp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Source City"
+        android:textSize="25sp"
+        android:textColor="#00ffa1"
+        android:background="#e2000000"
+        android:autoText="false" />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/SCity"
+        android:spinnerMode="dialog"
+        style="@android:style/Widget.Spinner.DropDown"
+        android:entries="@android:style/Widget.TextView.SpinnerItem"
+        ></Spinner>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Destination City"
+        android:layout_below="@id/SCity"
+        android:textSize="25sp"
+        android:textColor="#00ffa1"
+        android:background="#e2000000"
+        android:autoText="false" />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/DCity"
+        style="@android:style/Widget.Spinner.DropDown"></Spinner>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Additional City"
+        android:textSize="25sp"
+        android:textColor="#00ffa1"
+        android:background="#e2000000"
+        android:autoText="false" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/ADCity"
+        style="@android:style/Widget.Spinner.DropDown"></Spinner>
+
+    <!--<GridView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        android:background="#09151414"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="spacingWidth"
+        android:gravity="center"
+        android:id="@+id/gv"
+        android:clickable="false"
+        android:columnWidth="200dp"
+
+        android:contextClickable="true"
+        android:smoothScrollbar="true"
+        android:focusableInTouchMode="false"
+        android:choiceMode="multipleChoice"
+        android:cacheColorHint="#f43131"
+        android:layoutMode="clipBounds">
+
+    </GridView>-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Vehical"
+        android:layout_below="@id/SCity"
+        android:textSize="25sp"
+        android:textColor="#00ffa1"
+        android:background="#e2000000"
+        android:autoText="false" />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/gadi"
+        style="@android:style/Widget.Spinner"></Spinner>
+
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:id="@+id/btmGenM" />
+
+
+</LinearLayout>
+
+</ScrollView>

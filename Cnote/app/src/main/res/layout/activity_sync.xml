@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="srmicrosystems.cnote.SyncActivity"
+    android:background="#bc0a0a0a"
+    android:longClickable="false">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_centerHorizontal="true" android:id="@+id/syncButton" android:text="Sync It!"
+        android:background="#e9010101"
+        android:textColor="#ffffff" />
+
+           <ListView
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:id="@+id/syncit"
+               tools:context="srmicrosystems.cnote.MasterSyncActivity" android:layout_below="@+id/syncButton" android:layout_alignParentLeft="true"></ListView>
+
+
+</RelativeLayout>

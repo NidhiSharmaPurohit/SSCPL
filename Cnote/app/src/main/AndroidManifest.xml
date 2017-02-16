@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="srmicrosystems.cnote">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:hardwareAccelerated="true"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <receiver
+            android:name=".BackgroundSyncActivator"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.EXTERNAL_APPLICATIONS_AVAILABLE"></action>
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".BackgroundSync"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".BarcodeCaptureActivity"></activity>
+        <activity
+            android:name=".CNNoteExtDetailsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity
+            android:name=".CnoteActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".GetManifestActivity" />
+        <activity android:name=".SyncActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.Main" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".CaptureSignatureActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".CaptureSignature"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="Signature Confirmation"
+            android:theme="@android:style/Theme.Holo.Light.Dialog" />
+        <activity android:name=".ManifestGenActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
+        <activity android:name=".ManifestConfActivity" android:configChanges="orientation|screenSize|keyboardHidden"/>
+        <activity
+            android:name=".BTSettingsActivity"
+            android:label="@string/title_activity_btsettings" />
+        <activity android:name=".MasterSyncActivity" />
+        <activity android:name=".SearchCNNoteActivity" />
+    </application>
+
+</manifest>

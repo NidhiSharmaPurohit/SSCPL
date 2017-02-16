@@ -1,0 +1,164 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="srmicrosystems.cnote.CnoteActivity"
+    android:background="#999999">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="left|top"
+        android:background="#3a3a3a"
+        android:showDividers="middle|beginning|end">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Consigner Name"
+            android:textColor="#30f69d" />
+<!--<EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Consigner Name" android:id="@+id/ConsignerName"
+    android:textSize="30sp"
+    android:textColor="#f4e91c" />-->
+
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Consigner Name"
+            android:id="@+id/ConsignerName"
+            android:textSize="20sp"
+            android:textColor="#ffffff" android:completionHintView="@layout/autocomp_item"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Consigner Address"
+            android:textColor="#30f69d" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Consigner Address" android:id="@+id/ConsignerAddress"
+            android:textSize="15sp"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Consignee Name"
+            android:textColor="#30f69d" />
+        <!--<EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Consignee Name" android:id="@+id/ConsigneeName"
+            android:textSize="30sp"
+            android:textColor="#f4e91c" />
+-->
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Consigner Name"
+            android:id="@+id/ConsigneeName"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:completionHintView="@layout/autocomp_item"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Consignee Address"
+            android:textColor="#30f69d" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Consignee Address" android:id="@+id/ConsigneeAddress"
+            android:textSize="15sp"
+            android:textColor="#ffffff" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No of Pacakge"
+            android:textColor="#30f69d" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="No. Of Packages" android:id="@+id/PacakgeNo"
+            android:textSize="20sp"
+            android:textColor="#ffffff" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" Weight"
+            android:textColor="#30f69d" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ACW" android:id="@+id/ACW"
+            android:textSize="20sp"
+            android:textColor="#ffffff" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Matrial Description"
+            android:textColor="#30f69d" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Material Description" android:id="@+id/MD"
+            android:textSize="20sp"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TransPort Mode"
+            android:textColor="#30f69d" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/spntm"></Spinner>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Packaging Mode"
+            android:textColor="#30f69d" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/spnpm"></Spinner>
+
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+android:id="@+id/btnSign"
+            android:text="Signature"/>
+
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+android:id="@+id/btnSubmit"
+    android:text="Submit"/>
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnPrint" android:visibility="invisible"
+            android:text="Print"/>
+
+
+    </LinearLayout>
+</ScrollView>
+
+</FrameLayout>

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="srmicrosystems.cnote.Model.CNNoteDetailsExt" />
+        <variable
+            name="cn"
+            type="srmicrosystems.cnote.Model.CNNoteDetailsExt" />
+    </data>
+    <ScrollView   android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="srmicrosystems.cnote.CNNoteExtDetailsActivity"
+    android:orientation="vertical">
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/btnprint" android:text="Print" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="CNNote Number"
+        android:textSize="10sp"
+        android:textIsSelectable="true"
+        android:textColor="#929292" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="@{cn.CNNumber}"
+        android:textSize="15sp"
+        android:textColor="#2f313c"
+        android:shadowColor="#761e1e"
+        android:singleLine="false" />
+    <View
+        style="@style/Divider"></View>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="ShipperCompany"
+        android:textSize="10sp"
+        android:textIsSelectable="true"
+        android:textColor="#929292" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="@{cn.ShipperCompany}"
+        android:textSize="15sp"
+        android:textColor="#2f313c" />
+    <View
+        style="@style/Divider"></View>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="ShipperCompanyAddress"
+        android:textSize="10sp"
+        android:textIsSelectable="true"
+        android:textColor="#929292" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="@{cn.ShipperCompanyAddress}"
+        android:textSize="15sp"
+        android:textColor="#2f313c" />
+    <View
+        style="@style/Divider"></View>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="ShipperCity"
+        android:textSize="10sp"
+        android:textIsSelectable="true"
+        android:textColor="#929292" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="@{cn.ShipperCity}"
+        android:textSize="15sp"
+        android:textColor="#2f313c" />
+    <View
+        style="@style/Divider"></View>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="ConsigneeCompany"
+        android:textSize="10sp"
+        android:textIsSelectable="true"
+        android:textColor="#929292" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="@{cn.ConsigneeCompany}"
+        android:textSize="15sp"
+        android:textColor="#2f313c" />
+    <View
+        style="@style/Divider"></View>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="ConsigneeCompanyAddress"
+        android:textSize="10sp"
+        android:textIsSelectable="true"
+        android:textColor="#929292" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="@{cn.ConsigneeCompanyAddress}"
+        android:textSize="15sp"
+        android:textColor="#2f313c" />
+    <View
+        style="@style/Divider"></View>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="ConsigneeCity"
+        android:textSize="10sp"
+        android:textIsSelectable="true"
+        android:textColor="#929292" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="@{cn.ConsigneeCity}"
+        android:textSize="15sp"
+        android:textColor="#2f313c" />
+    <View
+        style="@style/Divider"></View>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="BookingDate"
+        android:textSize="10sp"
+        android:textIsSelectable="true"
+        android:textColor="#929292" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="@{cn.BookingDate}"
+        android:textSize="15sp"
+        android:textColor="#2f313c" />
+    <View
+        style="@style/Divider"></View>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="PackageNo"
+        android:textSize="10sp"
+        android:textIsSelectable="true"
+        android:textColor="#929292" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="@{cn.PackageNo}"
+        android:textSize="15sp"
+        android:textColor="#2f313c" />
+    <View
+        style="@style/Divider"></View>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="ActualWeight"
+        android:textSize="10sp"
+        android:textIsSelectable="true"
+        android:textColor="#929292" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="@{cn.ActualWeight}"
+        android:textSize="15sp"
+        android:textColor="#2f313c" />
+    <View
+        style="@style/Divider"></View>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="ConsignmentWeight"
+        android:textSize="10sp"
+        android:textIsSelectable="true"
+        android:textColor="#929292" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="@{cn.ConsignmentWeight}"
+        android:textSize="15sp"
+        android:textColor="#2f313c" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="MaterialDesc"
+        android:textSize="10sp"
+        android:textIsSelectable="true"
+        android:textColor="#929292" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="@{cn.MaterialDesc}"
+        android:textSize="15sp"
+        android:textColor="#2f313c" />
+    <View
+        style="@style/Divider"></View>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="HandedBy"
+        android:textSize="10sp"
+        android:textIsSelectable="true"
+        android:textColor="#929292" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="@{cn.HandedBy}"
+        android:textSize="15sp"
+        android:textColor="#2f313c" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="HandedBy"
+        android:textSize="10sp"
+        android:textIsSelectable="true"
+        android:textColor="#929292" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/imgHBy"/>
+    <View
+        style="@style/Divider"></View>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="ReceivedBy"
+        android:textSize="10sp"
+        android:textIsSelectable="true"
+        android:textColor="#929292" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="@{cn.ReceivedBy}"
+        android:textSize="15sp"
+        android:textColor="#2f313c" />
+    <View
+        style="@style/Divider"></View>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="ReceivedBy"
+        android:textSize="10sp"
+        android:textIsSelectable="true"
+        android:textColor="#929292" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/imgRecBy"/>
+
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent" android:text="Sign" android:id="@+id/btnRecBYSign" />
+    <View
+        style="@style/Divider"></View>
+
+</LinearLayout>
+    </ScrollView>
+</layout>

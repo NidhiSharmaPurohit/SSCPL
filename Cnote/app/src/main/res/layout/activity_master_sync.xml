@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="0dp"
+    android:layout_marginRight="0dp"
+    android:paddingLeft="0dp"
+    android:layout_alignParentLeft="true"
+    tools:context="srmicrosystems.cnote.MasterSyncActivity" android:background="#1d080808">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:id="@+id/TaskSync" android:text="City Sync" android:textSize="20sp"
+        android:layout_alignParentLeft="true"
+        android:textColor="#ffffff" />
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:id="@+id/TaksProgress"
+        style="?android:attr/progressBarStyleSmall" android:layout_toStartOf="@+id/TaskSyncStatus" android:layout_marginTop="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:id="@+id/TaskSyncStatus" android:text="City Sync Status" android:textSize="15sp"
+         android:layout_alignParentEnd="true"
+        android:textColor="#ffffff" />
+</RelativeLayout>
+
+           <!-- <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/TaskSync" android:text="City Sync" android:textSize="25dp"
+                android:layout_alignParentStart="true" />
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/Citypb"
+                style="?android:attr/progressBarStyleSmall" android:layout_toStartOf="@+id/TaskSyncStatus" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:id="@+id/TaskSyncStatus" android:text="City Sync Status" android:textSize="20dp"
+        android:layout_alignParentEnd="true" />-->
+

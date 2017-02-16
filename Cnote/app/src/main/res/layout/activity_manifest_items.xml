@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="srmicrosystems.cnote.ManifestGenActivity"
+    android:orientation="vertical">
+<!--
+<TableLayout android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="srmicrosystems.cnote.ManifestGenActivity"
+    android:orientation="vertical">
+-->
+
+   <!-- <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:layout_weight="1"
+        android:textColor="#fff428"
+        android:textSize="25sp"
+        android:textIsSelectable="true">
+    </TextView>
+-->
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="10dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:paddingTop="0dp"
+        tools:context="srmicrosystems.cnote.ManifestGenActivity"
+        android:background="#6d131011"
+        android:visibility="visible"
+android:layout_marginBottom="10dp"
+        android:layout_margin="0dp"
+        android:padding="0dp">
+
+      <!--  <TextView
+            android:id="@+id/CNNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="CNNoteNumber"
+
+            android:layout_weight="1"
+            android:textColor="#fff428"
+            android:textSize="25sp"
+            android:textIsSelectable="true">
+        </TextView>
+
+        <TextView
+            android:id="@+id/BookingDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Second"
+            android:layout_weight="1"
+            android:textColor="#3b89f7"
+            android:textSize="25sp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/ConsignerDetails"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Third"
+            android:layout_weight="2"
+            android:textColor="#4cf985"
+            android:textSize="25sp">
+
+        </TextView>
+
+
+        <TextView
+            android:id="@+id/SourceCityId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Fourth"
+            android:layout_weight="1"
+            android:textColor="#36f9b8"
+            android:textSize="35sp">
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="->"
+            android:layout_weight="1"
+            android:textColor="#e3eb14e4"
+            android:textSize="35sp"
+            android:id="@+id/arrow">
+        </TextView>
+        <TextView
+            android:id="@+id/DestCityID"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="fifth"
+            android:layout_weight="1"
+            android:textColor="#f50f0f"
+            android:textSize="35sp">
+        </TextView>
+        <TextView
+            android:id="@+id/ActualWight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fourth"
+            android:layout_weight="1"
+            android:textColor="#36f9b8"
+            android:textSize="35sp">
+        </TextView>-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2016150412123"
+            android:id="@+id/CNNumber"
+
+            android:textSize="20sp"
+            android:textIsSelectable="true"
+            android:textColor="#3860ef" />
+        <TextView
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:text="FedEx Suart"
+            android:id="@+id/ConsignerDetails"
+            android:layout_below="@id/CNNumber"
+            android:textSize="25sp"
+            android:textIsSelectable="false"
+            android:textColor="#6eec6a" />
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BOM"
+            android:id="@+id/destcc"
+            android:textSize="35sp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="10dp"
+            android:textColor="#fff700"
+            android:layout_toLeftOf="@+id/uqty" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(Mumbai)"
+            android:id="@+id/dsetcity"
+
+            android:layout_marginStart="10dp"
+            android:textSize="10sp"
+            android:layout_below="@+id/destcc"
+            android:layout_alignStart="@+id/destcc"
+            android:textColor="#ffffff" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:id="@+id/dash"
+            android:textSize="40sp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_toLeftOf="@id/destcc"
+            android:textColor="#ffffff" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SRT"
+            android:id="@+id/fromcc"
+            android:textSize="35sp"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/dash"
+            android:layout_marginStart="20dp"
+            android:textColor="#61f135" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(Surat)"
+            android:id="@+id/fromc"
+
+            android:layout_marginStart="20dp"
+            android:textSize="10sp"
+            android:layout_below="@+id/fromcc"
+            android:layout_alignStart="@+id/fromcc"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="80"
+            android:id="@+id/uqty"
+            android:textSize="35sp"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="10dp"
+            android:textColor="#ff0000" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/"
+            android:id="@+id/slash"
+            android:textSize="35sp"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/uqty"
+            android:layout_marginStart="0dp"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100"
+            android:id="@+id/tqty"
+            android:textSize="35sp"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/slash"
+            android:layout_marginStart="0dp"
+            android:textColor="#14b5ff" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2016150412123"
+            android:id="@+id/BookingDate"
+
+            android:textSize="20sp"
+            android:layout_toStartOf="@+id/updateqty"
+            android:textDirection="rtl"
+            android:textColor="#f028c5" />
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="FedEx Mumai"
+            android:id="@+id/tocon"
+            android:layout_below="@id/BookingDate"
+            android:textDirection="rtl"
+            android:textSize="25sp"
+            android:textIsSelectable="false"
+            android:layout_alignEnd="@+id/BookingDate"
+            android:layout_toEndOf="@+id/tqty"
+            android:textColor="#fb7522" />
+     <!-- <Button
+          android:layout_width="65dp"
+          android:layout_height="wrap_content"
+          android:id="@+id/UploadBTN"
+          android:text="Upload"
+
+          android:layout_toStartOf="@+id/UploadFULLBTN"
+          />-->
+      <EditText
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="1"
+          android:id="@+id/updateqty"
+          android:textSize="40sp"
+        android:layout_toLeftOf="@+id/UploadBTN"
+          android:textColor="#c0ff04" />
+      <ImageButton
+          android:layout_width="65dp"
+          android:layout_height="65dp"
+          android:src="@drawable/single_package"
+          android:scaleType="fitCenter"
+          android:id="@+id/UploadBTN"
+          android:text="Upload"
+          android:padding="10dp"
+          android:layout_toStartOf="@+id/UploadFULLBTN"
+          android:background="@android:color/transparent" />
+
+<ImageButton
+    android:layout_width="65dp"
+    android:layout_height="65dp"
+    android:src="@drawable/box_icon"
+    android:id="@+id/UploadFULLBTN"
+    android:text="FUll Load"
+    android:layout_alignParentEnd="true"
+    android:scaleType="fitCenter"
+    android:background="@android:color/transparent" />
+
+    </RelativeLayout>
+
+
+
+</GridLayout>
