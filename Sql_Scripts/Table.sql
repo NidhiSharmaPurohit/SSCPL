@@ -221,6 +221,11 @@ CREATE TABLE `payment` (
   `Amount` double NOT NULL,
   `CreatedBy` varchar(100) DEFAULT NULL,
   `DateCreated` date DEFAULT NULL,
+  `ChequeNumber` varchar(100) DEFAULT NULL,
+  `BankName` varchar(100) DEFAULT NULL,
+  `AccountNumber` varchar(100) DEFAULT NULL,
+  `PayTMMobile` varchar(100) DEFAULT NULL,
+  `NEFTDebitCreditTransactionId` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`PaymentId`),
   KEY `CentreP_CentreId_fk` (`CenterId`),
   KEY `InvoiceP_InvoiceNum_fk` (`InvoiceNum`),
@@ -229,6 +234,7 @@ CREATE TABLE `payment` (
   CONSTRAINT `InvoiceP_InvoiceNum_fk` FOREIGN KEY (`InvoiceNum`) REFERENCES `invoice` (`InvoiceNum`),
   CONSTRAINT `packagingmodeP_Mode_fk` FOREIGN KEY (`PaymentMode`) REFERENCES `packagingmode` (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+
 
 
 CREATE TABLE `paymentinvoice` (
