@@ -251,15 +251,20 @@ CREATE TABLE `rate` (
   `KG` int(11) NOT NULL,
   `Statuss` tinyint(1) DEFAULT NULL,
   `ModeID` int(11) NOT NULL,
+  `SourceCityID` int(11) NOT NULL,
+  `DestCityID` int(11) NOT NULL,
   PRIMARY KEY (`RateId`),
   KEY `companyy_CompId_fk` (`CompanyId`),
   KEY `CentreR_CentreId_fk` (`CenterId`),
   KEY `transportmodeR_ModelId_fk` (`ModeID`),
+  KEY `city_SCityId_fk` (`SourceCityID`),
+  KEY `city_DCityIdDest_fk` (`DestCityID`),
   CONSTRAINT `CentreR_CentreId_fk` FOREIGN KEY (`CenterId`) REFERENCES `centermaster` (`CenterId`),
   CONSTRAINT `companyy_CompId_fk` FOREIGN KEY (`CompanyId`) REFERENCES `company` (`CompanyId`),
-  CONSTRAINT `transportmodeR_ModelId_fk` FOREIGN KEY (`ModeID`) REFERENCES `transportmode` (`ModelId`)
+  CONSTRAINT `transportmodeR_ModelId_fk` FOREIGN KEY (`ModeID`) REFERENCES `transportmode` (`ModelId`),
+  CONSTRAINT `city_DCityIdDest_fk` FOREIGN KEY (`DestCityID`) REFERENCES `city` (`CityId`),
+  CONSTRAINT `city_SCityId_fk` FOREIGN KEY (`SourceCityID`) REFERENCES `city` (`CityId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
-
 
 CREATE TABLE `smartmeeting` (
   `Nam` varchar(50) DEFAULT NULL,
