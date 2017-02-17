@@ -449,3 +449,44 @@ left join tax tax on tax.TaxId = Invt.TaxId
 where Invt.InvoiceNum = InvoiceNum ;
 
 END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetPaymentInfoWithTaxForCnnumber`(in CnoteNumber varchar(20))
+BEGIN
+
+select cm.Name as CenterName , cm.City as CenterCity, cm.Address as CenterAddress, sc.CityName as SourceCity, 
+sc.CityCode as SourceCityCode, dc.CityName AS DestCity, dc.CityCode as DestCityCode, pm.Typee AS PayMode, 
+tm.Modee AS TransportMode, shipc.CompanyName as ShipperCompany, shipc.CompanyCity as ShipperCity, shipc.CompanyCCode as ShipperCompanyCode, shipc.CompanyAddress As ShipperCompanyAddress,
+shipc.CompanyContactPerson as ShipperContactPerson, shipc.CompanyEmailId as ShipperEmailID, shipc.CompanyPrimaryContactNumber as ShipperPrimaryContactNumber, shipc.CompanySecondaryContactNumber As ShipperSecondarycontactNumber,
+conc.CompanyName as ConsigneeCompany, conc.CompanyCity as ConsigneeCity, conc.CompanyCCode as ConsigneeCompanyCode, conc.CompanyAddress as ConsigneeCompanyAddress,
+conc.CompanyContactPerson as ConsigneeContactPerson, conc.CompanyEmailId as ConsigneeEmailID, conc.CompanyPrimaryContactNumber as ConsigneePrimaryContactNumber, conc.CompanySecondaryContactNumber As ConsigneeSecondaryContactNumber,
+cn.*, 'RatePerKG' as RatePerKG, 'Amount' as Amount , 'TaxableAmount' as TaxableAmount,
+'TotalAmount' as TotalAmount, 'TaxDetails' as TaxDetails from cnnote  cn 
+left join centermaster cm on cm.centerid = cn.centerid
+left join city sc on sc.cityid = cn.origincityid
+left join city dc on dc.cityid = cn.destcityId
+left join company shipc on shipc.CompanyId = cn.shippercompid
+left join company conc on conc.CompanyId = cn.ConsigneeCompId
+left join packagingmode pm on pm.Id = cn.ToPayMode
+left join transportmode tm on tm.ModelId = cn.ModeID where cn.CNNumber = CnoteNumber;
+
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetPaymentInfoForCnnumber`(in CnoteNumber varchar(20))
+BEGIN
+
+select cm.Name as CenterName , cm.City as CenterCity, cm.Address as CenterAddress, sc.CityName as SourceCity, 
+sc.CityCode as SourceCityCode, dc.CityName AS DestCity, dc.CityCode as DestCityCode, pm.Typee AS PayMode, 
+tm.Modee AS TransportMode, shipc.CompanyName as ShipperCompany, shipc.CompanyCity as ShipperCity, shipc.CompanyCCode as ShipperCompanyCode, shipc.CompanyAddress As ShipperCompanyAddress,
+shipc.CompanyContactPerson as ShipperContactPerson, shipc.CompanyEmailId as ShipperEmailID, shipc.CompanyPrimaryContactNumber as ShipperPrimaryContactNumber, shipc.CompanySecondaryContactNumber As ShipperSecondarycontactNumber,
+conc.CompanyName as ConsigneeCompany, conc.CompanyCity as ConsigneeCity, conc.CompanyCCode as ConsigneeCompanyCode, conc.CompanyAddress as ConsigneeCompanyAddress,
+conc.CompanyContactPerson as ConsigneeContactPerson, conc.CompanyEmailId as ConsigneeEmailID, conc.CompanyPrimaryContactNumber as ConsigneePrimaryContactNumber, conc.CompanySecondaryContactNumber As ConsigneeSecondaryContactNumber,
+cn.*, 'RatePerKG' as RatePerKG, 'Amount' as Amount , 'TotalAmount' as TotalAmount from cnnote  cn 
+left join centermaster cm on cm.centerid = cn.centerid
+left join city sc on sc.cityid = cn.origincityid
+left join city dc on dc.cityid = cn.destcityId
+left join company shipc on shipc.CompanyId = cn.shippercompid
+left join company conc on conc.CompanyId = cn.ConsigneeCompId
+left join packagingmode pm on pm.Id = cn.ToPayMode
+left join transportmode tm on tm.ModelId = cn.ModeID where cn.CNNumber = CnoteNumber;
+
+END

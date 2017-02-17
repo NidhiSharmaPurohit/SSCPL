@@ -18,7 +18,7 @@ var express = require('express')
 var app = express();
 
 // all environments
-app.set('port', process.env.PORT || 80);
+app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon());
@@ -1012,6 +1012,23 @@ app.get('/GetActiveInvoicesForCompanyInDateRange', function(request, response) {
 	paymentdataservice.getActiveInvoicesforCompanyInDateRange(pool, request.param('FromDate'),request.param('ToDate') ,request.param('CompanyId'), request.param('CenterId'), response);
 	});
 
+
+app.get('/GetPaymentDetailsWithTaxForCnote/:cnnumber', function(request, response){
+	
+	console.log(request.url + ' : querying for ' +
+			request.params.cnnumber);
+			cnotedataservice.getPaymentDetailsWithTaxForCnote(pool,request.params.cnnumber, response);
+	
+});
+
+
+app.get('/GetPaymentDetailsForCnote/:cnnumber', function(request, response){
+	
+	console.log(request.url + ' : querying for ' +
+			request.params.cnnumber);
+			cnotedataservice.getPaymentDetailsForCnote(pool,request.params.cnnumber, response);
+	
+});
 
 app.del('/uploadCNNOtesSignImage/:file', function(req, res) {
 	console.log('delete');
