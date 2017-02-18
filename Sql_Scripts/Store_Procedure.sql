@@ -459,8 +459,8 @@ tm.Modee AS TransportMode, shipc.CompanyName as ShipperCompany, shipc.CompanyCit
 shipc.CompanyContactPerson as ShipperContactPerson, shipc.CompanyEmailId as ShipperEmailID, shipc.CompanyPrimaryContactNumber as ShipperPrimaryContactNumber, shipc.CompanySecondaryContactNumber As ShipperSecondarycontactNumber,
 conc.CompanyName as ConsigneeCompany, conc.CompanyCity as ConsigneeCity, conc.CompanyCCode as ConsigneeCompanyCode, conc.CompanyAddress as ConsigneeCompanyAddress,
 conc.CompanyContactPerson as ConsigneeContactPerson, conc.CompanyEmailId as ConsigneeEmailID, conc.CompanyPrimaryContactNumber as ConsigneePrimaryContactNumber, conc.CompanySecondaryContactNumber As ConsigneeSecondaryContactNumber,
-cn.*, 'RatePerKG' as RatePerKG, 'Amount' as Amount , 'TaxableAmount' as TaxableAmount,
-'TotalAmount' as TotalAmount, 'TaxDetails' as TaxDetails from cnnote  cn 
+cn.*, 'RateId' as RateId, 'RatePerKG' as RatePerKG, 'Amount' as Amount , 'TaxableAmount' as TaxableAmount,
+'TotalAmount' as TotalAmount, 'TaxDetails' as TaxDetails, 'Discount' as Discount from cnnote  cn 
 left join centermaster cm on cm.centerid = cn.centerid
 left join city sc on sc.cityid = cn.origincityid
 left join city dc on dc.cityid = cn.destcityId
@@ -480,7 +480,7 @@ tm.Modee AS TransportMode, shipc.CompanyName as ShipperCompany, shipc.CompanyCit
 shipc.CompanyContactPerson as ShipperContactPerson, shipc.CompanyEmailId as ShipperEmailID, shipc.CompanyPrimaryContactNumber as ShipperPrimaryContactNumber, shipc.CompanySecondaryContactNumber As ShipperSecondarycontactNumber,
 conc.CompanyName as ConsigneeCompany, conc.CompanyCity as ConsigneeCity, conc.CompanyCCode as ConsigneeCompanyCode, conc.CompanyAddress as ConsigneeCompanyAddress,
 conc.CompanyContactPerson as ConsigneeContactPerson, conc.CompanyEmailId as ConsigneeEmailID, conc.CompanyPrimaryContactNumber as ConsigneePrimaryContactNumber, conc.CompanySecondaryContactNumber As ConsigneeSecondaryContactNumber,
-cn.*, 'RatePerKG' as RatePerKG, 'Amount' as Amount , 'TotalAmount' as TotalAmount from cnnote  cn 
+cn.*, 'RateId' as RateId, 'RatePerKG' as RatePerKG, 'Amount' as Amount , 'TotalAmount' as TotalAmount, 'Discount' as Discount from cnnote  cn 
 left join centermaster cm on cm.centerid = cn.centerid
 left join city sc on sc.cityid = cn.origincityid
 left join city dc on dc.cityid = cn.destcityId

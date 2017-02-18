@@ -146,6 +146,7 @@ CREATE TABLE `invoice` (
   `InvoiceDate` date DEFAULT NULL,
   `FromDate` date DEFAULT NULL,
   `ToDate` date DEFAULT NULL,
+  `TaxAmount` double DEFAULT '0',
   PRIMARY KEY (`InvoiceNum`),
   KEY `companyIn_CompId_fk` (`CompanyId`),
   KEY `CentreIn_CentreId_fk` (`CenterId`),
@@ -154,6 +155,7 @@ CREATE TABLE `invoice` (
   CONSTRAINT `RateIn_RateId_fk` FOREIGN KEY (`RateId`) REFERENCES `rate` (`RateId`),
   CONSTRAINT `companyIn_CompId_fk` FOREIGN KEY (`CompanyId`) REFERENCES `company` (`CompanyId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 CREATE TABLE `invoiceitems` (
