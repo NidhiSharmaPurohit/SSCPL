@@ -146,8 +146,7 @@ exports.createAirFlight = function(pool, requestbody, response)
 {
 
 	var flight = {
-			CompanyId: requestbody.CompanyId , CenterId: requestbody.CenterId ,Rate: requestbody.Rate,
-			KG: requestbody.KG, Statuss: requestbody.Statuss, DestCityID: requestbody.DestCityID,
+			CenterId: requestbody.CenterId ,DestCityID: requestbody.DestCityID,
 			FlightName: requestbody.FlightName, FlightNumber: requestbody.FlightNumber
 			        	
 	};
