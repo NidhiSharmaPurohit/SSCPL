@@ -1030,6 +1030,34 @@ app.get('/GetPaymentDetailsForCnote/:cnnumber', function(request, response){
 	
 });
 
+app.put('/PaymentForCnnote', function(request, response) {
+	paymentdataservice.createPaymentForCnnumber(pool, request.body, response);
+	});
+
+app.put('/AirFlight', function(request, response) {
+	vehicledataservice.createAirFlight(pool, request.body, response);
+	});
+
+app.post('/AirFlight', function(request, response) {
+	vehicledataservice.updateAirFlight(pool, request.body, response);
+	});
+
+app.get('/AirFlight', function(request, response) {
+	vehicledataservice.listAirFlight(pool, request, response);
+	});
+
+app.get('/GetAirFlight/:FlightId', function(request, response) {
+	vehicledataservice.getAirFlightById(pool, request.params.FlightId, response);
+	});
+
+app.get('/GetAirFlightByCenterIdandFlightId', function(request, response) {
+	vehicledataservice.GetAirFlightForComapnyAndCenterId(pool, request.param('FlightId'), request.param('CenterId'), response);
+	});
+
+app.del('/AirFlight/:FlightId', function(request, response) {
+	vehicledataservice.DeleteAirFlight(pool, request.params.FlightId, response);
+	});
+
 app.del('/uploadCNNOtesSignImage/:file', function(req, res) {
 	console.log('delete');
 	var file = req.params.file;

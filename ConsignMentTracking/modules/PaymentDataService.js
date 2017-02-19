@@ -829,7 +829,7 @@ exports.createPayment = function(pool, requestbody, response)
             connection.release();
             if(!err) {
             	console.log(resp.insertId);
-            	response.json({"PaymentId" : resp.insertId, "status" : " Successflly Created Payment Record with " + resp.insertId});
+            	response.json({"code" : 200,"PaymentId" : resp.insertId, "status" : " Successflly Created Payment Record with " + resp.insertId});
             }  
             else
             	{
@@ -1661,4 +1661,86 @@ exports.getActiveInvoicesforCompanyInDateRange = function(pool, _fromDate, _toDa
         });
         
   });
+};
+
+
+exports.createPaymentForCnnumber = function(pool, requestbody, response)
+{
+
+	var invoice = {
+			InvoiceNum: requestbody.InvoiceNum , CompanyId: requestbody.CompanyId ,CenterId: requestbody.CenterId,
+			RateId: requestbody.RateId, Statuss: requestbody.Statuss, Amount: requestbody.Amount, Discount : requestbody.Discount,
+			TotalAmount: requestbody.TotalAmount, InvoiceDate: requestbody.InvoiceDate, FromDate: requestbody.FromDate, ToDate : requestbody.ToDate,
+			TaxAmount: requestbody.TaxAmount
+			        	
+	};
+	
+	
+	
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+       
+        connection.query("insert into invoice SET ?", invoice, function(err,resp){
+            
+            if(!err) {
+            	           
+						   var invoiceitem = {
+			                                   InvoiceNum: requestbody.InvoiceNum , RateId: requestbody.RateId ,CNNumber: requestbody.CNNumber,
+			                                   Amount: requestbody.TotalAmount, Weight: requestbody.Weight
+			        	
+	                                         };
+											 
+											 connection.query("insert into invoiceitems SET ?", invoiceitem, function(error,respp){
+                                            
+                                             if(!error) {
+												 
+												           var payment = {
+			                                                                 InvoiceNum: requestbody.InvoiceNum , PaymentMode: requestbody.PaymentMode ,CenterId: requestbody.CenterId,
+			                                                                 Statuss: requestbody.Statuss, Amount: requestbody.TotalAmount, CreatedBy: requestbody.CreatedBy, 
+																			 DateCreated: requestbody.DateCreated
+			        	
+	                                                                     };
+																		 
+															connection.query("insert into payment SET ?", payment, function(exp,reso){
+                                                            connection.release();
+                                                            if(!exp) {
+            	                                                       console.log(reso.insertId);
+            	                                                       response.json({"code" : 200,"PaymentId" : reso.insertId, "status" : " Successflly Created Payment Record with " + reso.insertId});
+                                                                     }  
+                                                                  else
+            	                                                     {
+            	                                                        response.json({"code" : 101, "status" : " Error in  creating Payment " + exp});
+            	                                                        console.log(exp);
+            	                                                     }
+            	
+                                                                   }); 			 
+																		 
+            	                                        
+                                                        }  
+                                               else
+            	                                    {
+														connection.release();
+            	                                        response.json({"code" : 101, "status" : " Error in  creating InvoiceItems " + error});
+            	                                        console.log(error);
+            	                                    }
+            	
+                                                }); 
+						   
+            }  
+            else
+            	{
+					connection.release();
+            	     response.json({"code" : 101, "status" : " Error in  creating Invoice " + err});
+            	      console.log(err);
+            	}
+            	
+        }); 
+  });
+	
 };

@@ -1895,19 +1895,17 @@ exports.getPaymentDetailsWithTaxForCnote = function(pool, _cnnumber, response)
             if(!err) {
             	if(rows[0] !== null && rows[0].length > 0)
         		{
-            		console.log('1');
+            		
         		       connection.query("select * from rate where CompanyId = " + rows[0][0].ShipperCompId +  " AND  ModeID = " + rows[0][0].ModeID + 
 					   " AND SourceCityID = " + rows[0][0].OriginCityID + " AND DestCityID = " + rows[0][0].DestCityID + " AND CenterID = " + rows[0][0].CenterID,
 					   
 					   function(error,result){
                        
-                       if(!error){console.log('2');
-                                      console.log(result[0].Rate);
+                       if(!error){
             	                      rows[0][0].RatePerKG = result[0].Rate;
-            	                      console.log('3');
-            	                      console.log(rows[0][0].RatePerKG);
+            	                      rows[0][0].RateId = result[0].RateId;
 									  rows[0][0].Amount = rows[0][0].ConsignmentWeight * result[0].Rate ;
-									  console.log(rows[0][0].Amount);
+									  
 									  connection.query("select * from tax ", function(exc,taxresult){
 										  if(!exc)
 										  {
@@ -1916,20 +1914,17 @@ exports.getPaymentDetailsWithTaxForCnote = function(pool, _cnnumber, response)
 											var cncount = 0;
              	                               for(cncount=0; cncount <taxresult.length ;cncount++)
              		                            {
-             	                            	   console.log(5);
-             	                            	   console.log(taxresult[cncount].Percentage);
-             	                            	   console.log(rows[0][0].Amount);
-             	                            	   console.log(taxresult[cncount].Percentage * rows[0][0].Amount);
+             	                            	  
 													taxamount = taxamount + taxresult[cncount].Percentage  * (rows[0][0].Amount/100) ;
-													console.log(taxamount);
+													
 													taxdesc = taxdesc + taxresult[cncount].TaxName  + "  " + taxresult[cncount].Percentage.toString() + " #  ";
 												}
 												rows[0][0].TaxableAmount = taxamount;
-												 console.log(rows[0][0].TaxableAmount);
+												
 												rows[0][0].TaxDetails = taxdesc;
-												 console.log(rows[0][0].TaxDetails);
+												 
 												rows[0][0].TotalAmount = rows[0][0].Amount + rows[0][0].TaxableAmount;
-												 console.log(rows[0][0].TotalAmount);
+												rows[0][0].Discount = 0;
 												 connection.release();
 									            response.json(rows[0][0]);
 										  }
@@ -1982,8 +1977,10 @@ exports.getPaymentDetailsForCnote = function(pool, _cnnumber, response)
                        
                        if(!error){
             	                      rows[0][0].RatePerKG = result[0].Rate;
+            	                      rows[0][0].RateId = result[0].RateId;
 									  rows[0][0].Amount = rows[0][0].ConsignmentWeight * result[0].Rate ;
 									  rows[0][0].TotalAmount = rows[0][0].Amount ;
+									  rows[0][0].Discount = 0;
 									  connection.release();
 						            	response.json(rows[0][0]);
 

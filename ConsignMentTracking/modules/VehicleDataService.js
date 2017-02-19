@@ -141,3 +141,165 @@ exports.GenerateDRunSheetForVehicle = function(pool, _CarrierTypeID , _Date, res
   });
 	
 };
+
+exports.createAirFlight = function(pool, requestbody, response)
+{
+
+	var flight = {
+			CompanyId: requestbody.CompanyId , CenterId: requestbody.CenterId ,Rate: requestbody.Rate,
+			KG: requestbody.KG, Statuss: requestbody.Statuss, DestCityID: requestbody.DestCityID,
+			FlightName: requestbody.FlightName, FlightNumber: requestbody.FlightNumber
+			        	
+	};
+	
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+       
+        connection.query("insert into airflights SET ?", flight, function(err,resp){
+            connection.release();
+            if(!err) {
+            	response.json({"code" : 200, "status" : " flight Inserted Successfully "});
+            }  
+            else
+            	{
+            	response.json({"code" : 101, "status" : " Error in  creating flight " + err});
+            	console.log(err);
+            	}
+            	
+        }); 
+  });
+	
+};
+
+exports.updateAirFlight = function(pool, requestbody, response)
+{
+
+	var flight = {
+			FlightId: requestbody.FlightId, CompanyId: requestbody.CompanyId , CenterId: requestbody.CenterId ,Rate: requestbody.Rate,
+			KG: requestbody.KG, Statuss: requestbody.Statuss, DestCityID: requestbody.DestCityID,
+			FlightName: requestbody.FlightName, FlightNumber: requestbody.FlightNumber
+			        	
+	};
+	
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+       
+        connection.query("Update airflights SET ? where FlightId = ?", [flight, requestbody.FlightId], function(err,resp){
+            connection.release();
+            if(!err) {
+            	response.json({"code" : 200, "status" : " flight Inserted Successfully "});
+            }  
+            else
+            	{
+            	response.json({"code" : 101, "status" : " Error in  Updating flight " + err});
+            	console.log(err);
+            	}
+            	
+        }); 
+  });
+	
+};
+
+
+
+exports.listAirFlight = function(pool, request, response)
+{
+
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+       
+        connection.query("call consignmentmanagement.GetAirFlightDetails();",function(err,rows){
+            connection.release();
+            if(!err) {
+            	response.json(rows[0]);
+            }          
+        });       
+  });
+};
+
+
+
+exports.getAirFlightById = function(pool, _FlightId, response)
+{
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+        var spquery = "call consignmentmanagement.GetAirFlightDetailsById(?)";
+        
+        connection.query(spquery, [_FlightId]   ,function(err,rows){
+            connection.release();
+            if(!err) {
+            	response.json(rows[0]);
+            }          
+        });       
+  });
+};
+
+
+
+exports.GetAirFlightForComapnyAndCenterId = function(pool, _FlightId, _CenterId , response)
+{
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+        var spquery = "call consignmentmanagement.GetAirFlightDetailsByIdAndCenterId(?,?)";
+        
+        connection.query(spquery, [_FlightId,_CenterId]   ,function(err,rows){
+            connection.release();
+            if(!err) {
+            	response.json(rows[0]);
+            }          
+        });       
+  });
+};
+
+
+
+
+exports.DeleteAirFlight = function(pool, _FlightId, response)
+{
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+       
+        connection.query("delete  from airflights where FlightId = " + _FlightId ,function(err,rows){
+            connection.release();
+            if(!err) {
+            	response.json(rows);
+            }          
+        });       
+  });
+};
