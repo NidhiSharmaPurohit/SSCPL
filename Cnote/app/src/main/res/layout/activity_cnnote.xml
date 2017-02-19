@@ -140,6 +140,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/spnpm"></Spinner>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Flight Details"
+            android:textColor="#f4e91c" />
+
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Flight Name Start with Airline Name"
+            android:id="@+id/FlightDetail"
+            android:textSize="20sp"
+            android:textColor="#f4e91c"
+            android:completionHintView="@layout/autocomp_item"
+          />
+
+
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

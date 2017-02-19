@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.databinding.tool.util.StringUtils;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
@@ -67,6 +68,7 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import srmicrosystems.cnote.Model.Adapters.TranportModeSpinerADP;
 import srmicrosystems.cnote.Model.Adapters.PackagingModeSpinerADP;
+import srmicrosystems.cnote.Model.AirFlight;
 import srmicrosystems.cnote.Model.CNNote;
 import srmicrosystems.cnote.Model.CNNoteDetailsExt;
 import srmicrosystems.cnote.Model.City;
@@ -74,6 +76,8 @@ import srmicrosystems.cnote.Model.Company;
 import srmicrosystems.cnote.Model.PackagingMode;
 import srmicrosystems.cnote.Model.SQL.CNNoteSQLHelper;
 import srmicrosystems.cnote.Model.TransportMode;
+import srmicrosystems.cnote.Repository.AirFlightADP;
+import srmicrosystems.cnote.Repository.AirFlightRepo;
 import srmicrosystems.cnote.Repository.CNNoteRepo;
 import srmicrosystems.cnote.Repository.CompADP;
 import srmicrosystems.cnote.Repository.CompRepo;
@@ -95,11 +99,13 @@ public class CnoteActivity extends BaseActivity {
     Callback<CNNote> cbcn ;
     public static final int SIGNATURE_ACTIVITY = 1;
     CompADP adp;
+    AirFlightADP afdp;
     ProgressDialog pd ;
     TranportModeSpinerADP tmadp ;
     PackagingModeSpinerADP pmadp;
     CNNote tmpCN = new CNNote();
     String CNNumber;
+    String FlightDetails = "BLANK";
        ArrayList<TransportMode>  tm;
     ArrayList<PackagingMode> pm;
     Context current;
@@ -165,19 +171,24 @@ public class CnoteActivity extends BaseActivity {
 //CityRepo cr = new CityRepo();
         //ArrayList<String> lstCity = cr.GetCity(this);
         CompRepo cr = new CompRepo();
+        AirFlightRepo afr = new AirFlightRepo();
         /*ArrayList<String> lstComp= cr.GetComp(this);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,lstComp);*/
         AutoCompleteTextView Congs = (AutoCompleteTextView) findViewById(R.id.ConsignerName);
         AutoCompleteTextView Congsinee = (AutoCompleteTextView) findViewById(R.id.ConsigneeName);
+        AutoCompleteTextView flights = (AutoCompleteTextView) findViewById(R.id.FlightDetail);
         //Congs.setAdapter(adapter);
 
         ArrayList<Company> com = cr.GetAllComp(this);
+        ArrayList<AirFlight> fl = afr.GetAirFlightCached(this);
      //   AutoCompleteTextView etProductSearch = (AutoCompleteTextView)getView().findViewById(R.id.edtSearchBoxTakeOrder);
          adp = new CompADP(this, android.R.layout.select_dialog_singlechoice, com);
+         afdp = new AirFlightADP(this,android.R.layout.select_dialog_singlechoice, fl);
         //etProductSearch.setAdapter(adapter );
         Congs.setAdapter(adp);
         Congsinee.setAdapter(adp);
+        flights.setAdapter(afdp);
 
         TransportModeRepo tmr  = new TransportModeRepo();
 
@@ -216,6 +227,7 @@ public class CnoteActivity extends BaseActivity {
         });
 
 
+
         Congsinee.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
             @Override
@@ -237,6 +249,16 @@ public class CnoteActivity extends BaseActivity {
             }
         });
 
+        flights.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AirFlight airf = afdp.getItem(position);
+                tmpCN.FlightId = airf.getFlightId();
+                data.setFlightID(airf.getFlightId());
+                FlightDetails = airf.getFlightName() + " " + airf.getFlightNumber() + " " + airf.getDestCity();
+            }
+        });
+
 Button btnPrint = (Button) findViewById(R.id.btnPrint);
         btnPrint.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -254,9 +276,9 @@ Button btnPrint = (Button) findViewById(R.id.btnPrint);
                 EditText aw = (EditText) findViewById(R.id.ACW);
                 EditText pn = (EditText) findViewById(R.id.PacakgeNo);
                 EditText md = (EditText) findViewById(R.id.MD);
-               tmpCN.ActualWight =   aw.getText().toString();
-                data.setActualWeight(tmpCN.getActualWight());
-                tmpCN.ConsignmentWeight = Integer.parseInt( aw.getText().toString());
+               tmpCN.ActualWeight =   Double.parseDouble(aw.getText().toString());
+                data.setActualWeight(String.valueOf(tmpCN.getActualWight()));
+                tmpCN.ConsignmentWeight = Double.parseDouble( aw.getText().toString());
                 data.setConsignmentWeight( String.valueOf( tmpCN.getConsignmentWeight()));
                 tmpCN.setPackageNo( Integer.parseInt( pn.getText().toString()));
                 data.setPackageNo(pn.getText().toString());
@@ -328,7 +350,7 @@ Button btnPrint = (Button) findViewById(R.id.btnPrint);
                    //CNNoteSQLHelper cnh = new CNNoteSQLHelper(current);
                    //cnh.onCreate(CNnoteHelper.getWritableDatabase());
                    //String[] db=      CNNoteSQLHelper.getAppCategoryDetail(CNnoteHelper.getReadableDatabase());
-                  int rid=  CNNoteSQLHelper.InsertCNNOte(CNnoteHelper.getWritableDatabase(),tmpCN.CNNumber,tmpCN.BookingDate, tmpCN.PackageNo,tmpCN.ModeID,tmpCN.ActualWight,tmpCN.ConsignmentWeight,
+                  int rid=  CNNoteSQLHelper.InsertCNNOte(CNnoteHelper.getWritableDatabase(),tmpCN.CNNumber,tmpCN.BookingDate, tmpCN.PackageNo,tmpCN.ModeID,tmpCN.ActualWeight,tmpCN.ConsignmentWeight,
                            tmpCN.MaterialDesc,tmpCN.ShipperCompId,tmpCN.ConsigneeCompId,tmpCN.OriginCityID,tmpCN.DestCityID,tmpCN.ToPayMode,tmpCN.ServiceTax,tmpCN.TOTAL,tmpCN.CenterID,tmpCN.Remarks,tmpCN.HandedBy,
                            "Initial");
                    Toast.makeText(current,rid, Toast.LENGTH_LONG).show();
@@ -515,6 +537,21 @@ File f = new File("drawable://" + R.drawable.sscpllogo1);
         mPrinter.printTextLine( data.getPayMode() + " \n");
         mPrinter.printLineFeed();
         mPrinter.setRegular();
+
+
+
+        if(data.getTransportMode().equalsIgnoreCase("air"))
+        {
+            if (this.FlightDetails != "BLANK")
+            {
+                mPrinter.printTextLine("Flight Details: ");
+                mPrinter.setBold();
+                mPrinter.printTextLine( this.FlightDetails + " \n");
+                mPrinter.printLineFeed();
+                mPrinter.setRegular();
+            }
+        }
+
         mPrinter.printTextLine("Material Description: ");
         mPrinter.setBold();
         mPrinter.printTextLine( data.getMaterialDesc() + " \n");

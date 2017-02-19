@@ -68,14 +68,14 @@ public  CNNoteSQLHelper(Context context)
                 CNNote cn = new CNNote();
                 cn.HandedBy = cursor.getString(cursor.getColumnIndex(CNOTETable.CNNoteEntry.CN_HandedBy));
                 cn.MaterialDesc =cursor.getString(cursor.getColumnIndex(CNOTETable.CNNoteEntry.CN_MaterialDesc));
-                cn.ActualWight=cursor.getString(cursor.getColumnIndex(CNOTETable.CNNoteEntry.CN_ActualWight));
+                cn.ActualWeight=cursor.getDouble(cursor.getColumnIndex(CNOTETable.CNNoteEntry.CN_ActualWight));
                 cn.ModeID=cursor.getInt(cursor.getColumnIndex(CNOTETable.CNNoteEntry.CN_ModeID));
                 cn.DestCityID = cursor.getInt(cursor.getColumnIndex(CNOTETable.CNNoteEntry.CN_DestCityID));
                 cn.BookingDate = cursor.getString(cursor.getColumnIndex(CNOTETable.CNNoteEntry.CN_BookingDate));
                 cn.CenterID =cursor.getInt(cursor.getColumnIndex(CNOTETable.CNNoteEntry.CN_CenterID));
                 cn.CNNumber = cursor.getString(cursor.getColumnIndex(CNOTETable.CNNoteEntry.CN_CNNumber));
                 cn.ConsigneeCompId = cursor.getInt(cursor.getColumnIndex(CNOTETable.CNNoteEntry.CN_ConsigneeCompId));
-                cn.ConsignmentWeight = cursor.getInt(cursor.getColumnIndex(CNOTETable.CNNoteEntry.CN_ConsignmentWeight));
+                cn.ConsignmentWeight = cursor.getDouble(cursor.getColumnIndex(CNOTETable.CNNoteEntry.CN_ConsignmentWeight));
                 cn.ConsigneeCompId = cursor.getInt(cursor.getColumnIndex(CNOTETable.CNNoteEntry.CN_ConsigneeCompId));
                 cn.OriginCityID =cursor.getInt(cursor.getColumnIndex(CNOTETable.CNNoteEntry.CN_OriginCityID));
                 cn.PackageNo= cursor.getInt(cursor.getColumnIndex(CNOTETable.CNNoteEntry.CN_PackageNo));
@@ -95,7 +95,7 @@ public  CNNoteSQLHelper(Context context)
     public static int InsertCNNOte( SQLiteDatabase sqLiteDatabase,   String CNNumber, String BookingDate
             ,  int PackageNo
             ,  int ModeID
-            , String ActualWight
+            , double ActualWight
             ,  double ConsignmentWeight
             ,  String MaterialDesc
             ,  int ShipperCompId

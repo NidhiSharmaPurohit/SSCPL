@@ -28,11 +28,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import srmicrosystems.cnote.Model.Adapters.MasterSyncAdapter;
 import srmicrosystems.cnote.Model.Adapters.TranportModeSpinerADP;
+import srmicrosystems.cnote.Model.AirFlight;
 import srmicrosystems.cnote.Model.CarrierType;
 import srmicrosystems.cnote.Model.City;
 import srmicrosystems.cnote.Model.Company;
 import srmicrosystems.cnote.Model.PackagingMode;
 import srmicrosystems.cnote.Model.TransportMode;
+import srmicrosystems.cnote.Repository.AirFlightRepo;
 import srmicrosystems.cnote.Repository.CarrierTypeRepo;
 import srmicrosystems.cnote.Repository.CityRepo;
 import srmicrosystems.cnote.Repository.CompRepo;
@@ -90,6 +92,29 @@ public class SyncActivity extends Activity {
             @Override
             public void onFailure(Call<List<PackagingMode>> call, Throwable t) {
                 Toast.makeText(c,"Packaging Mode Sync Failed",Toast.LENGTH_LONG);
+            }
+        });
+    }
+
+    public void SyncAF()
+    {
+        AirFlightRepo tmr = new AirFlightRepo();
+        final  MasterSyncAdapter.SyncItem si =msAdp.GetItem("AirFlight");
+        msAdp.updateItem(si.Id-1,"In-Prgoress",true);
+        msAdp.notifyDataSetChanged();
+
+        tmr.GetAirFlights(new Callback<List<AirFlight>>() {
+            @Override
+            public void onResponse(Call<List<AirFlight>> call, Response<List<AirFlight>> response) {
+                PutDataAF(response);
+                Toast.makeText(c,"AirFlight Sync Done",Toast.LENGTH_LONG);
+                msAdp.updateItem(si.Id-1,"Sync-Done",false);
+                msAdp.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<AirFlight>> call, Throwable t) {
+                Toast.makeText(c,"Air Flight Sync Failed",Toast.LENGTH_LONG);
             }
         });
     }
@@ -221,6 +246,7 @@ public ListView mList;
         msAdp.InsertItems("Company","Yet to Started",false);
         msAdp.InsertItems("Carrier Type","Yet to Started",false);
         msAdp.InsertItems("Packaging Mode","Yet to Started",false);
+        msAdp.InsertItems("AirFlight", "Yet to Started",false);
 
         mList.setAdapter(msAdp);
         Button syncBtn = (Button) findViewById(R.id.syncButton);
@@ -236,6 +262,7 @@ public ListView mList;
                 SyncCity();
                 SyncPM();
                 SyncCT();;
+                SyncAF();
             }
         });
 
@@ -267,6 +294,13 @@ public ListView mList;
         Gson gson = new Gson();
         PreferenceManager.getDefaultSharedPreferences(this).edit()
                 .putString("packagingMode",gson.toJson(response.body())).apply();
+    }
+
+    protected  void PutDataAF(Response<List<AirFlight>> response)
+    {
+        Gson gson = new Gson();
+        PreferenceManager.getDefaultSharedPreferences(this).edit()
+                .putString("airflight",gson.toJson(response.body())).apply();
     }
 
 

@@ -36,12 +36,21 @@ public class CNNote {
         ModeID = modeID;
     }
 
-    public String getActualWight() {
-        return ActualWight;
+    public int getFlightId(){
+        return FlightId;
     }
 
-    public void setActualWight(String actualWight) {
-        ActualWight = actualWight;
+    public void setFlightId(int FlightID){
+        FlightId = FlightID;
+    }
+
+
+    public double getActualWight() {
+        return ActualWeight;
+    }
+
+    public void setActualWight(double actualWight) {
+        ActualWeight = actualWight;
     }
 
     public double getConsignmentWeight() {
@@ -120,7 +129,7 @@ public class CNNote {
     public String BookingDate;
     public  int PackageNo;
     public  int ModeID;
-    public String ActualWight;
+    public double ActualWeight;
     public  double ConsignmentWeight;
     public  String MaterialDesc;
     public  int ShipperCompId;
@@ -133,6 +142,7 @@ public class CNNote {
     public  int CenterID;
     public String HandedBy;
     public String  RecievedBy;
+    public int FlightId;
 
     public String getHandedBy() {return HandedBy;}
     public  void  setHandedBy(String handedBy) {HandedBy= handedBy;}

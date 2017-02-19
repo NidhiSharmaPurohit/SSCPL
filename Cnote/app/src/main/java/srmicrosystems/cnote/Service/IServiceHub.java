@@ -4,6 +4,7 @@ import java.util.List;
 import java.io.File;
 
 import retrofit2.http.Query;
+import srmicrosystems.cnote.Model.AirFlight;
 import srmicrosystems.cnote.Model.CNNoteDetails;
 import srmicrosystems.cnote.Model.CNNoteDetailsExt;
 import srmicrosystems.cnote.Model.CarrierType;
@@ -49,8 +50,8 @@ public interface IServiceHub {
     @GET("company")
     Call<List<Company>> GetCompany();
 
-@PUT("cnnotes")
-Call<CNNote> CreateDeatils(@Body CNNote user);
+    @PUT("cnnotes")
+    Call<CNNote> CreateDeatils(@Body CNNote user);
 
     @Multipart
      @POST("uploadCNNOtesSignImage")
@@ -88,5 +89,8 @@ Call<CNNote> CreateDeatils(@Body CNNote user);
 
     @GET("CNNotesFullDetails/{CNNote}")
     Call<CNNoteDetailsExt> GetCNNoteDetailsExt(@Path("CNNote") String CNNote);
+
+    @GET("AirFlight")
+    Call<List<AirFlight>> GetAirFlight();
 
 }
