@@ -52,6 +52,7 @@ CREATE TABLE `cnnote` (
   `Status` varchar(40) DEFAULT NULL,
   `HandedBy` varchar(100) DEFAULT NULL,
   `ReceivedBy` varchar(100) DEFAULT NULL,
+  `FlightId` int(11) DEFAULT '0',
   PRIMARY KEY (`CNNumber`),
   KEY `transportmode_ModelId_fk` (`ModeID`),
   KEY `centermaster_CenterId_fk` (`CenterID`),
@@ -68,6 +69,7 @@ CREATE TABLE `cnnote` (
   CONSTRAINT `shippercompany_ShipperCompId_fk` FOREIGN KEY (`ShipperCompId`) REFERENCES `company` (`CompanyId`),
   CONSTRAINT `transportmode_ModelId_fk` FOREIGN KEY (`ModeID`) REFERENCES `transportmode` (`ModelId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 
