@@ -320,3 +320,23 @@ CREATE TABLE `transportmode` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 
+CREATE TABLE `airflights` (
+  `FlightId` int(11) NOT NULL AUTO_INCREMENT,
+  `CompanyId` int(11) DEFAULT NULL,
+  `CenterId` int(11) DEFAULT NULL,
+  `Rate` double NOT NULL,
+  `KG` int(11) NOT NULL,
+  `Statuss` tinyint(1) DEFAULT NULL,
+  `DestCityID` int(11) NOT NULL,
+  `FlightName` varchar(100) NOT NULL,
+  `FlightNumber` varchar(100) NOT NULL,
+  PRIMARY KEY (`FlightId`),
+  KEY `companyy_AFCompId_fk` (`CompanyId`),
+  KEY `CentreAF_CentreId_fk` (`CenterId`),
+  KEY `city_AFCityIdDest_fk` (`DestCityID`),
+  CONSTRAINT `CentreAF_CentreId_fk` FOREIGN KEY (`CenterId`) REFERENCES `centermaster` (`CenterId`),
+  CONSTRAINT `city_AFCityIdDest_fk` FOREIGN KEY (`DestCityID`) REFERENCES `city` (`CityId`),
+  CONSTRAINT `companyy_AFCompId_fk` FOREIGN KEY (`CompanyId`) REFERENCES `company` (`CompanyId`)
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+
+

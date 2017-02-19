@@ -490,3 +490,47 @@ left join packagingmode pm on pm.Id = cn.ToPayMode
 left join transportmode tm on tm.ModelId = cn.ModeID where cn.CNNumber = CnoteNumber;
 
 END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAirFlightDetails`()
+BEGIN
+
+select cm.Name as CenterName , cm.City as CenterCity, cm.Address as CenterAddress, dc.CityName AS DestCity, dc.CityCode as DestCityCode, 
+shipc.CompanyName as Company, shipc.CompanyCity as ShipperCity, shipc.CompanyCCode as CompanyCode, shipc.CompanyAddress As CompanyAddress,
+shipc.CompanyContactPerson as CompanyContactPerson, shipc.CompanyEmailId as CompanyEmailID, shipc.CompanyPrimaryContactNumber as CompanyPrimaryContactNumber, shipc.CompanySecondaryContactNumber As CompanySecondarycontactNumber,
+fn.* from airflights  fn 
+left join centermaster cm on cm.centerid = fn.centerid
+left join city dc on dc.cityid = fn.DestCityID
+left join company shipc on shipc.CompanyId = fn.CompanyId;
+
+
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAirFlightDetailsById`(in flightId int)
+BEGIN
+
+select cm.Name as CenterName , cm.City as CenterCity, cm.Address as CenterAddress, dc.CityName AS DestCity, dc.CityCode as DestCityCode, 
+shipc.CompanyName as Company, shipc.CompanyCity as ShipperCity, shipc.CompanyCCode as CompanyCode, shipc.CompanyAddress As CompanyAddress,
+shipc.CompanyContactPerson as CompanyContactPerson, shipc.CompanyEmailId as CompanyEmailID, shipc.CompanyPrimaryContactNumber as CompanyPrimaryContactNumber, shipc.CompanySecondaryContactNumber As CompanySecondarycontactNumber,
+fn.* from airflights  fn 
+left join centermaster cm on cm.centerid = fn.centerid
+left join city dc on dc.cityid = fn.DestCityID
+left join company shipc on shipc.CompanyId = fn.CompanyId
+where fn.FlightId = flightId;
+
+
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAirFlightDetailsByIdAndCenterId`(in flightId int, in centerid int)
+BEGIN
+
+select cm.Name as CenterName , cm.City as CenterCity, cm.Address as CenterAddress, dc.CityName AS DestCity, dc.CityCode as DestCityCode, 
+shipc.CompanyName as Company, shipc.CompanyCity as ShipperCity, shipc.CompanyCCode as CompanyCode, shipc.CompanyAddress As CompanyAddress,
+shipc.CompanyContactPerson as CompanyContactPerson, shipc.CompanyEmailId as CompanyEmailID, shipc.CompanyPrimaryContactNumber as CompanyPrimaryContactNumber, shipc.CompanySecondaryContactNumber As CompanySecondarycontactNumber,
+fn.* from airflights  fn 
+left join centermaster cm on cm.centerid = fn.centerid
+left join city dc on dc.cityid = fn.DestCityID
+left join company shipc on shipc.CompanyId = fn.CompanyId
+where fn.FlightId = flightId And fn.CenterId = centerid;
+
+
+END
