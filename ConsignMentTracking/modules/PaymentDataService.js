@@ -812,7 +812,12 @@ exports.createPayment = function(pool, requestbody, response)
 
 	var payment = {
 			InvoiceNum: requestbody.InvoiceNum , PaymentMode: requestbody.PaymentMode ,CenterId: requestbody.CenterId,
-			Statuss: requestbody.Statuss, Amount: requestbody.Amount, CreatedBy: requestbody.CreatedBy, DateCreated: requestbody.DateCreated
+			Statuss: requestbody.Statuss, Amount: requestbody.Amount, CreatedBy: requestbody.CreatedBy, DateCreated: requestbody.DateCreated, 
+			 ChequeNumber: requestbody.ChequeNumber, BankName: requestbody.BankName,
+			 AccountNumber: requestbody.AccountNumber, PayTMMobile: requestbody.PayTMMobile, 
+			 NEFTDebitCreditTransactionId: requestbody.NEFTDebitCreditTransactionId
+			
+			
 			        	
 	};
 	
@@ -847,7 +852,10 @@ exports.updatePayment = function(pool, requestbody, response)
 
 	var payment = {
 			PaymentId: requestbody.PaymentId, InvoiceNum: requestbody.InvoiceNum , PaymentMode: requestbody.PaymentMode ,CenterId: requestbody.CenterId,
-			Statuss: requestbody.Statuss, Amount: requestbody.Amount, CreatedBy: requestbody.CreatedBy, DateCreated: requestbody.DateCreated
+			Statuss: requestbody.Statuss, Amount: requestbody.Amount, CreatedBy: requestbody.CreatedBy, DateCreated: requestbody.DateCreated, 
+			 ChequeNumber: requestbody.ChequeNumber, BankName: requestbody.BankName,
+			 AccountNumber: requestbody.AccountNumber, PayTMMobile: requestbody.PayTMMobile, 
+			 NEFTDebitCreditTransactionId: requestbody.NEFTDebitCreditTransactionId
 			        	
 	};
 	
@@ -1703,7 +1711,9 @@ exports.createPaymentForCnnumber = function(pool, requestbody, response)
 												           var payment = {
 			                                                                 InvoiceNum: requestbody.InvoiceNum , PaymentMode: requestbody.PaymentMode ,CenterId: requestbody.CenterId,
 			                                                                 Statuss: requestbody.Statuss, Amount: requestbody.TotalAmount, CreatedBy: requestbody.CreatedBy, 
-																			 DateCreated: requestbody.DateCreated
+																			 DateCreated: requestbody.DateCreated, ChequeNumber: requestbody.ChequeNumber, BankName: requestbody.BankName,
+																			 AccountNumber: requestbody.AccountNumber, PayTMMobile: requestbody.PayTMMobile, 
+																			 NEFTDebitCreditTransactionId: requestbody.NEFTDebitCreditTransactionId
 			        	
 	                                                                     };
 																		 
@@ -1744,7 +1754,9 @@ exports.createPaymentForCnnumber = function(pool, requestbody, response)
             				       var payment = {
                                        InvoiceNum: requestbody.InvoiceNum , PaymentMode: requestbody.PaymentMode ,CenterId: requestbody.CenterId,
                                        Statuss: requestbody.Statuss, Amount: requestbody.TotalAmount, CreatedBy: requestbody.CreatedBy, 
-										 DateCreated: requestbody.DateCreated
+										 DateCreated: requestbody.DateCreated , ChequeNumber: requestbody.ChequeNumber, BankName: requestbody.BankName,
+										 AccountNumber: requestbody.AccountNumber, PayTMMobile: requestbody.PayTMMobile, 
+										 NEFTDebitCreditTransactionId: requestbody.NEFTDebitCreditTransactionId
 
                                     };
 									 
