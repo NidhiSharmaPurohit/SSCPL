@@ -1735,9 +1735,44 @@ exports.createPaymentForCnnumber = function(pool, requestbody, response)
             }  
             else
             	{
-					connection.release();
-            	     response.json({"code" : 101, "status" : " Error in  creating Invoice " + err});
-            	      console.log(err);
+            	
+            	connection.query("select * from Invoice where InvoiceNum ='" + requestbody.InvoiceNum +"'", function(exception, invresp){
+            		if(!exception)
+            			{
+            			   if(invresp !==null && invresp.length >=1)
+            				   {
+            				       var payment = {
+                                       InvoiceNum: requestbody.InvoiceNum , PaymentMode: requestbody.PaymentMode ,CenterId: requestbody.CenterId,
+                                       Statuss: requestbody.Statuss, Amount: requestbody.TotalAmount, CreatedBy: requestbody.CreatedBy, 
+										 DateCreated: requestbody.DateCreated
+
+                                    };
+									 
+						            connection.query("insert into payment SET ?", payment, function(exp,reso){
+                                    connection.release();
+                                    if(!exp) {
+                                               console.log(reso.insertId);
+                                               response.json({"code" : 200,"PaymentId" : reso.insertId, "status" : " Successflly Created Payment Record with " + reso.insertId});
+                                             }  
+                                    else
+                                        {
+                                             response.json({"code" : 101, "status" : " Error in  creating Payment " + exp});
+                                             console.log(exp);
+                                        }
+
+                                    }); 	
+            				   }
+            			}
+            		else 
+            			{
+            		        connection.release();
+            		        response.json({"code" : 101, "status" : " Error in  creating Payment " + exception});
+                            console.log(exception);
+            			}
+            	});
+            	
+					
+            	     
             	}
             	
         }); 

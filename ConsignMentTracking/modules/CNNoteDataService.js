@@ -52,7 +52,7 @@ exports.createCNNOtes = function(pool, requestBody, response)
 			MaterialDesc: requestBody.MaterialDesc, ShipperCompId: requestBody.ShipperCompId, ConsigneeCompId: requestBody.ConsigneeCompId,
 			OriginCityID: requestBody.OriginCityID, DestCityID: requestBody.DestCityID, ToPayMode: requestBody.ToPayMode, 
 			ServiceTax: requestBody.ServiceTax, TOTAL: requestBody.TOTAL, Remarks: requestBody.Remarks, Status: requestBody.Status,
-			HandedBy: requestBody.HandedBy, ReceivedBy: requestBody.ReceivedBy
+			HandedBy: requestBody.HandedBy, ReceivedBy: requestBody.ReceivedBy, FlightId: requestBody.FlightId
 			};
 	
 	pool.getConnection(function(err,connection){
@@ -105,7 +105,7 @@ exports.updateCNNOtes = function(pool, requestBody, response)
 			MaterialDesc: requestBody.MaterialDesc, ShipperCompId: requestBody.ShipperCompId, ConsigneeCompId: requestBody.ConsigneeCompId,
 			OriginCityID: requestBody.OriginCityID, DestCityID: requestBody.DestCityID, ToPayMode: requestBody.ToPayMode, 
 			ServiceTax: requestBody.ServiceTax, TOTAL: requestBody.TOTAL, Remarks: requestBody.Remarks, Status: requestBody.Status,
-			HandedBy: requestBody.HandedBy, ReceivedBy: requestBody.ReceivedBy
+			HandedBy: requestBody.HandedBy, ReceivedBy: requestBody.ReceivedBy, FlightId: requestBody.FlightId
 			};
 	
 	pool.getConnection(function(err,connection){
@@ -1925,8 +1925,27 @@ exports.getPaymentDetailsWithTaxForCnote = function(pool, _cnnumber, response)
 												 
 												rows[0][0].TotalAmount = rows[0][0].Amount + rows[0][0].TaxableAmount;
 												rows[0][0].Discount = 0;
-												 connection.release();
-									            response.json(rows[0][0]);
+												rows[0][0].TotalAmountDue = rows[0][0].TotalAmount;
+												
+												var invoicenum = "Invoice_" + _cnnumber;
+												connection.query("select * from payment where InvoiceNum ='" + invoicenum + "'",function(exception, payresponse){
+													if(!exception)
+														{
+														    if(payresponse !==null && payresponse.length >= 1)
+														    	{
+														    	   var totalpaid = 0;
+														    	   var counter = 0;
+														    	   for(counter=0; counter <payresponse.length; counter++)
+														    		   {
+														    		     totalpaid = totalpaid + payresponse[counter].Amount;
+														    		   }
+														    	   rows[0][0].TotalAmountDue = rows[0][0].TotalAmount - totalpaid;
+														    	}
+														}
+													connection.release();
+										            response.json(rows[0][0]);
+												});
+												 
 										  }
 										  else
 										  {
@@ -1981,9 +2000,26 @@ exports.getPaymentDetailsForCnote = function(pool, _cnnumber, response)
 									  rows[0][0].Amount = rows[0][0].ConsignmentWeight * result[0].Rate ;
 									  rows[0][0].TotalAmount = rows[0][0].Amount ;
 									  rows[0][0].Discount = 0;
-									  connection.release();
-						            	response.json(rows[0][0]);
-
+									  rows[0][0].TotalAmountDue = rows[0][0].TotalAmount;
+									  var invoicenum = "CashMemo_" + _cnnumber;
+										connection.query("select * from payment where InvoiceNum ='" + invoicenum + "'",function(exception, payresponse){
+											if(!exception)
+												{
+												    if(payresponse !==null && payresponse.length >= 1)
+												    	{
+												    	   var totalpaid = 0;
+												    	   var counter = 0;
+												    	   for(counter=0; counter < payresponse.length; counter++)
+												    		   {
+												    		     totalpaid = totalpaid + payresponse[counter].Amount;
+												    		   }
+												    	   rows[0][0].TotalAmountDue = rows[0][0].TotalAmount - totalpaid;
+												    	}
+												}
+											connection.release();
+								            response.json(rows[0][0]);
+										});
+									 
                                  } 
                              else{
 							        connection.release();
