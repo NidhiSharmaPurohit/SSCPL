@@ -525,6 +525,80 @@ exports.updateManifestItem = function(pool, requestbody, response)
 	
 };
 
+
+exports.updateManifestItemFinal = function(pool, requestbody, response)
+{
+	Date.prototype.yyyymmdd = function() {
+		   var yyyy = this.getFullYear();
+		   var mm = this.getMonth() < 9 ? "0" + (this.getMonth() + 1) : (this.getMonth() + 1); // getMonth() is zero-based
+		   var dd  = this.getDate() < 10 ? "0" + this.getDate() : this.getDate();
+		   return "".concat(yyyy).concat("-").concat(mm).concat("-").concat(dd);
+		  };
+
+
+	var ManifestItems = {
+			ManifestId: requestbody.ManifestId ,CNoteNo: requestbody.CNoteNo,
+			LoadedQuantity: parseInt(requestbody.LoadedQuantity) , ItemDate : new Date().yyyymmdd()      	
+	};
+	
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+       
+        connection.query("select * from ManifestItems where CNoteNo = '" + requestbody.CNoteNo + "'" ,function(err,rows){
+            
+            if(!err) {
+            	
+            	if(rows!==null && rows.length >0)
+            		{
+            		
+            		connection.query("Update ManifestItems SET ? where CNoteNo = ?", [ManifestItems,requestbody.CNoteNo], function(err,resp){
+                        connection.release();
+                        if(!err) {
+                        	response.end('manifest Record Updated Successfully');
+                        }  
+                        else
+                        	{
+                        	response.json({"code" : 101, "status" : " Error in  Updating manifest " + err});
+                        	console.log(err);
+                        	}
+                        	
+                    }); 
+            		}
+            	else
+            		{
+            		
+            		connection.query("insert into ManifestItems SET ?", ManifestItems, function(error,resp2){
+                        connection.release();
+                        if(!error) {
+                        	response.end('ManifestItems Record Inserted Successfully');
+                        }  
+                        else
+                        	{
+                        	response.json({"code" : 101, "status" : " Error in  creating ManifestItems " + error});
+                        	console.log(error);
+                        	}
+                        	
+                    }); 
+            		}
+            }  
+            else
+            	{
+            	response.json({"code" : 101, "status" : " Error in  Updating manifest " + err});
+            	console.log(err);
+            	}
+            	
+        }); 
+  });
+	
+};
+
+
 exports.listmanifestItem = function(pool, request, response)
 {
 

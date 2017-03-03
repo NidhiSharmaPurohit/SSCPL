@@ -509,6 +509,10 @@ app.post('/ManifestItem', function(request, response) {
 	manifestdataservice.updateManifestItem(pool, request.body, response);
 	});
 
+app.post('/ManifestItemFinal', function(request, response) {
+	manifestdataservice.updateManifestItemFinal(pool, request.body, response);
+	});
+
 app.get("/ManifestItem", function(request, response) {
 	manifestdataservice.listmanifestItem(pool,request, response);
 });
