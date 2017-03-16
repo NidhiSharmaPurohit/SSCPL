@@ -348,3 +348,16 @@ CREATE TABLE `aircompanyratemapping` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+CREATE TABLE `mixedbagmanifestitems` (
+  `MBagItemID` int(11) NOT NULL AUTO_INCREMENT,
+  `ManifestId` varchar(100) DEFAULT NULL,
+  `CNoteNo` varchar(15) DEFAULT NULL,
+  `MixedBagLabel` varchar(15) DEFAULT NULL,
+  `BagsQuantity` int(11) DEFAULT NULL,
+  `ItemDate` date DEFAULT NULL,
+  PRIMARY KEY (`MBagItemID`),
+  KEY `MBagManifest_ManifestId_fk` (`ManifestId`),
+  KEY `MBagCNNote_CNNumber_fk` (`CNoteNo`),
+  CONSTRAINT `MBagCNNote_CNNumber_fk` FOREIGN KEY (`CNoteNo`) REFERENCES `cnnote` (`CNNumber`),
+  CONSTRAINT `MBagManifest_ManifestId_fk` FOREIGN KEY (`ManifestId`) REFERENCES `manifest` (`ManifestId`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;

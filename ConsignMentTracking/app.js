@@ -1061,6 +1061,42 @@ app.get('/GetAirFlightByCenterIdandFlightId', function(request, response) {
 app.del('/AirFlight/:FlightId', function(request, response) {
 	vehicledataservice.DeleteAirFlight(pool, request.params.FlightId, response);
 	});
+	
+
+app.put('/MixedBagManifestItem', function(request, response) {
+	manifestdataservice.createMixedBagManifestItem(pool, request.body, response);
+	});
+
+app.post('/MixedBagManifestItem', function(request, response) {
+	manifestdataservice.updateMixedBagManifestItem(pool, request.body, response);
+	});
+
+
+app.get("/MixedBagManifestItem", function(request, response) {
+	manifestdataservice.listmixedbagmanifestItem(pool,request, response);
+});
+
+app.get('/MixedBagManifestItem/:ManifestId', function(request, response) {
+	console.log(request.url + ' : querying for ' +
+	request.params.ManifestId);
+	manifestdataservice.getmixedbagmanifestItemsByManifestId(pool,request.params.ManifestId, response);
+	});
+
+app.get('/MixedBagManifestItemDetail/:ManifestId', function(request, response) {
+	console.log(request.url + ' : querying for ' +
+	request.params.ManifestId);
+	manifestdataservice.getmixedbagmanifestItemsDetailByManifestId(pool,request.params.ManifestId, response);
+	});
+
+app.del('/MixedBagManifestItem/:ManifestId', function(request, response) {
+	
+	manifestdataservice.DeleteMixedBagManifestItemByManifestId(pool,request.params.ManifestId, response);
+});
+
+app.del('/MixedBagManifestItem/DeleteOlderDate/:Date', function(request, response) {
+
+	manifestdataservice.DeleteMixedBagOlderManifestItemOfDate(pool,request.params.Date, response);
+});	
 
 app.del('/uploadCNNOtesSignImage/:file', function(req, res) {
 	console.log('delete');

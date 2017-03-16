@@ -527,5 +527,26 @@ left join centermaster cm on cm.centerid = fn.centerid
 left join city dc on dc.cityid = fn.DestCityID
 where fn.FlightId = flightId And fn.CenterId = centerid;
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMixedBagManifestItemDetailForManifest`(in ManifestId varchar(50))
+BEGIN
+  
+select sc.CityName as SourceCity, 
+dc.CityName AS DestCity, pm.Typee AS PayMode, 
+tm.Modee AS TransportMode, shipc.CompanyName as ShipperCompany, shipc.CompanyCity as ShipperCity,  shipc.CompanyAddress As ShipperCompanyAddress,
+shipc.CompanyContactPerson as ShipperContactPerson,  shipc.CompanyPrimaryContactNumber as ShipperPrimaryContactNumber, 
+conc.CompanyName as ConsigneeCompany, conc.CompanyCity as ConsigneeCity,  conc.CompanyAddress as ConsigneeCompanyAddress,
+conc.CompanyContactPerson as ConsigneeContactPerson, conc.CompanyPrimaryContactNumber as ConsigneePrimaryContactNumber, 
+cn.CNNumber, cn.BookingDate, cn.PackageNo, cn.ActualWeight, cn.ConsignmentWeight, cn.MaterialDesc , mf.ManifestId , mi.BagsQuantity, mi.MixedBagLabel, mi.ItemDate from mixedbagmanifestitems  mi 
+left join cnnote cn on cn.CNNumber = mi.CNoteNo
+left join manifest mf on mf.ManifestId = mi.ManifestId
+left join city sc on sc.cityid = cn.origincityid
+left join city dc on dc.cityid = cn.destcityId
+left join company shipc on shipc.CompanyId = cn.shippercompid
+left join company conc on conc.CompanyId = cn.ConsigneeCompId
+left join packagingmode pm on pm.Id = cn.ToPayMode
+left join transportmode tm on tm.ModelId = cn.ModeID where mi.ManifestId = ManifestId;
+  
+END
+
 
 END

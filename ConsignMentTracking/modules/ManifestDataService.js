@@ -1269,3 +1269,223 @@ exports.updateDRsItems = function(pool, requestbody, response)
 };
 
 
+
+
+exports.createMixedBagManifestItem = function(pool, requestbody, response)
+{
+	Date.prototype.yyyymmdd = function() {
+		   var yyyy = this.getFullYear();
+		   var mm = this.getMonth() < 9 ? "0" + (this.getMonth() + 1) : (this.getMonth() + 1); // getMonth() is zero-based
+		   var dd  = this.getDate() < 10 ? "0" + this.getDate() : this.getDate();
+		   return "".concat(yyyy).concat("-").concat(mm).concat("-").concat(dd);
+		  };
+
+
+	var MixedbagManifestItems = {
+			ManifestId: requestbody.ManifestId ,CNoteNo: requestbody.CNoteNo,MixedBagLabel: requestbody.MixedBagLabel,
+			BagsQuantity: parseInt(requestbody.BagsQuantity), ItemDate : new Date().yyyymmdd()       	
+	};
+	
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+       
+        connection.query("insert into mixedbagmanifestitems SET ?", MixedbagManifestItems, function(err,resp){
+            connection.release();
+            if(!err) {
+            	response.end('MixedbagManifestItems Record Inserted Successfully');
+            }  
+            else
+            	{
+            	response.json({"code" : 101, "status" : " Error in  creating MixedbagManifestItems " + err});
+            	console.log(err);
+            	}
+            	
+        }); 
+  });
+	
+};
+
+exports.updateMixedBagManifestItem = function(pool, requestbody, response)
+{
+	Date.prototype.yyyymmdd = function() {
+		   var yyyy = this.getFullYear();
+		   var mm = this.getMonth() < 9 ? "0" + (this.getMonth() + 1) : (this.getMonth() + 1); // getMonth() is zero-based
+		   var dd  = this.getDate() < 10 ? "0" + this.getDate() : this.getDate();
+		   return "".concat(yyyy).concat("-").concat(mm).concat("-").concat(dd);
+		  };
+
+
+	var MixedbagManifestItems = {
+			ManifestId: requestbody.ManifestId ,CNoteNo: requestbody.CNoteNo,MixedBagLabel: requestbody.MixedBagLabel,
+			BagsQuantity: parseInt(requestbody.BagsQuantity), ItemDate : new Date().yyyymmdd()       	
+	};
+	
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+       
+        connection.query("select * from mixedbagmanifestitems where CNoteNo = '" + requestbody.CNoteNo + "'" + " and ManifestId = '" + 
+		                  requestbody.ManifestId +"'" + " and MixedBagLabel = '" + requestbody.MixedBagLabel + "'"
+
+		,function(err,rows){
+            
+            if(!err) {
+            	
+            	if(rows!==null && rows.length >0)
+            		{
+            		MixedbagManifestItems.BagsQuantity = parseInt(requestbody.BagsQuantity) + parseInt(rows[0].BagsQuantity);
+            		connection.query("Update mixedbagmanifestitems SET ? where CNoteNo = ? and ManifestId = ? and MixedBagLabel = ?", [MixedbagManifestItems,requestbody.CNoteNo, requestbody.ManifestId, requestbody.MixedBagLabel ], 
+					function(err,resp){
+                        connection.release();
+                        if(!err) {
+                        	response.end('mixedbagmanifestitems Record Updated Successfully');
+                        }  
+                        else
+                        	{
+                        	response.json({"code" : 101, "status" : " Error in  Updating mixedbagmanifestitems " + err});
+                        	console.log(err);
+                        	}
+                        	
+                    }); 
+            		}
+            	else
+            		{
+            		
+            		connection.query("insert into mixedbagmanifestitems SET ?", MixedbagManifestItems, function(error,resp2){
+                        connection.release();
+                        if(!error) {
+                        	response.end('MixedbagManifestItems Record Inserted Successfully');
+                        }  
+                        else
+                        	{
+                        	response.json({"code" : 101, "status" : " Error in  creating MixedbagManifestItems " + error});
+                        	console.log(error);
+                        	}
+                        	
+                    }); 
+            		}
+            }  
+            else
+            	{
+            	response.json({"code" : 101, "status" : " Error in  Updating MixedbagManifestItems " + err});
+            	console.log(err);
+            	}
+            	
+        }); 
+  });
+	
+};
+
+exports.listmixedbagmanifestItem = function(pool, request, response)
+{
+
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+       
+        connection.query("select * from mixedbagmanifestitems",function(err,rows){
+            connection.release();
+            if(!err) {
+            	response.json(rows);
+            }          
+        });       
+  });
+};
+
+exports.getmixedbagmanifestItemsByManifestId = function(pool, _ManifestId, response)
+{
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+       
+        connection.query("select * from mixedbagmanifestitems where ManifestId = '" + _ManifestId +"'" ,function(err,rows){
+            connection.release();
+            if(!err) {
+            	response.json(rows);
+            }          
+        });       
+  });
+};
+
+
+exports.getmixedbagmanifestItemsDetailByManifestId = function(pool, _ManifestId, response)
+{
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+       
+        var spquery = "call consignmentmanagement.GetMixedBagManifestItemDetailForManifest(?)";
+        connection.query(spquery,[_ManifestId] ,function(err,rows){
+            connection.release();
+            if(!err) {
+            	response.json(rows[0]);
+            }          
+        });       
+  });
+};
+
+exports.DeleteMixedBagManifestItemByManifestId = function(pool, _ManifestId, response)
+{
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+       
+        connection.query("delete  from mixedbagmanifestitems where ManifestId = '" + _ManifestId +"'" ,function(err,rows){
+            connection.release();
+            if(!err) {
+            	response.json(rows);
+            }          
+        });       
+  });
+};
+
+exports.DeleteMixedBagOlderManifestItemOfDate = function(pool, _Date, response)
+{
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+       
+        connection.query("delete  from mixedbagmanifestitems where ItemDate <= '" + _Date +"'" ,function(err,rows){
+            connection.release();
+            if(!err) {
+            	response.json(rows);
+            }          
+        });       
+  });
+};
