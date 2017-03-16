@@ -143,11 +143,24 @@ public class CNNote {
     public String HandedBy;
     public String  RecievedBy;
     public int FlightId;
+    public  String Remarks;
+    public String Status;
 
-    public String getHandedBy() {return HandedBy;}
-    public  void  setHandedBy(String handedBy) {HandedBy= handedBy;}
-    public String getRecievedBy() {return RecievedBy;}
-    public  void  setRecievedBy(String recievedBy) {RecievedBy= recievedBy;}
+    public String getHandedBy() {
+        return HandedBy;
+    }
+
+    public  void  setHandedBy(String handedBy) {
+        HandedBy= handedBy;
+    }
+
+    public String getRecievedBy() {
+        return RecievedBy;
+    }
+
+    public  void  setRecievedBy(String recievedBy) {
+        RecievedBy= recievedBy;
+    }
 
 
     public String getRemarks() {
@@ -182,7 +195,13 @@ public class CNNote {
         ShipperCompId = shipperCompId;
     }
 
-    public  String Remarks;
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
+    }
 
 
 }

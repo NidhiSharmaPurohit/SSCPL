@@ -44,11 +44,11 @@ public class CaptureSignature extends Activity {
     public String current = null;
     private Bitmap mBitmap;
     View mView;
-    File mypath;
-String CNN;
-    private String uniqueId;
+    //File mypath;
+    String CNN;
+    //private String uniqueId;
     public EditText yourName;
-
+    public boolean signdir;
 
 
 
@@ -64,12 +64,10 @@ String CNN;
 
         tempDir = Environment.getExternalStorageDirectory() + "/" + getResources().getString(R.string.external_dir) + "/";
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
-        File directory = cw.getDir(getResources().getString(R.string.external_dir), Context.MODE_PRIVATE);
 
-        prepareDirectory();
-        uniqueId = getTodaysDate() + "_" + getCurrentTime() + "_" + Math.random();
-        current = uniqueId + ".png";
-        mypath= new File(directory,current);
+
+        signdir = prepareDirectory();
+
 
 
         mContent = (LinearLayout) findViewById(R.id.linearLayout);
@@ -207,14 +205,14 @@ String CNN;
 
         if (tempdir.isDirectory())
         {
-            File[] files = tempdir.listFiles();
+            /*File[] files = tempdir.listFiles();
             for (File file : files)
             {
                 if (!file.delete())
                 {
                     System.out.println("Failed to delete " + file);
                 }
-            }
+            }*/
         }
         return (tempdir.isDirectory());
     }
@@ -251,27 +249,37 @@ String CNN;
             Canvas canvas = new Canvas(mBitmap);
             try
             {
-                FileOutputStream mFileOutStream = new FileOutputStream(mypath);
 
                 v.draw(canvas);
-                mBitmap.compress(Bitmap.CompressFormat.PNG, 90, mFileOutStream);
-                mFileOutStream.flush();
-                mFileOutStream.close();
-              //  String url = Images.Media.insertImage(getContentResolver(),  mBitmap,  CNN + ".jpg",null);
 
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                 mBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
 
 //you can create a new file name "test.jpg" in sdcard folder.
-                File f = new File(Environment.getExternalStorageDirectory()
-                        + File.separator +  CNN+ ".jpg");
-                f.createNewFile();
+                if(signdir) {
+                    File f = new File(Environment.getExternalStorageDirectory() + File.separator + getResources().getString(R.string.external_dir)
+                            + File.separator + CNN + ".jpg");
+                    f.createNewFile();
 //write the bytes in file
-                FileOutputStream fo = new FileOutputStream(f);
-                fo.write(bytes.toByteArray());
+                    FileOutputStream fo = new FileOutputStream(f);
+                    fo.write(bytes.toByteArray());
 
 // remember close de FileOutput
-                fo.close();
+                    fo.close();
+                }
+                else{
+
+
+                    File f = new File(Environment.getExternalStorageDirectory()
+                            + File.separator + CNN + ".jpg");
+                    f.createNewFile();
+//write the bytes in file
+                    FileOutputStream fo = new FileOutputStream(f);
+                    fo.write(bytes.toByteArray());
+
+// remember close de FileOutput
+                    fo.close();
+                }
 
                 Log.v("log_tag","url: " + "desiredFilename.png");
                 //In case you want to delete the file

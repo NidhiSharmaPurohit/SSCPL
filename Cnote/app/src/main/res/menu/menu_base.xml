@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-
-    <item android:title="CN Note">
+    <item android:title="CNNote">
         <menu>
             <group android:menuCategory="container" >
-            <item android:title="Home" android:id="@+id/nav_home" android:icon="@android:drawable/ic_menu_mapmode"></item>
-
-</group>
-</menu>
-    </item>
-            <item android:title="CN Note">
-        <menu>
-            <group android:menuCategory="container" >
-
-
                 <item
                     android:id="@+id/action_main"
+
                     android:icon="@android:drawable/ic_input_add"
                     android:title="Add"/>
                 <item
@@ -28,19 +18,54 @@
     </item>
 
 
-    <item android:title="Menifest" android:menuCategory="system"  >
+    <item android:title="Manifest" android:menuCategory="system"   >
         <menu>
             <group>
             <item
                 android:id="@+id/nav_createMF"
-
-                android:title="Create" />
+                android:icon ="@android:drawable/ic_input_add"
+                android:title="Create Manifest" />
+                <item
+                    android:id="@+id/nav_SerachMF"
+                    android:icon ="@android:drawable/ic_menu_search"
+                    android:title="Search Manifest" />
             <item
                 android:id="@+id/nav_editMF"
+                android:icon ="@android:drawable/ic_menu_edit"
+                android:title="Edit Manifest" />
 
-                android:title="Edit" />
 
-            <item android:title="Sync" android:id="@+id/nav_syncMF"></item>
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Payment" android:menuCategory="system"  >
+        <menu>
+            <group>
+                <item
+                    android:id="@+id/nav_createPay"
+                    android:icon ="@android:drawable/ic_input_add"
+                    android:title="Payment" />
+                <item
+                    android:id="@+id/nav_createkrishna"
+                    android:icon ="@android:drawable/ic_input_add"
+                    android:title="Krishna" />
+
+
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Admin" android:menuCategory="system"  >
+        <menu>
+            <group>
+                <item android:title="Sync" android:id="@+id/nav_syncMF"></item>
+                <item
+                    android:id="@+id/nav_logoprint"
+
+                    android:title="Upload Logo for Print" />
+
+
             </group>
         </menu>
     </item>

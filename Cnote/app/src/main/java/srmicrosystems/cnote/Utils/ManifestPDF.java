@@ -85,17 +85,32 @@ public class ManifestPDF {
 
             ContextCompat.getDrawable(context,R.drawable.sscpllogo1);
 
-            Uri fileUri = Uri.parse("/storage/emulated/0/Download/SSCPL LOGO1.jpg");
+            //Uri fileUri = Uri.parse("/storage/emulated/0/Download/SSCPL LOGO1.jpg");
             try {
-                Image img = Image.getInstance(fileUri.getPath());
+                //java.net.URL url = new java.net.URL("http://52.11.236.231/uploadCNNOtesSignImage/sscpl.jpg");
+                File logoFolder = new File(Environment.getExternalStorageDirectory().getPath().toString());
+                String path =       logoFolder + File.separator + "sscpl.jpg";
+                Image img = Image.getInstance(path);
+                //Image img = Image.getInstance(url);
                 img.setAlignment(Element.ALIGN_TOP);
                 img.setWidthPercentage(20);
                 img.setScaleToFitHeight(false);
                 img.scaleAbsolute(500, 100);
                 img.setDpi(50, 50);
-                //  document.add(img);
+                img.setSpacingAfter(5f);
+
+                PdfPTable imgtable = new PdfPTable(5);
+                PdfPCell cell11 = new PdfPCell(img, true);
+                cell11.setColspan(5);
+                imgtable.addCell(cell11);
+                imgtable.setWidthPercentage(100);
+
+                document.add(imgtable);
             }
-            catch(Exception exp){}
+            catch(Exception exp)
+            {
+                String s = exp.getMessage();
+            }
 
             //document.add(new Paragraph("Manifest"));
             Paragraph p = new Paragraph("");
@@ -104,17 +119,11 @@ public class ManifestPDF {
 
             p.setFont(f);
             p.setAlignment(Element.ALIGN_CENTER);
+            p.setSpacingBefore(5f);
+            p.setSpacingAfter(5f);
             document.add(p);
 
 
-            p.setFont(f);
-            p.setAlignment(Element.ALIGN_CENTER);
-            document.add(p);
-            //Paragraph p1 = new Paragraph("MANIFEST No:"+ MD.getManifestId());
-
-
-
-            // document.add(new Paragraph("                                                                                                                                                                                                                                                                    "));
 
             Font f1 =      FontFactory.getFont(FontFactory.TIMES_ROMAN, 8f,Font.NORMAL);
 
@@ -139,17 +148,18 @@ public class ManifestPDF {
             c1.setColspan(2);
 
 
-            header.addCell(c1);
+            //header.addCell(c1);
             PdfPCell c2 = new PdfPCell();
             c2.setBorderWidth(0);
-            header.addCell(c2);
+            //header.addCell(c2);
             Date d = new Date();
 
             PdfPCell c3 = new PdfPCell(new Phrase("Date : " +d.toString()));
             c3.setColspan(2);
             c3.setBorderWidth(0);
             header.addCell(c3);
-
+            header.addCell(c1);
+            header.addCell(c2);
             PdfPCell c4 = new PdfPCell(new Phrase("Brach : " + "Surat"));
             c4.setColspan(2);
             c4.setBorder(0);
@@ -168,8 +178,8 @@ public class ManifestPDF {
             c6.setColspan(2);
             header.addCell(c6);
 
-            header.setSpacingBefore(10f);
-            header.setSpacingAfter(1f);
+            header.setSpacingBefore(25f);
+            header.setSpacingAfter(10f);
 
 
             document.add(header);
@@ -263,7 +273,13 @@ public class ManifestPDF {
 
                 table.addCell(getNormalCell(tmp.getDestCity(),8));
                 if (tmp.getPackageNo() >0 ){
-                    table.addCell(getNormalCell(tmp.getPackageNo().toString(),8));}
+                    if(Integer.parseInt(tmp.getLoadedQuantity().toString()) > tmp.getPackageNo()) {
+                        table.addCell(getNormalCell(tmp.getPackageNo().toString(), 8));
+                    }
+                    else {
+                        table.addCell(getNormalCell(tmp.getLoadedQuantity().toString(), 8));
+                    }
+                }
                 if (tmp.getConsignmentWeight()>0){
                     table.addCell(getNormalCell(tmp.getConsignmentWeight().toString(),8));}
                 table.addCell("");
@@ -311,16 +327,48 @@ public class ManifestPDF {
 
     private String GetPath(ManifestDetail MD)
     {
-        File pdfFolder = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DOCUMENTS), "pdfdemo");
-        if (!pdfFolder.exists()) {
-            pdfFolder.mkdir();
-            Log.i("sr", "Pdf Directory created");
+        if(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).exists() &&
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).isDirectory()) {
+
+            File pdfFolder = new File(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DOCUMENTS), "pdfdemo");
+            if (!pdfFolder.exists()) {
+                pdfFolder.mkdir();
+                Log.i("sr", "Pdf Directory created");
+            }
+
+            //Create time stamp
+            String path = pdfFolder + File.separator + MD.getManifestId() + ".pdf";
+            return path;
+        }
+        else if(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).exists() &&
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).isDirectory()){
+
+            File pdfFolder = new File(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DCIM), "pdfdemo");
+            if (!pdfFolder.exists()) {
+                pdfFolder.mkdir();
+                Log.i("sr", "Pdf Directory created");
+            }
+
+            //Create time stamp
+            String path = pdfFolder + File.separator + MD.getManifestId() + ".pdf";
+            return path;
+
+        }
+        else{
+            File pdfFolder = new File(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DOWNLOADS), "pdfdemo");
+            if (!pdfFolder.exists()) {
+                pdfFolder.mkdir();
+                Log.i("sr", "Pdf Directory created");
+            }
+
+            //Create time stamp
+            String path = pdfFolder + File.separator + MD.getManifestId() + ".pdf";
+            return path;
         }
 
-        //Create time stamp
-        String path =       pdfFolder +  MD.getManifestId() + ".pdf";
-        return  path;
 
     }
 

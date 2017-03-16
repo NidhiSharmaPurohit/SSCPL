@@ -50,6 +50,23 @@ public class SyncActivity extends Activity {
 
      Context c;
 
+    public void DownloadLogo(){
+        final  MasterSyncAdapter.SyncItem si =msAdp.GetItem("DownloadLogo");
+        msAdp.updateItem(si.Id-1,"In-Prgoress",true);
+        msAdp.notifyDataSetChanged();
+        try
+        {
+            Long  i1 = new DownloadLogoTask().execute("sscpl.jpg").get();
+            Toast.makeText(c,"Logo Download Done",Toast.LENGTH_LONG);
+            msAdp.updateItem(si.Id-1,"Sync-Done",false);
+            msAdp.notifyDataSetChanged();
+        }
+        catch(Exception e){
+            Toast.makeText(c,"Logo Download Failed",Toast.LENGTH_LONG);
+        }
+
+    }
+
     public void SyncTM()
     {
         TransportModeRepo tmr = new TransportModeRepo();
@@ -247,6 +264,7 @@ public ListView mList;
         msAdp.InsertItems("Carrier Type","Yet to Started",false);
         msAdp.InsertItems("Packaging Mode","Yet to Started",false);
         msAdp.InsertItems("AirFlight", "Yet to Started",false);
+        msAdp.InsertItems("DownloadLogo", "Yet to Started",false);
 
         mList.setAdapter(msAdp);
         Button syncBtn = (Button) findViewById(R.id.syncButton);
@@ -263,6 +281,7 @@ public ListView mList;
                 SyncPM();
                 SyncCT();;
                 SyncAF();
+                DownloadLogo();
             }
         });
 

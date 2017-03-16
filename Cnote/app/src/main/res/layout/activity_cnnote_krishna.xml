@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="srmicrosystems.cnote.Model.PaymentDetailsForCnote" />
+        <variable
+            name="krishna"
+            type="srmicrosystems.cnote.Model.PaymentDetailsForCnote" />
+    </data>
+    <ScrollView   android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            tools:context="srmicrosystems.cnote.CNNoteKrishna"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="CNNote Number"
+                android:textSize="10sp"
+                android:textIsSelectable="true"
+                android:textColor="#929292" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="@{krishna.getCNNumber()}"
+                android:textSize="15sp"
+                android:textColor="#2f313c"
+                android:shadowColor="#761e1e"
+                android:singleLine="false" />
+            <View
+                style="@style/Divider"></View>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="ShipperCompany"
+                android:textSize="10sp"
+                android:textIsSelectable="true"
+                android:textColor="#929292" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="@{krishna.getShipperCompany()}"
+                android:textSize="15sp"
+                android:textColor="#2f313c" />
+            <View
+                style="@style/Divider"></View>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="SourceCity"
+                android:textSize="10sp"
+                android:textIsSelectable="true"
+                android:textColor="#929292" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="@{krishna.getSourceCity()}"
+                android:textSize="15sp"
+                android:textColor="#2f313c" />
+            <View
+                style="@style/Divider"></View>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="DestinationCity"
+                android:textSize="10sp"
+                android:textIsSelectable="true"
+                android:textColor="#929292" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="@{krishna.getDestCity()}"
+                android:textSize="15sp"
+                android:textColor="#2f313c" />
+            <View
+                style="@style/Divider"></View>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="BookingDate"
+                android:textSize="10sp"
+                android:textIsSelectable="true"
+                android:textColor="#929292" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="@{krishna.getBookingDate().toString()}"
+                android:textSize="15sp"
+                android:textColor="#2f313c" />
+            <View
+                style="@style/Divider"></View>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="ConsignmentWeight"
+                android:textSize="10sp"
+                android:textIsSelectable="true"
+                android:textColor="#929292" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="@{String.valueOf(krishna.getConsignmentWeight())}"
+                android:textSize="15sp"
+                android:textColor="#2f313c" />
+            <View
+                style="@style/Divider"></View>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="PackageNumber"
+                android:textSize="10sp"
+                android:textIsSelectable="true"
+                android:textColor="#929292" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="@{String.valueOf(krishna.getPackageNo())}"
+                android:textSize="15sp"
+                android:textColor="#2f313c" />
+            <View
+                style="@style/Divider"></View>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="RatePerKG"
+                android:textSize="10sp"
+                android:textIsSelectable="true"
+                android:textColor="#929292" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="@{String.valueOf(krishna.getRatePerKG())}"
+                android:textSize="15sp"
+                android:textColor="#2f313c" />
+            <View
+                style="@style/Divider"></View>
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="TotalAmount"
+                android:textSize="10sp"
+                android:textIsSelectable="true"
+                android:textColor="#929292" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="@{String.valueOf(krishna.getTotalAmount())}"
+                android:textSize="15sp"
+                android:textColor="#2f313c" />
+            <View
+                style="@style/Divider"></View>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="Total Due Amount to be paid"
+                android:textSize="10sp"
+                android:textIsSelectable="true"
+                android:textColor="#929292" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="@{String.valueOf(krishna.getTotalAmountDue())}"
+                android:textSize="15sp"
+                android:textColor="#2f313c" />
+            <View
+                style="@style/Divider"></View>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="PaymentAmount"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textIsSelectable="true"
+                android:textColor="#4237c0" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/PayAmounttxt"
+                android:text="@{String.valueOf(krishna.getTotalAmountDue())}"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#4237c0" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="PaymentMode"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textIsSelectable="true"
+                android:textColor="#4237c0" />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/spnPayMode"></Spinner>
+
+            <View
+                style="@style/Divider"></View>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="Payment Created By:"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textIsSelectable="true"
+                android:textColor="#4237c0" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/paycreatedperson"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#4237c0" />
+
+            <View
+                style="@style/Divider"></View>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="ChequeNumber"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textIsSelectable="true"
+                android:textColor="#4237c0" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/chqnum"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#4237c0" />
+            <View
+                style="@style/Divider"></View>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="BankName"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textIsSelectable="true"
+                android:textColor="#4237c0" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/bankname"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#4237c0" />
+
+            <View
+                style="@style/Divider"></View>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="AccountNumber"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textIsSelectable="true"
+                android:textColor="#4237c0" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/accountnum"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#4237c0" />
+
+            <View
+                style="@style/Divider"></View>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="PayTMMobileNumber"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textIsSelectable="true"
+                android:textColor="#4237c0" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/paytmmobile"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#4237c0" />
+
+            <View
+                style="@style/Divider"></View>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="Credit/Debit Card Transaction Id"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textIsSelectable="true"
+                android:textColor="#4237c0" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/onlinetransactionid"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#4237c0" />
+
+            <View
+                style="@style/Divider"></View>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnPaySubmit"
+                android:textStyle="bold"
+                android:text="Make Payment"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnPayPrint" android:visibility="invisible"
+                android:textStyle="bold"
+                android:text="Print Receipt"/>
+
+        </LinearLayout>
+    </ScrollView>
+</layout>
+
+

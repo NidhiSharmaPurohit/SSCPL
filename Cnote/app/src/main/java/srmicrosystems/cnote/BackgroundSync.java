@@ -92,7 +92,7 @@ public BackgroundSync()
                     new NotificationCompat.Builder(this)
                             .setSmallIcon(R.drawable.box_icon)
                             .setContentTitle("Background Sync SVC")
-                            .setContentText("Background Sync SVC Staarted!");
+                            .setContentText("Background Sync SVC Started!");
 
             Intent resultIntent = new Intent(this, MainActivity.class);
 

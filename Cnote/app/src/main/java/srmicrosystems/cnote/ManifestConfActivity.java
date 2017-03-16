@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
 
 import srmicrosystems.cnote.Model.Adapters.CarrierSpinerAdapter;
@@ -52,6 +53,7 @@ public class ManifestConfActivity extends AppCompatActivity {
     private TextView EndDateView;
     private int year, month, day;
     private  String currentDV;
+    private ArrayList<City> city;
 
     public void showDatePickerDialog(View v) {
      //   DialogFragment newFragment = new DatePickerFragment();
@@ -95,6 +97,38 @@ public class ManifestConfActivity extends AppCompatActivity {
 
                 }
             };
+
+    private List<String> getCities(ArrayList<City> city){
+        List<String> cities = new ArrayList<String>();
+        for(City c : city)
+        {
+            if(c.getCityName() !=null && !c.getCityName().isEmpty()) {
+                cities.add(c.getCityName());
+            }
+        }
+        return  cities;
+    }
+
+    private String getSelectedCitiesAsString(List<String> acity, String destcity)
+    {
+        String result = "";
+
+        for(String s : acity)
+        {
+            for(City c : city)
+            {
+                if(c.getCityName().equalsIgnoreCase(s)){
+                    result = result + String.valueOf(c.getCityId()) + ",";
+                    break;
+                }
+            }
+        }
+
+        result = result + destcity;
+
+        return result;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +145,7 @@ public class ManifestConfActivity extends AppCompatActivity {
         showDate(year,month+1,day,EndDateView);
         CityRepo c = new CityRepo();
         CarrierTypeRepo ctrepo = new CarrierTypeRepo();
-        ArrayList<City> city = new ArrayList<City> (c.GetAllCity(this));
+        city = new ArrayList<City> (c.GetAllCity(this));
         ArrayList<CarrierType> ct = new ArrayList<CarrierType> (ctrepo.GetAllCarrierType(this));
 
         CitySpinerAdapter cadp = new CitySpinerAdapter(this,R.layout.support_simple_spinner_dropdown_item, city);
@@ -120,7 +154,7 @@ public class ManifestConfActivity extends AppCompatActivity {
         //CitySpinerAdapter cityAddADP = new CitySpinerAdapter(this,R.layout., city);
         final Spinner scity = (Spinner) findViewById(R.id.SCity);
         final Spinner dcity = (Spinner) findViewById(R.id.DCity);
-        final Spinner adCity =(Spinner) findViewById(R.id.ADCity);
+        final MyMultiSpin adCity =(MyMultiSpin) findViewById(R.id.ADCity);
         final Spinner ctSpn = (Spinner) findViewById(R.id.gadi) ;
  //gv1 = (GridView) findViewById(R.id.gv);
 
@@ -136,9 +170,9 @@ public class ManifestConfActivity extends AppCompatActivity {
         gv1.setMultiChoiceModeListener(new MultiChoiceModeListener());*/
         scity.setAdapter(cadp);
         dcity.setAdapter(cadp);
-        adCity.setAdapter(cadp);
+        adCity.setItems(getCities(city));
         ctSpn.setAdapter(ctADP);
-Button b1;
+        Button b1;
         b1 = (Button) findViewById(R.id.btmGenM)    ;
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,7 +181,7 @@ Button b1;
              //   Object o= list.getSelectedItem();
                 in.putExtra("SCity",((City) scity.getSelectedItem()).getCityId());
                 in.putExtra("DCity",((City) dcity.getSelectedItem()).getCityId());
-               // in.putExtra("DCity",((City) scity.getSelectedItem()).getCityId());
+                in.putExtra("ADDCity",getSelectedCitiesAsString(adCity.getSelectedStrings(), String.valueOf(((City) dcity.getSelectedItem()).getCityId())));
                 in.putExtra("gadi",((CarrierType) ctSpn.getSelectedItem()).getId());
                 in.putExtra("mDate",((TextView) findViewById(R.id.Manidate)).getText());
                 in.putExtra("mEndDate",((TextView) findViewById(R.id.ManiEnddate)).getText()  );

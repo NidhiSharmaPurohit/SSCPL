@@ -42,10 +42,11 @@ public class DownloadImageTask extends AsyncTask<String, Integer, Long> {
            FileOutputStream out = null;
            URL url = new URL("http://52.11.236.231/uploadCNNOtesSignImage/" + params[0] + ".jpg" );
            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-           File pdfFolder = new File(Environment.getExternalStorageDirectory().getPath().toString());
-           String path =       pdfFolder +"/" + params[0] + ".jpg";
+           File pdfFolder = new File(Environment.getExternalStorageDirectory().getPath().toString() + File.separator + "GetSignature");
+           String path =       pdfFolder + File.separator + params[0] + ".jpg";
            if (bmp.getByteCount() > 0 ){
                out = new FileOutputStream(path);
+
                bmp.compress(Bitmap.CompressFormat.JPEG,100,out);
        }
        }catch(Exception ex){

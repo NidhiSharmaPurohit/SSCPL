@@ -92,10 +92,16 @@ android:text="Start Date"
         android:background="#e2000000"
         android:autoText="false" />
 
-    <Spinner
+    <srmicrosystems.cnote.MyMultiSpin
+        android:id="@+id/ADCity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@android:style/Widget.Spinner.DropDown" />
+
+    <!--<Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content" android:id="@+id/ADCity"
-        style="@android:style/Widget.Spinner.DropDown"></Spinner>
+        style="@android:style/Widget.Spinner.DropDown"></Spinner>-->
 
     <!--<GridView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"

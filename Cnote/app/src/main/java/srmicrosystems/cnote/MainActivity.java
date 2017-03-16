@@ -137,6 +137,24 @@ public class MainActivity extends BaseActivity{
             }
         });
 
+        Button b7 = (Button) findViewById(R.id.btnPayment);
+        b7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in=new Intent(MainActivity.this ,srmicrosystems.cnote.CnnotePaymentSearch.class);
+                startActivity(in);
+            }
+        });
+
+        Button b8 = (Button)findViewById(R.id.btnKrishna);
+        b8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in=new Intent(MainActivity.this ,srmicrosystems.cnote.CNNoteKrishnaSerach.class);
+                startActivity(in);
+            }
+        });
+
     }
 
   /*  @Override

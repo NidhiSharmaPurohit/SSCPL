@@ -7,6 +7,23 @@
         <item>Delhi</item>
         <item>Amhmadabaad</item>
     </string-array>
+    <string name="MixedBags_prompt">Select Bag</string>
+    <string-array name="MixedBags">
+        <item>M Bag 1</item>
+        <item>M Bag 2</item>
+        <item>M Bag 3</item>
+        <item>M Bag 4</item>
+        <item>M Bag 5</item>
+        <item>M Bag 6</item>
+        <item>M Bag 7</item>
+        <item>M Bag 8</item>
+        <item>M Bag 9</item>
+        <item>M Bag 10</item>
+        <item>M Bag 11</item>
+        <item>M Bag 12</item>
+        <item>M Bag 13</item>
+    </string-array>
+
     <string name="ok">OK</string>
     <string name="permission_camera_rationale">Access to the camera is needed for detection</string>
     <string name="no_camera_permission">This application cannot run because it does not have the camera permission.  The application will now exit.</string>

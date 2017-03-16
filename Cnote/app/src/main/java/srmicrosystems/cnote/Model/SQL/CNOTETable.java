@@ -35,6 +35,7 @@ public class CNOTETable {
         public static final  String CN_Status="Status";
         private static final String TEXT_TYPE = " TEXT";
         public static final String CN_HandedBy ="HandedBy";
+        public static final String CN_FlightId = "FlightId";
         public static final String COMMA_SEP = ",";
         public static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE " + CNNoteEntry.TABLE_NAME + " (" +

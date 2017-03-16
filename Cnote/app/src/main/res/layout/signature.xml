@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
 
     android:id="@+id/linearLayout1"
     android:layout_width="600dp" android:layout_height="400dp"
    >
+
+
     <LinearLayout android:layout_height="wrap_content"
-        android:id="@+id/linearLayout2" android:layout_width="match_parent">
+        android:id="@+id/linearLayout2" android:layout_width="390dp" >
+        <Button android:layout_height="50dp" android:layout_weight=".40"
+            android:text="Save" android:layout_width="0dp" android:id="@+id/getsign"  />
+        <Button android:layout_height="50dp" android:layout_weight=".30"
+            android:text="Clear" android:layout_width="0dp" android:id="@+id/clear" />
         <Button android:layout_height="50dp" android:layout_weight=".30"
             android:text="Cancel" android:layout_width="0dp" android:id="@+id/cancel" />
-        <Button android:layout_height="50dp" android:layout_weight=".35"
-            android:text="Clear" android:layout_width="0dp" android:id="@+id/clear" />
-        <Button android:layout_height="50dp" android:layout_weight=".35"
-            android:text="Save" android:layout_width="0dp" android:id="@+id/getsign" />
+
+
     </LinearLayout>
     <TableLayout android:layout_height="wrap_content"
         android:id="@+id/tableLayout1" android:layout_width="match_parent">
@@ -42,4 +47,6 @@
     </TableLayout>
     <LinearLayout android:layout_height="match_parent" android:orientation="vertical"
         android:id="@+id/linearLayout" android:layout_width="match_parent" />
+
+
 </LinearLayout>

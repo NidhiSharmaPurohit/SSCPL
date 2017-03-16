@@ -97,16 +97,16 @@ public class CNNoteDetailsExt
 
     private String ServiceTax;
 
-    private int FlightID;
+    private int FlightId;
 
     public int getFlightID()
     {
-        return  FlightID;
+        return  FlightId;
     }
 
     public  void setFlightID(int flightid)
     {
-        FlightID = flightid;
+        FlightId = flightid;
     }
 
     public String getShipperCompany ()

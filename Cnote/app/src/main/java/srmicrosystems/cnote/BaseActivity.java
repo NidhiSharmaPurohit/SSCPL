@@ -118,10 +118,38 @@ public class BaseActivity extends AppCompatActivity implements
                 startActivity(new Intent(this, CnoteActivity.class));
                 return true;
 
-         /*   case R.id.action_other:
-                startActivity(new Intent(this, OtherActivity.class));
+           case R.id.action_other:
+                startActivity(new Intent(this, SearchCNNoteActivity.class));
                 return true;
 
+            case R.id.nav_createMF:
+                startActivity(new Intent(this, ManifestConfActivity.class));
+                return true;
+
+            case R.id.nav_SerachMF:
+                startActivity(new Intent(this, ManifestConfActivity.class));
+                return true;
+
+            case R.id.nav_editMF:
+                startActivity(new Intent(this, ManifestConfActivity.class));
+                return true;
+
+            case R.id.nav_createPay:
+                startActivity(new Intent(this, CnnotePaymentSearch.class));
+                return true;
+
+            case R.id.nav_createkrishna:
+                startActivity(new Intent(this, CNNoteKrishnaSerach.class));
+                return true;
+
+
+            case R.id.nav_syncMF:
+                startActivity(new Intent(this, SyncActivity.class));
+                return true;
+
+            case R.id.nav_logoprint:
+                startActivity(new Intent(this, UploadLogoToPrinter.class));
+            /*
             case R.id.action_noHamburger :
                 startActivity(new Intent(this, NoHamburger.class));
                 return true;

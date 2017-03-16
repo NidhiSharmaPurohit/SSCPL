@@ -32,6 +32,9 @@ import srmicrosystems.cnote.Model.ManifestDetail;
 import srmicrosystems.cnote.Model.ManifestItem;
 import srmicrosystems.cnote.Model.ManifestItemDetails;
 import srmicrosystems.cnote.Model.PackagingMode;
+import srmicrosystems.cnote.Model.PaymentCnnote;
+import srmicrosystems.cnote.Model.PaymentDetailsForCnote;
+import srmicrosystems.cnote.Model.PaymentDetailsWithTaxForCnote;
 import srmicrosystems.cnote.Model.TransportMode;
 
 /**
@@ -53,6 +56,9 @@ public interface IServiceHub {
     @PUT("cnnotes")
     Call<CNNote> CreateDeatils(@Body CNNote user);
 
+    @POST("cnnotes")
+    Call<CNNote> UpdateCNNDetails(@Body CNNote cnn);
+
     @Multipart
      @POST("uploadCNNOtesSignImage")
     Call<ResponseBody> Upload(@Part("description") RequestBody description,@Part MultipartBody.Part file);
@@ -64,6 +70,9 @@ public interface IServiceHub {
 
     @POST("ManifestItem")
     Call<ResponseBody> CreateManifestItem(@Body ManifestItem manifest);
+
+    @POST("ManifestItemFinal")
+    Call<ResponseBody> CreateManifestItemFinal(@Body ManifestItem manifest);
 
 
     @GET("CarrierType")
@@ -93,4 +102,12 @@ public interface IServiceHub {
     @GET("AirFlight")
     Call<List<AirFlight>> GetAirFlight();
 
+    @GET("GetPaymentDetailsWithTaxForCnote/{CNNote}")
+    Call<PaymentDetailsWithTaxForCnote> GetPaymentDetailsWithTax(@Path("CNNote") String CNNote);
+
+    @GET("GetPaymentDetailsForCnote/{CNNote}")
+    Call<PaymentDetailsForCnote> GetPaymentDetailsForCnnote(@Path("CNNote") String CNNote);
+
+    @PUT("PaymentForCnnote")
+    Call<ResponseBody> CreatePaymentForCNNote(@Body PaymentCnnote payment);
 }

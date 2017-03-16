@@ -84,11 +84,23 @@ public class CNNoteDetails {
 
     public  void setLodedBag(int qty)
     {
-        LodedBag = qty +1;
+        LodedBag = qty;
     }
     public int getLodedBag(){
         return this.LodedBag;
     }
+
+    public int LodedBagPartial =0;
+
+    public void setLodedBagPartial(int qty)
+    {
+        LodedBagPartial = LodedBagPartial + qty;
+    }
+
+    public int getLodedBagPartial(){
+        return this.LodedBagPartial;
+    }
+
     private String BookingDate;
 
     public String getBookingDate() { return this.BookingDate.substring(0,10); }
@@ -118,6 +130,8 @@ public class CNNoteDetails {
     public int getDispPackageNo() { return this.DispPackageNo; }
 
     public void setDispPackageNo() { this.DispPackageNo = this.DispPackageNo-1; }
+
+    public void setDispPackageNo(int quantity) { this.DispPackageNo = this.DispPackageNo - quantity;}
 
     public void setintiDispPackageNo() { this.DispPackageNo = this.PackageNo-this.GetManifestItemLoadedQuantity(); }
 

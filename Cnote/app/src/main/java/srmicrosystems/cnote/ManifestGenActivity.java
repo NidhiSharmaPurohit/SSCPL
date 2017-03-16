@@ -120,9 +120,8 @@ if (response.isSuccessful()){
             public void onFailure(Call<ResponseBody> call, Throwable t) {
             String s = t.getMessage();
                 Object e = t.getStackTrace();
-                Toast t1 = new Toast(Current);
-                t1.setText("Error Creating Mainfest");
-                t1.show();
+                Toast.makeText(Current,"Error Creating Mainfest", Toast.LENGTH_LONG).show();
+
 
             }
         });
@@ -135,8 +134,8 @@ if (response.isSuccessful()){
         StartDate = sdf.format(mDate);
         EndDate = sdf.format(mEndDate);
 
-        Cities="    2,3,4,5,6";
-
+        //Cities="    2,3,4,5,6";
+        Cities = getIntent().getExtras().get("ADDCity").toString();
        // StartDate = mDate.toString();
         //EndDate = mEndDate.toString();
         Call<List<CNNoteDetails>> cnotecb = ServiceHub.createRetrofitService().GetCNNotesDetailsForManifest(StartDate,EndDate,Cities);

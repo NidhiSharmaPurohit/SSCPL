@@ -176,6 +176,32 @@ android:id="@+id/btnSubmit"
             android:id="@+id/btnPrint" android:visibility="invisible"
             android:text="Print"/>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnCPay" android:visibility="invisible"
+            android:text="Payment"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnCKrishna" android:visibility="invisible"
+            android:text="Krishna"/>
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnCSave" android:visibility="invisible"
+            android:text="Save As Pdf"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnCSms" android:visibility="invisible"
+            android:text="Sms"/>
+
+
     </LinearLayout>
 
     </ScrollView>

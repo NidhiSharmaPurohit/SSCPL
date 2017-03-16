@@ -88,13 +88,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="No of Pacakge"
-            android:textColor="#30f69d" />
+            android:textColor="#30f69d"
+            />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="No. Of Packages" android:id="@+id/PacakgeNo"
             android:textSize="20sp"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff" android:inputType="number"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -105,7 +106,7 @@
             android:layout_height="wrap_content"
             android:hint="ACW" android:id="@+id/ACW"
             android:textSize="20sp"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff" android:inputType="numberDecimal"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -170,6 +171,31 @@ android:id="@+id/btnSubmit"
             android:layout_height="wrap_content"
             android:id="@+id/btnPrint" android:visibility="invisible"
             android:text="Print"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnCPay" android:visibility="invisible"
+            android:text="Payment"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnCKrishna" android:visibility="invisible"
+            android:text="Krishna"/>
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnCSave" android:visibility="invisible"
+            android:text="Save As Pdf"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnCSms" android:visibility="invisible"
+            android:text="Sms"/>
 
 
     </LinearLayout>

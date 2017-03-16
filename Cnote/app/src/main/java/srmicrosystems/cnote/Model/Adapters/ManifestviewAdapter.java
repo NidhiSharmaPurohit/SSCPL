@@ -6,16 +6,23 @@ package srmicrosystems.cnote.Model.Adapters;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.graphics.Color;
 import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.NumberPicker;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 
@@ -26,6 +33,7 @@ import retrofit2.Response;
 import srmicrosystems.cnote.Model.CNNoteDetails;
 import srmicrosystems.cnote.Model.City;
 import srmicrosystems.cnote.Model.ManifestItem;
+import srmicrosystems.cnote.MyNumberPicker;
 import srmicrosystems.cnote.R;
 import srmicrosystems.cnote.Repository.CityRepo;
 import srmicrosystems.cnote.Service.ServiceHub;
@@ -40,8 +48,9 @@ public class ManifestviewAdapter extends BaseAdapter
     public List<CNNoteDetails> list;
     public String MID;
     Activity activity;
-public  List<City> Cities;
- public   ProgressDialog pd;
+    public List<City> Cities;
+    public ProgressDialog pd;
+
     public ManifestviewAdapter(Activity activity, List<CNNoteDetails> list,ProgressDialog pd1,String MID1) {
         super();
         this.activity = activity;
@@ -62,6 +71,10 @@ public  List<City> Cities;
     list.get(Position).setDispPackageNo();
     }
 
+    public void updateDispQty(int Position, int quantity)
+    {
+        list.get(Position).setDispPackageNo(quantity);
+    }
 
     public void remove(int position){
        list.remove(position);
@@ -98,9 +111,12 @@ public  List<City> Cities;
         TextView txtSCity;
         TextView txtDCity;
         TextView txtConsigneeName;
-        EditText txtUplodqty;
+        //EditText txtUplodqty;
+        MyNumberPicker txtUplodqty;
         ImageButton btnFullLoad;
         ImageButton btnLoad;
+        Spinner mixval;
+        ImageButton MixedBTN;
     }
 
 
@@ -126,9 +142,13 @@ public  List<City> Cities;
             holder.txtDCity =(TextView) convertView.findViewById(R.id.dsetcity);
             holder.txtSCity =(TextView) convertView.findViewById(R.id.fromc);
             holder.txtConsigneeName = (TextView) convertView.findViewById(R.id.tocon);
-            holder.txtUplodqty = (EditText) convertView.findViewById(R.id.updateqty);
-holder.btnFullLoad = (ImageButton) convertView.findViewById(R.id.UploadFULLBTN);
+            holder.txtUplodqty = (MyNumberPicker) convertView.findViewById(R.id.updateqty);
+            holder.btnFullLoad = (ImageButton) convertView.findViewById(R.id.UploadFULLBTN);
             holder.btnLoad = (ImageButton) convertView.findViewById((R.id.UploadBTN));
+            holder.mixval = (Spinner) convertView.findViewById(R.id.mixval) ;
+            holder.MixedBTN = (ImageButton) convertView.findViewById(R.id.MixedBTN);
+
+
             convertView.setTag(holder);
         }
         else
@@ -147,6 +167,10 @@ try {
     holder.txttqty.setText(Integer.toString(map.getPackageNo()));
     holder.btnFullLoad.setTag(position);
     holder.btnLoad.setTag(position);
+    holder.MixedBTN.setTag(position);
+    holder.txtUplodqty.setValue(1);
+    holder.txtUplodqty.setMinValue(1);
+    holder.txtUplodqty.setMaxValue(map.getPackageNo());
        holder.txtConsigneeName.setText(map.getConsigneeCompany());
     for(int i=0; i<Cities.size();i++) {
         if (Cities.get(i).getCityId() ==  map.getOriginCityID())
@@ -162,18 +186,40 @@ try {
         }
     }
 
+    Context ctx = this.activity.getApplicationContext();
+    List<String> baglist = new ArrayList<String>();
+    baglist.add("M Bag 1");
+    baglist.add("M Bag 2");
+    baglist.add("M Bag 3");
+    baglist.add("M Bag 4");
+    baglist.add("M Bag 5");
+    baglist.add("M Bag 6");
+    baglist.add("M Bag 7");
+    baglist.add("M Bag 8");
+    baglist.add("M Bag 9");
+    baglist.add("M Bag 10");
+    baglist.add("M Bag 11");
+    baglist.add("M Bag 12");
+    baglist.add("M Bag 13");
+    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(ctx,android.R.layout.simple_spinner_item,baglist);
+    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    holder.mixval.setAdapter(dataAdapter);
+
 
 holder.btnLoad.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
         pd.show();
         final int position=(Integer)  v.getTag();
-        map.setLodedBag(Integer.parseInt(holder.txtUplodqty.getText().toString()));
+        //map.setLodedBagPartial(Integer.parseInt(holder.txtUplodqty.getText().toString()));
+        map.setLodedBagPartial(holder.txtUplodqty.getValue());
         ManifestItem mi = new ManifestItem();
         mi.setCNoteNo(map.getCNNumber());
-        mi.setLoadedQuantity(map.getLodedBag());
-        updateDispQty(position);
+        mi.setLoadedQuantity(map.getLodedBagPartial());
+        //updateDispQty(position,Integer.parseInt((holder.txtUplodqty.getText().toString())));
+        updateDispQty(position,holder.txtUplodqty.getValue());
         mi.setManifestId(MID);
+
         Call<ResponseBody> cbmi = ServiceHub.createRetrofitService().CreateManifestItem(mi);
         cbmi.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -181,7 +227,7 @@ holder.btnLoad.setOnClickListener(new View.OnClickListener() {
                 if (response.isSuccessful() ){
 
                     synchronized (list){
-                        if(map.getLodedBag() == map.getTOTAL()){
+                        if(map.getLodedBagPartial() >= map.getPackageNo()){
                         list.remove(position);
                        }
                         list.notifyAll();
@@ -226,13 +272,13 @@ holder.btnLoad.setOnClickListener(new View.OnClickListener() {
 pd.show();
             final int position=(Integer)  v.getTag();
            // CNNoteDetails cn = (CNNoteDetails) madapter.getItem(position);
-            map.setLodedBag((int) map.getTOTAL());
+            map.setLodedBag((int) map.getPackageNo());
             ManifestItem mi = new ManifestItem();
             mi.setCNoteNo(map.getCNNumber());
             mi.setLoadedQuantity(map.getLodedBag());
             updateDispQty(position);
             mi.setManifestId(MID);
-            Call<ResponseBody> cbmi = ServiceHub.createRetrofitService().CreateManifestItem(mi);
+            Call<ResponseBody> cbmi = ServiceHub.createRetrofitService().CreateManifestItemFinal(mi);
             cbmi.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -276,6 +322,8 @@ notifyDataSetChanged();
             });
         }
     });
+
+
 
 
 }

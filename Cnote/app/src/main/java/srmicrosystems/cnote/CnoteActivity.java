@@ -34,6 +34,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -121,7 +122,9 @@ public class CnoteActivity extends BaseActivity {
     public static final String title_not_connected = "not connected";
     private ToggleButton tbPrinter;
     private TextView statusMsg;
-
+    private  AutoCompleteTextView Congs;
+    private AutoCompleteTextView Congsinee;
+    private AutoCompleteTextView flights;
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -175,9 +178,9 @@ public class CnoteActivity extends BaseActivity {
         /*ArrayList<String> lstComp= cr.GetComp(this);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,lstComp);*/
-        AutoCompleteTextView Congs = (AutoCompleteTextView) findViewById(R.id.ConsignerName);
-        AutoCompleteTextView Congsinee = (AutoCompleteTextView) findViewById(R.id.ConsigneeName);
-        AutoCompleteTextView flights = (AutoCompleteTextView) findViewById(R.id.FlightDetail);
+        Congs = (AutoCompleteTextView) findViewById(R.id.ConsignerName);
+        Congsinee = (AutoCompleteTextView) findViewById(R.id.ConsigneeName);
+        flights = (AutoCompleteTextView) findViewById(R.id.FlightDetail);
         //Congs.setAdapter(adapter);
 
         ArrayList<Company> com = cr.GetAllComp(this);
@@ -249,6 +252,57 @@ public class CnoteActivity extends BaseActivity {
             }
         });
 
+        Congs.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+                if(!hasFocus){
+                    String str = Congs.getText().toString();
+                    ListAdapter adapter = Congs.getAdapter();
+                    if(adapter instanceof CompADP)
+                    {
+                        CompADP cadp = (CompADP)adapter;
+                        for(int i = 0; i < cadp .getCount(); i++) {
+
+                            if (str.compareTo(cadp.getItem(i).getCompanyName()) == 0) {
+                                return;
+                            }
+                        }
+
+                        Congs.setError("Invalid Company");
+
+                    }
+                }
+
+            }
+        });
+
+        Congsinee.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+                    if(!hasFocus){
+                        String str = Congsinee.getText().toString();
+                        ListAdapter adapter = Congsinee.getAdapter();
+                        if(adapter instanceof CompADP)
+                        {
+                            CompADP cadp = (CompADP)adapter;
+                            for(int i = 0; i < cadp .getCount(); i++) {
+
+                                if (str.compareTo(cadp.getItem(i).getCompanyName()) == 0) {
+                                    return;
+                                }
+                            }
+
+                            Congsinee.setError("Invalid Company");
+
+                        }
+                    }
+
+
+            }
+        });
+
         flights.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -256,6 +310,58 @@ public class CnoteActivity extends BaseActivity {
                 tmpCN.FlightId = airf.getFlightId();
                 data.setFlightID(airf.getFlightId());
                 FlightDetails = airf.getFlightName() + " " + airf.getFlightNumber() + " " + airf.getDestCity();
+            }
+        });
+
+        flights.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+
+                    if(!hasFocus){
+                        String str = flights.getText().toString();
+                        if(str.isEmpty() || str == null)
+                        {
+                            return;
+                        }
+                        ListAdapter adapter = flights.getAdapter();
+                        if(adapter instanceof AirFlightADP)
+                        {
+                            AirFlightADP cadp = (AirFlightADP)adapter;
+                            for(int i = 0; i < cadp .getCount(); i++) {
+                                String flight = cadp.getItem(i).getFlightName() + " " + cadp.getItem(i).getFlightNumber() + " " + cadp.getItem(i).getDestCity();
+                                if (str.compareTo(flight) == 0) {
+                                    return;
+                                }
+                            }
+
+                            flights.setError("Invalid Flight Detail ");
+
+                        }
+                    }
+
+                }
+            }
+        });
+
+
+        Button Cpaybtn = (Button) findViewById(R.id.btnCPay);
+        Cpaybtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ctx,CnnotePayment.class);
+                intent.putExtra("CNNNumber",CNNumber);
+                startActivity(intent);
+            }
+        });
+
+        Button Ckbtn = (Button) findViewById(R.id.btnCKrishna);
+        Ckbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ctx,CNNoteKrishna.class);
+                intent.putExtra("CNNNumber",CNNumber);
+                startActivity(intent);
             }
         });
 
@@ -267,10 +373,14 @@ Button btnPrint = (Button) findViewById(R.id.btnPrint);
             }
         });
 
-       final Button btnsub = (Button) findViewById(R.id.btnSubmit);
+        final Button btnsub = (Button) findViewById(R.id.btnSubmit);
         btnsub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(isvalid() == false)
+                {
+                    return;
+                }
                 pd.show();
                // CNNote tmpCN = new CNNote();
                 EditText aw = (EditText) findViewById(R.id.ACW);
@@ -289,6 +399,11 @@ Button btnPrint = (Button) findViewById(R.id.btnPrint);
                 tmpCN.BookingDate = s;
                 data.setBookingDate(s.toString());
                 tmpCN.CenterID=1;
+                data.setCenterID("1");
+                data.setStatus("Load Picked up");
+                data.setRemarks("Load Picked up");
+                tmpCN.setStatus("Load Picked up");
+
 
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
                 tmpCN.CNNumber=CNNumber;
@@ -362,6 +477,16 @@ Button btnPrint = (Button) findViewById(R.id.btnPrint);
                 Button printbtn = (Button) findViewById(R.id.btnPrint);
                 printbtn.setVisibility(View.VISIBLE);
                 btnsub.setVisibility(View.INVISIBLE);
+
+                Button Cpay = (Button) findViewById(R.id.btnCPay);
+                Cpay.setVisibility(View.VISIBLE);
+                Button Ck = (Button) findViewById(R.id.btnCKrishna);
+                Ck.setVisibility(View.VISIBLE);
+                Button Csave = (Button) findViewById(R.id.btnCSave);
+                Csave.setVisibility(View.VISIBLE);
+                Button Csms = (Button) findViewById(R.id.btnCSms);
+                Csms.setVisibility(View.VISIBLE);
+
               if(  isNetworkAvailable()) {
                   cr1.CreateCNNNotes(cbcn, tmpCN);
 
@@ -407,6 +532,16 @@ Button btnPrint = (Button) findViewById(R.id.btnPrint);
         };
     }
 
+    public String getblankspace(String left, String right)
+    {
+        String result = "";
+        int resultlenght = 24 - (left.length() + right.length());
+        for(int i=0; i <resultlenght; i++){
+            result = result + " ";
+        }
+        return  result;
+    }
+
     public void Print(){
         pd.setMessage("Printing CNNote");
         pd.show();
@@ -440,46 +575,40 @@ Button btnPrint = (Button) findViewById(R.id.btnPrint);
 
             mPrinter.setPrinterWidth(PrinterWidth.PRINT_WIDTH_72MM);
 
-        //   Button btnprint = (Button) findViewById(R.id.btnprint);
-        //  btnprint.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //  public void onClick(View v) {
+
         mPrinter.setHighIntensity();
         mPrinter.setStyleCourier();
-    //    file:///android_asset
-      //  Uri fileUri = Uri.parse("/storage/emulated/0/Download/SSCPL LOGO1.jpg");
-       /* String imageUri = "drawable://" + R.drawable.sscpllogo1;
-        Uri path = Uri.parse("android.resource:///srmicrosystems.cnote" + R.drawable.sscpllogo1);
-        Uri otherPath = Uri.parse("android.resource://com.segf4ult.test/drawable/icon");*/
-        boolean b1=   mPrinter.printSavedImage(1);
-      /*  String path1 = path.toString();
-File f = new File("drawable://" + R.drawable.sscpllogo1);
-        try {
-          Bitmap b = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.sscpllogo1);
 
-        } catch (Exception e1)
-        {
-            pd.setMessage(e1.getMessage());
-        }
+        File logoFolder = new File(Environment.getExternalStorageDirectory().getPath().toString());
+        String path = logoFolder + File.separator + "sscpl.jpg";
+        mPrinter.printDirect(path, true, 127);
 
-            if (f.exists())
-        {
-            Boolean r = mPrinter.printDirect(f.getPath(),true,134);
-        }
-     Uri fileUri = Uri.parse("file:///android_asset/sscpllogo2.jpg");
-  //      Boolean r = mPrinter.printDirect(fileUri.getPath(),true,134);*/
-        mPrinter.setFondSizeMedium();
-        mPrinter.printTextLine(data.getTransportMode() + "              ");
-        // mPrinter.printTextLine("AIR              ");
-        // mPrinter.printTextLine("SRT-BOM\n");
+        mPrinter.printTextLine("\n");
+
+        mPrinter.setAlignmentLeft();
+
+        mPrinter.setFondSizeSmall();
+        mPrinter.setRegular();
+        mPrinter.setStyleFixedsys();
+        mPrinter.printTextLine("Center Addr: JG-4,JAPAN MARKET,OPP LINEAR BUS STOP,RING ROAD SURAT \n");
+        mPrinter.printLineFeed();
+        mPrinter.setAlignmentLeft();
+
+        mPrinter.setFondSizeLarge();
+
+        mPrinter.printTextLine(data.getTransportMode() + getblankspace(data.getTransportMode() , data.getSourceCityCode() + "-"+ data.getDestCityCode()));
+
         mPrinter.printTextLine(data.getSourceCityCode() + "-"+ data.getDestCityCode() + "\n");
         mPrinter.setFondSizeSmall();
         mPrinter.printLineFeed();
 
-        //   mPrinter.printBarcode("2016120912", Barcode.CODE_128,384,100);
+
         mPrinter.printBarcode(data.getCNNumber(), Barcode.CODE_128,384,100);
         mPrinter.setAlignmentLeft();
-        // mPrinter.printTextLine(" AWB#:  201612091212121   ");
+        mPrinter.setStyleCourier();
+        mPrinter.setBold();
+        mPrinter.setFondSizeSmall();
+
         mPrinter.printTextLine(" AWB#:  " + data.getCNNumber());
 
         mPrinter.printTextLine("   Date: "+ data.getBookingDate().toString()  + "\n");
@@ -489,16 +618,17 @@ File f = new File("drawable://" + R.drawable.sscpllogo1);
 
         mPrinter.setFondSizeSmall();
         mPrinter.printLineFeed();
-        mPrinter.printLineFeed();
+        mPrinter.setBold();
+        mPrinter.setStyleCourier();
         mPrinter.setAlignmentLeft();
         mPrinter.printTextLine("Consinger: \n");
 
         mPrinter.setBold();
-        // mPrinter.printTextLine("Fed Ex Shipment Pvt Ltd. Surat \n");
+
         mPrinter.printTextLine(data.getShipperCompany() + "\n");
         mPrinter.setRegular();
         mPrinter.setStyleFixedsys();
-        //mPrinter.printTextLine("4 1240, Begampura Rd, Begampura, Surat, Gujarat 395003 \n");
+
         mPrinter.printTextLine( data.getShipperCompanyAddress() + "\n");
 
         mPrinter.printLineFeed();
@@ -508,11 +638,11 @@ File f = new File("drawable://" + R.drawable.sscpllogo1);
         mPrinter.printTextLine("Consignee: \n");
 
 
-        //   mPrinter.printTextLine("Fed Ex Shipment Pvt Ltd. Mumbai \n");
+
         mPrinter.printTextLine(data.getConsigneeCompany() + "\n");
         mPrinter.setRegular();
         mPrinter.setStyleFixedsys();
-        //mPrinter.printTextLine(" 8th Floor, Unit No 801, Boomerang, Wings A & B1, Chandivali Farm Road, Near Chandivali Studio, Andheri (E), Mumbai, Maharashtra 400072 \n");
+
         mPrinter.printTextLine( data.getConsigneeCompanyAddress() + "\n");
 
         mPrinter.printLineFeed();
@@ -521,7 +651,7 @@ File f = new File("drawable://" + R.drawable.sscpllogo1);
         mPrinter.setRegular();
         mPrinter.printTextLine("No of Packages: ");
         mPrinter.setBold();
-        //mPrinter.printTextLine("100\n");
+
         mPrinter.printTextLine( data.getPackageNo() + "\n");
         mPrinter.setRegular();
 
@@ -529,7 +659,7 @@ File f = new File("drawable://" + R.drawable.sscpllogo1);
         mPrinter.setRegular();
         mPrinter.printTextLine("Consingment Weight: ");
         mPrinter.setBold();
-        //  mPrinter.printTextLine("100\n");
+
         mPrinter.printTextLine( data.getConsignmentWeight() + "\n");
         mPrinter.setRegular();
         mPrinter.printTextLine("Mode Of Payment: ");
@@ -565,18 +695,42 @@ File f = new File("drawable://" + R.drawable.sscpllogo1);
 try
 {
         //      Uri fileUri1 = Uri.parse("/storage/emulated/0/20160911042047.jpg");
-        File file = new File(Environment.getExternalStorageDirectory()
+        File file = new File(Environment.getExternalStorageDirectory() + File.separator + getResources().getString(R.string.external_dir)
                 + File.separator  + CNNumber + ".jpg");
         Uri fileUri1 = Uri.parse(file.getPath());
            if (file.exists()){
 
-        Boolean r1 = mPrinter.printDirect(fileUri1.getPath(),true,134);}
+        Boolean r1 = mPrinter.printDirect(fileUri1.getPath(),true,134);
+           }
+    else{
+               File file2 = new File(Environment.getExternalStorageDirectory()
+                       + File.separator  + CNNumber + ".jpg");
+               Uri fileUri2 = Uri.parse(file2.getPath());
+               if (file.exists()){
+
+                   Boolean r1 = mPrinter.printDirect(fileUri2.getPath(),true,134);
+               }
+           }
 }
+
         catch(Exception ex1){
             pd.setMessage(ex1.getMessage());
         }
 
         mPrinter.printLineFeed();
+
+
+        mPrinter.setRegular();
+        mPrinter.printTextLine("Received By: \n");
+        mPrinter.printLineFeed();
+
+        mPrinter.setBold();
+        mPrinter.printTextLine("Signature of Receiver and Date after Delivery \n");
+        mPrinter.printTextLine("                                                              ");
+        mPrinter.printTextLine("                                                              ");
+        mPrinter.printTextLine("                                                              ");
+        mPrinter.printTextLine("                                                              ");
+        mPrinter.printTextLine("                                                              ");
         mPrinter.printLineFeed();
         mPrinter.printLineFeed();
         //      }
@@ -645,6 +799,120 @@ try
 
     }
 
+
+    private boolean isvalid(){
+        boolean valid = true;
+        EditText aw = (EditText) findViewById(R.id.ACW);
+        if(aw.getText().toString().isEmpty() || aw.getText().toString() == null)
+        {
+            aw.setError("Weight cannot be empty. Please enter Weight");
+            valid = false;
+        }
+        if(aw.getText().toString().compareTo("0")==0 || aw.getText().toString().compareTo("0.0")==0)
+        {
+            aw.setError("Weight cannot be 0. Please enter Weight");
+            valid = false;
+        }
+        if(aw.getText().toString().compareTo(".")==0)
+        {
+            aw.setError("Weight cannot be . Please enter proper Weight");
+            valid = false;
+        }
+
+        EditText pn = (EditText) findViewById(R.id.PacakgeNo);
+        if(pn.getText().toString().isEmpty() || pn.getText().toString() == null)
+        {
+            pn.setError("Number of Packages be empty. Please enter Package Number");
+            valid = false;
+        }
+        if(pn.getText().toString().compareTo("0")==0)
+        {
+            pn.setError("Package Number cannot be 0. Please enter Package Number");
+            valid = false;
+        }
+
+       if( Congs.getText().toString().isEmpty() ||Congs.getText().toString() == null)
+       {
+           Congs.setError("Company details cannot be Empty. Please enter company details.");
+           valid = false;
+       }
+       else
+       {
+           String str = Congs.getText().toString();
+           boolean iswrongval = true;
+           ListAdapter adapter = Congs.getAdapter();
+           if(adapter instanceof CompADP)
+           {
+               CompADP cadp = (CompADP)adapter;
+               for(int i = 0; i < cadp .getCount(); i++) {
+
+                   if (str.compareTo(cadp.getItem(i).getCompanyName()) == 0) {
+                       iswrongval = false;
+                       break;
+                   }
+               }
+               if(iswrongval) {
+                   Congs.setError("Invalid Company");
+                   valid = false;
+               }
+
+           }
+       }
+
+        if( Congsinee.getText().toString().isEmpty() ||Congs.getText().toString() == null)
+        {
+            Congsinee.setError("Company details cannot be Empty. Please enter company details.");
+            valid = false;
+        }
+        else
+        {
+            String str = Congsinee.getText().toString();
+            boolean iswrongval = true;
+            ListAdapter adapter = Congsinee.getAdapter();
+            if(adapter instanceof CompADP) {
+                CompADP cadp = (CompADP) adapter;
+                for (int i = 0; i < cadp.getCount(); i++) {
+
+                    if (str.compareTo(cadp.getItem(i).getCompanyName()) == 0) {
+                        iswrongval = false;
+                        break;
+                    }
+                }
+                if (iswrongval) {
+                    Congsinee.setError("Invalid Company");
+                    valid = false;
+                }
+            }
+        }
+
+
+        if(flights.getText().toString().isEmpty() || flights.getText().toString() == null)
+        {
+
+        }
+        else {
+            ListAdapter adapter = flights.getAdapter();
+            boolean iswrongval = true;
+            if (adapter instanceof AirFlightADP) {
+                AirFlightADP cadp = (AirFlightADP) adapter;
+                for (int i = 0; i < cadp.getCount(); i++) {
+                    String flight = cadp.getItem(i).getFlightName() + " " + cadp.getItem(i).getFlightNumber() + " " + cadp.getItem(i).getDestCity();
+                    if (flights.getText().toString().compareTo(flight) == 0) {
+                        iswrongval = false;
+                        break;
+                    }
+                }
+
+                if (iswrongval) {
+                    flights.setError("Invalid Flight Detail ");
+                    valid = false;
+                }
+            }
+        }
+
+
+        return valid;
+    }
 
 
 }

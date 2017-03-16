@@ -54,6 +54,12 @@ public String imgPath;
         SMRepo.enqueue(cb);
     }
 
+    public void UpdateCNNNotes(Callback<CNNote> cb, CNNote cnNote){
+        IServiceHub sh = ServiceHub.createRetrofitService();
+        Call<CNNote> SMRepo = sh.UpdateCNNDetails(cnNote);
+        SMRepo.enqueue(cb);
+    }
+
     public CNNoteDetailsExt GetCNNoteDetailsExtSync(Context ctx,String CNN) throws Exception{
         Object[] obj = new Object[2];
         obj[0] = ctx;
@@ -130,6 +136,30 @@ public String imgPath;
 
     }
 
+    public List<CNNoteDetailsExt> GetListOfCNNoteDetailsExt(Context ctx,String MID) throws Exception {
+        Object[] obj = new Object[2];
+        obj[0] = ctx;
+        obj[1] =MID;
+        return  new CNNoteListDetailsAsyncTask().execute(obj).get();
+    }
+
+    public List<CNNoteDetailsExt> ListOfCNNoteDetailsExt(String MID) throws Exception {
+        IServiceHub sh = ServiceHub.createRetrofitService();
+
+        Call<List<CNNoteDetailsExt>> resp = sh.GetCNNoteDetailByManifestId(MID);
+
+        try{
+            List<CNNoteDetailsExt> result = resp.execute().body();
+            return  result;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex);
+        }
+
+
+    }
+
     public void GetCNNNotDetailsExt(String MID,Callback<List<CNNoteDetailsExt>> cb)
     {
         IServiceHub sh = ServiceHub.createRetrofitService();
@@ -139,8 +169,7 @@ public String imgPath;
 
     public void SaveCNNNotDetailsExt(String MID, final Context ctx)
     {
-            Callback<List<CNNoteDetailsExt>> cb;
-
+        Callback<List<CNNoteDetailsExt>> cb;
 
         cb= new Callback<List<CNNoteDetailsExt>>() {
                 @Override
@@ -148,34 +177,22 @@ public String imgPath;
                     CNNoteDetailsExtSQLHelper sq = new CNNoteDetailsExtSQLHelper(ctx);
                     sq.onCreate(sq.getWritableDatabase());
                     sq.DeleteAllCnNote(sq.getWritableDatabase());
-                    for (CNNoteDetailsExt tmp:response.body()
-                         ) {
-                      int res=  CNNoteDetailsExtSQLHelper.InsertCNNOteDetailsExt(sq.getWritableDatabase(),tmp);
+                    for (CNNoteDetailsExt tmp : response.body()) {
+                       int res=  CNNoteDetailsExtSQLHelper.InsertCNNOteDetailsExt(sq.getWritableDatabase(),tmp);
+                       try {
+                               Toast.makeText(ctx.getApplicationContext(),"CN Note Details inserted -" + res, Toast.LENGTH_LONG);
+                               new DownloadImageTask().execute(tmp.getCNNumber());
+                       }
+                       catch(Exception ex){
+                               Log.d("Error",ex.getMessage());
+                               String s = ex.getMessage();
+                               Toast.makeText(ctx,"CN Note Details inserted -" + res +", But Image is not saved.", Toast.LENGTH_LONG);
 
 
-try
-{
-    Toast.makeText(ctx.getApplicationContext(),"CN Note Details inserted -" + res, Toast.LENGTH_LONG);
-
-         new DownloadImageTask().execute(tmp.getCNNumber());
-
-
-
-
-
-
-
-}
-catch(Exception ex){
-    Log.d("Error",ex.getMessage());
-String s = ex.getMessage();
-    Toast.makeText(ctx,"CN Note Details inserted -" + res +", But Image is not saved.", Toast.LENGTH_LONG);
-
-
-}
+                       }
 
                     }
-                   //return true;
+
 
                 }
 

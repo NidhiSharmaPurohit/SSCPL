@@ -141,19 +141,7 @@
         android:textColor="#2f313c" />
     <View
         style="@style/Divider"></View>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:text="ActualWeight"
-        android:textSize="10sp"
-        android:textIsSelectable="true"
-        android:textColor="#929292" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:text="@{cn.ActualWeight}"
-        android:textSize="15sp"
-        android:textColor="#2f313c" />
-    <View
-        style="@style/Divider"></View>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content" android:text="ConsignmentWeight"
@@ -165,6 +153,23 @@
         android:layout_height="wrap_content" android:text="@{cn.ConsignmentWeight}"
         android:textSize="15sp"
         android:textColor="#2f313c" />
+
+    <View
+        style="@style/Divider"></View>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="Actual Weight"
+        android:textSize="10sp"
+        android:textIsSelectable="true"
+        android:textColor="#929292" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/txtActualWeight" android:text="@{cn.actualWeight}"
+        android:textSize="15sp"
+        android:textColor="#2f313c" android:inputType="numberDecimal"/>
+
+    <View
+        style="@style/Divider"></View>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content" android:text="MaterialDesc"
@@ -178,6 +183,28 @@
         android:textColor="#2f313c" />
     <View
         style="@style/Divider"></View>
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="Flight Details"
+        android:textSize="10sp"
+        android:textIsSelectable="true"
+        android:textColor="#929292" />
+    <AutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Flight Name Start with Airline Name"
+        android:id="@+id/CNNFlightDetail"
+        android:textSize="15sp"
+        android:textColor="#2f313c"
+        android:completionHintView="@layout/autocomp_item"
+        />
+
+    <View
+        style="@style/Divider"></View>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content" android:text="HandedBy"
@@ -209,6 +236,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content" android:text="@{cn.ReceivedBy}"
+        android:id="@+id/recbytxt"
         android:textSize="15sp"
         android:textColor="#2f313c" />
     <View
@@ -229,6 +257,42 @@
     android:layout_height="match_parent" android:text="Sign" android:id="@+id/btnRecBYSign" />
     <View
         style="@style/Divider"></View>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnCDNUpdate"
+        android:text="Update"/>
+
+    <View
+        style="@style/Divider"></View>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="Payment" android:id="@+id/btnCDNPayment" />
+    <View
+        style="@style/Divider"></View>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="Krishna" android:id="@+id/btnCDNKrishna" />
+    <View
+        style="@style/Divider"></View>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="PdfSave" android:id="@+id/btnPdfSave" />
+    <View
+        style="@style/Divider"></View>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="Sms" android:id="@+id/btnCDNSms" />
+    <View
+        style="@style/Divider"></View>
+
+
+
+
 
 </LinearLayout>
     </ScrollView>
