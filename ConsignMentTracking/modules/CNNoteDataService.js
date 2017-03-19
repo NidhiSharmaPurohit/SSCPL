@@ -2037,6 +2037,34 @@ exports.getPaymentDetailsForCnote = function(pool, _cnnumber, response)
   });
 };
 
+exports.updateManifestCNNOtes = function(pool, requestBody, response)
+{
+	
+	
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+        
+        connection.query("Update cnnote SET ActualWeight = " + requestBody.ActualWeight  + " and FlightId = " + requestBody.FlightId + " where CNNumber = '" + "requestBody.CNNumber" + "'" ,  function(err,resp){
+            connection.release();
+            if(!err) {
+            	response.json({"code" : 200, "status" : "CNNOteData Updated Successfully"});
+            }  
+            else
+            	{
+            	   console.log(err);
+            	   response.json({"code" : 101, "status" : "Error in Updating CNNOteData with Error " + err});
+            	 }
+            	
+        }); 
+  });
+};
+
 
 
 

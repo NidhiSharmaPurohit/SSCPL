@@ -61,6 +61,11 @@ app.put('/CNNotes', function(request, response) {
 app.post('/CNNotes', function(request, response) {
 	cnotedataservice.updateCNNOtes(pool, request.body, response);
 	});
+	
+
+app.post('/ManifestCNNotes', function(request, response) {
+	cnotedataservice.updateManifestCNNOtes(pool, request.body, response);
+	});	
 
 app.get('/CNNotes/:cnnumber', function(request, response) {
 	console.log(request.url + ' : querying for ' +
