@@ -58,7 +58,7 @@ exports.createCNNOtes = function(pool, requestBody, response)
 	pool.getConnection(function(err,connection){
         if (err) {
           connection.release();
-          response.json({"code" : 100, "status" : "Error in connection database"});
+          response.json({"code" : 100, "status" : "Error in connection database" , "CNNNumber" : requestBody.CNNumber });
           return;
         }  
 
@@ -68,7 +68,7 @@ exports.createCNNOtes = function(pool, requestBody, response)
             
             if(!err) {
             	connection.release();
-            	response.json({"code" : 200, "status" : "CNNOteData Created Successfully"});
+            	response.json({"code" : 200, "status" : "CNNOteData Created Successfully" , "CNNNumber" : requestBody.CNNumber });
             }  
             else
             	{
@@ -78,16 +78,16 @@ exports.createCNNOtes = function(pool, requestBody, response)
                     if(!error) {
                     	if(rows !==null && rows.length >= 1)
                     		{
-                    		 response.json({"code" : 102, "status" : "Duplicate CNNOTe Number. CNNOte Already Exits with Error " + err});
+                    		 response.json({"code" : 102, "status" : "Duplicate CNNOTe Number. CNNOte Already Exits with Error " + err , "CNNNumber" : requestBody.CNNumber});
                     		}
                     	else
                     		{
-                    		response.json({"code" : 101, "status" : "Error in creating CNNOteData with Error " + err});
+                    		response.json({"code" : 101, "status" : "Error in creating CNNOteData with Error " + err , "CNNNumber" : requestBody.CNNumber});
                     		}
                     }
                     else
                     	{
-                    	  response.json({"code" : 101, "status" : "Error in creating CNNOteData with Error " + err});
+                    	  response.json({"code" : 101, "status" : "Error in creating CNNOteData with Error " + err, "CNNNumber" : requestBody.CNNumber});
                     	}
                 });
             	
@@ -111,7 +111,7 @@ exports.updateCNNOtes = function(pool, requestBody, response)
 	pool.getConnection(function(err,connection){
         if (err) {
           connection.release();
-          response.json({"code" : 100, "status" : "Error in connection database"});
+          response.json({"code" : 100, "status" : "Error in connection database" , "CNNNumber" : requestBody.CNNumber});
           return;
         }  
 
@@ -120,10 +120,13 @@ exports.updateCNNOtes = function(pool, requestBody, response)
         connection.query("Update cnnote SET ? where CNNumber = ?", [cnote,requestBody.CNNumber], function(err,resp){
             connection.release();
             if(!err) {
-            	response.end('CNNOte Record Updated Successfully');
+            	response.json({"code" : 200, "status" : "CNNOteData Updated Successfully" , "CNNNumber" : requestBody.CNNumber});
             }  
             else
-            	{console.log(err);}
+            	{
+            	   console.log(err);
+            	   response.json({"code" : 101, "status" : "Error in Updating CNNOteData with Error " + err , "CNNNumber" : requestBody.CNNumber});
+            	 }
             	
         }); 
   });
@@ -2037,6 +2040,7 @@ exports.getPaymentDetailsForCnote = function(pool, _cnnumber, response)
   });
 };
 
+
 exports.updateManifestCNNOtes = function(pool, requestBody, response)
 {
 	
@@ -2044,29 +2048,26 @@ exports.updateManifestCNNOtes = function(pool, requestBody, response)
 	pool.getConnection(function(err,connection){
         if (err) {
           connection.release();
-          response.json({"code" : 100, "status" : "Error in connection database"});
+          response.json({"code" : 100, "status" : "Error in connection database" , "CNNNumber" : requestBody.CNNumber});
           return;
         }  
 
         console.log('connected as id ' + connection.threadId);
         
-        connection.query("Update cnnote SET ActualWeight = " + requestBody.ActualWeight  + " and FlightId = " + requestBody.FlightId + " where CNNumber = '" + "requestBody.CNNumber" + "'" ,  function(err,resp){
+        connection.query("Update cnnote SET ActualWeight = " + requestBody.ActualWeight  + " ,FlightId = " + requestBody.FlightId + " where CNNumber = '" + requestBody.CNNumber + "'" ,  function(err,resp){
             connection.release();
             if(!err) {
-            	response.json({"code" : 200, "status" : "CNNOteData Updated Successfully"});
+            	response.json({"code" : 200, "status" : "CNNOteData Updated Successfully" , "CNNNumber" : requestBody.CNNumber});
             }  
             else
             	{
             	   console.log(err);
-            	   response.json({"code" : 101, "status" : "Error in Updating CNNOteData with Error " + err});
+            	   response.json({"code" : 101, "status" : "Error in Updating CNNOteData with Error " + err , "CNNNumber" : requestBody.CNNumber});
             	 }
             	
         }); 
   });
 };
-
-
-
 
 
 
