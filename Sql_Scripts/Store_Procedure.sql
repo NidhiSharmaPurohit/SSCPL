@@ -527,6 +527,8 @@ left join centermaster cm on cm.centerid = fn.centerid
 left join city dc on dc.cityid = fn.DestCityID
 where fn.FlightId = flightId And fn.CenterId = centerid;
 
+END
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMixedBagManifestItemDetailForManifest`(in ManifestId varchar(50))
 BEGIN
   
@@ -549,4 +551,3 @@ left join transportmode tm on tm.ModelId = cn.ModeID where mi.ManifestId = Manif
 END
 
 
-END

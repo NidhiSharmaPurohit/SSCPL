@@ -27,6 +27,8 @@ CREATE TABLE `city` (
   `CityId` int(11) NOT NULL AUTO_INCREMENT,
   `CityName` varchar(200) DEFAULT NULL,
   `CityCode` varchar(8) DEFAULT NULL,
+  `State` varchar(50) DEFAULT NULL,
+  `StateCode` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`CityId`),
   UNIQUE KEY `CityName` (`CityName`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
@@ -84,6 +86,8 @@ CREATE TABLE `company` (
   `CompanyEmailId` varchar(100) DEFAULT NULL,
   `CompanyPrimaryContactNumber` varchar(20) DEFAULT NULL,
   `CompanySecondaryContactNumber` varchar(20) DEFAULT NULL,
+   `CityId` int(11) DEFAULT NULL,
+   'PINCode' varchar(25),
   PRIMARY KEY (`CompanyId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
