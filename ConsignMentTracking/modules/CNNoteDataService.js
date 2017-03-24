@@ -704,7 +704,7 @@ exports.deletebyCityId = function(pool, _cityId, response)
 exports.createCity = function(pool, requestbody, response)
 {
 
-	var city = {CityName: requestbody.CityName, CityCode: requestbody.CityCode };
+	var city = {CityName: requestbody.CityName, CityCode: requestbody.CityCode, State: requestbody.State, StateCode: requestbody.StateCode };
 	
 	pool.getConnection(function(err,connection){
         if (err) {
@@ -734,7 +734,7 @@ exports.createCity = function(pool, requestbody, response)
 exports.updateCity = function(pool, requestbody, response)
 {
 
-	var city = {CityId: requestbody.CityId, CityName: requestbody.CityName, CityCode: requestbody.CityCode };
+	var city = {CityId: requestbody.CityId, CityName: requestbody.CityName, CityCode: requestbody.CityCode, State: requestbody.State, StateCode: requestbody.StateCode };
 	
 	pool.getConnection(function(err,connection){
         if (err) {
@@ -1159,7 +1159,8 @@ exports.createCompany = function(pool, requestbody, response)
 	var company = {
 			CompanyName: requestbody.CompanyName , CompanyAddress: requestbody.CompanyAddress ,CompanyCity: requestbody.CompanyCity,
 			CompanyState: requestbody.CompanyState, CompanyCCode: requestbody.CompanyCCode, CompanyContactPerson: requestbody.CompanyContactPerson, 
-			CompanyEmailId: requestbody.CompanyEmailId, CompanyPrimaryContactNumber: requestbody.CompanyPrimaryContactNumber, CompanySecondaryContactNumber: requestbody.CompanySecondaryContactNumber           	
+			CompanyEmailId: requestbody.CompanyEmailId, CompanyPrimaryContactNumber: requestbody.CompanyPrimaryContactNumber, CompanySecondaryContactNumber: requestbody.CompanySecondaryContactNumber,
+			CityId: requestbody.CityId
 	};
 	
 	pool.getConnection(function(err,connection){
@@ -1193,7 +1194,8 @@ exports.updateCompany = function(pool, requestbody, response)
 	var company = {
 			CompanyName: requestbody.CompanyName , CompanyAddress: requestbody.CompanyAddress ,CompanyCity: requestbody.CompanyCity,
 			CompanyState: requestbody.CompanyState, CompanyCCode: requestbody.CompanyCCode, CompanyContactPerson: requestbody.CompanyContactPerson, 
-			CompanyEmailId: requestbody.CompanyEmailId, CompanyPrimaryContactNumber: requestbody.CompanyPrimaryContactNumber, CompanySecondaryContactNumber: requestbody.CompanySecondaryContactNumber           	
+			CompanyEmailId: requestbody.CompanyEmailId, CompanyPrimaryContactNumber: requestbody.CompanyPrimaryContactNumber, CompanySecondaryContactNumber: requestbody.CompanySecondaryContactNumber,
+			CityId: requestbody.CityId
 	};
 	
 	pool.getConnection(function(err,connection){
