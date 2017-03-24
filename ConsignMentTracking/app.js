@@ -61,11 +61,11 @@ app.put('/CNNotes', function(request, response) {
 app.post('/CNNotes', function(request, response) {
 	cnotedataservice.updateCNNOtes(pool, request.body, response);
 	});
-	
+
 
 app.post('/ManifestCNNotes', function(request, response) {
 	cnotedataservice.updateManifestCNNOtes(pool, request.body, response);
-	});	
+	});
 
 app.get('/CNNotes/:cnnumber', function(request, response) {
 	console.log(request.url + ' : querying for ' +
@@ -287,6 +287,26 @@ app.put('/GetCNNotesDetailsForManifest', function(request, response) {
 	
 	cnotedataservice.listCNNotesDetailsForManifestWithMultipleCityInDateRange(pool, request.body , response);
 	});
+
+app.get("/States", function(request, response) {
+	cnotedataservice.listState(pool, request, response);
+});
+
+app.put("/States", function(request, response) {
+	cnotedataservice.createState(pool, request, response);
+});
+
+app.post("/States", function(request, response) {
+	cnotedataservice.updateState(pool, request, response);
+});
+
+app.get('/States/:Name', function(request, response) {
+	cnotedataservice.getStatebyName(pool, request.params.Name, response);
+});
+
+app.del('/States/:Name', function(request, response) {
+	cnotedataservice.deletStatebyName(pool, request.params.Name, response);
+});
 
 app.get("/City", function(request, response) {
 	cnotedataservice.listCity(pool,request, response);
@@ -1066,7 +1086,6 @@ app.get('/GetAirFlightByCenterIdandFlightId', function(request, response) {
 app.del('/AirFlight/:FlightId', function(request, response) {
 	vehicledataservice.DeleteAirFlight(pool, request.params.FlightId, response);
 	});
-	
 
 app.put('/MixedBagManifestItem', function(request, response) {
 	manifestdataservice.createMixedBagManifestItem(pool, request.body, response);
@@ -1101,7 +1120,9 @@ app.del('/MixedBagManifestItem/:ManifestId', function(request, response) {
 app.del('/MixedBagManifestItem/DeleteOlderDate/:Date', function(request, response) {
 
 	manifestdataservice.DeleteMixedBagOlderManifestItemOfDate(pool,request.params.Date, response);
-});	
+});
+
+
 
 app.del('/uploadCNNOtesSignImage/:file', function(req, res) {
 	console.log('delete');
@@ -1153,6 +1174,8 @@ app.get('/uploadCNNOtesSignImage/:file', function (req, res){
       res.writeHead(200, {'Content-Type': 'image/jpg' });
       res.end(img, 'binary');
 });
+
+
  
 
 http.createServer(app).listen(app.get('port'), function(){

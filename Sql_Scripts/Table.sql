@@ -365,3 +365,10 @@ CREATE TABLE `mixedbagmanifestitems` (
   CONSTRAINT `MBagCNNote_CNNumber_fk` FOREIGN KEY (`CNoteNo`) REFERENCES `cnnote` (`CNNumber`),
   CONSTRAINT `MBagManifest_ManifestId_fk` FOREIGN KEY (`ManifestId`) REFERENCES `manifest` (`ManifestId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+
+ CREATE TABLE `states` (
+  `State` varchar(60) NOT NULL,
+  `StateCode` varchar(40) DEFAULT NULL,
+  PRIMARY KEY (`State`),
+  UNIQUE KEY `State` (`State`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

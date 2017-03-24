@@ -2073,6 +2073,126 @@ exports.updateManifestCNNOtes = function(pool, requestBody, response)
 
 
 
+exports.listState = function(pool, request, response)
+{
+
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+       
+        connection.query("select * from states",function(err,rows){
+            connection.release();
+            if(!err) {
+            	response.json(rows);
+            }          
+        });       
+  });
+};
+
+exports.getStatebyName = function(pool, _Name, response)
+{
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+       
+        connection.query("select * from states where State = '" + _Name + "'" ,function(err,rows){
+            connection.release();
+            if(!err) {
+            	response.json(rows);
+            }          
+        });       
+  });
+};
+
+exports.deletStatebyName = function(pool, _Name, response)
+{
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+       
+        connection.query("delete from states where State = '" + _Name + "'" ,function(err,rows){
+            connection.release();
+            if(!err) {
+            	response.json(rows);
+            }          
+        });       
+  });
+};
+
+exports.createState = function(pool, requestbody, response)
+{
+
+	var state = {State: requestbody.State, StateCode: requestbody.StateCode };
+	
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+       
+        connection.query("insert into states SET ?", state, function(err,resp){
+            connection.release();
+            if(!err) {
+            	response.end('state Record Inserted Successfully');
+            }  
+            else
+            	{
+            	response.json({"code" : 101, "status" : " Error in  creating state " + err});
+            	console.log(err);
+            	}
+            	
+        }); 
+  });
+	
+};
+
+exports.updateState = function(pool, requestbody, response)
+{
+
+	var state = {State: requestbody.State, StateCode: requestbody.StateCode };
+	
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+        
+        connection.query("Update states SET ? where State = ?", [state,requestbody.State] , function(err,resp){
+            connection.release();
+            if(!err) {
+            	response.end('State Record Inserted Successfully');
+            }  
+            else
+            	{
+            	response.json({"code" : 101, "status" : " Error in  updating State " + err});
+            	console.log(err);
+            	}
+            	
+        }); 
+  });
+	
+};
 
 
 
