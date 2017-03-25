@@ -1153,6 +1153,26 @@ exports.getCompanyById = function(pool, _CompId, response)
   });
 };
 
+exports.deleteCompanyById = function(pool, _CompId, response)
+{
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+       
+        connection.query("delete from company where CompanyId = " + _CompId ,function(err,rows){
+            connection.release();
+            if(!err) {
+            	response.json({"code" : 200, "status" : "Successfully deleted a Company Record"});
+            }          
+        });       
+  });
+};
+
 exports.createCompany = function(pool, requestbody, response)
 {
 
@@ -1160,7 +1180,7 @@ exports.createCompany = function(pool, requestbody, response)
 			CompanyName: requestbody.CompanyName , CompanyAddress: requestbody.CompanyAddress ,CompanyCity: requestbody.CompanyCity,
 			CompanyState: requestbody.CompanyState, CompanyCCode: requestbody.CompanyCCode, CompanyContactPerson: requestbody.CompanyContactPerson, 
 			CompanyEmailId: requestbody.CompanyEmailId, CompanyPrimaryContactNumber: requestbody.CompanyPrimaryContactNumber, CompanySecondaryContactNumber: requestbody.CompanySecondaryContactNumber,
-			CityId: requestbody.CityId
+			CityId: requestbody.CityId, PINCode: requestbody.PINCode
 	};
 	
 	pool.getConnection(function(err,connection){
@@ -1175,7 +1195,8 @@ exports.createCompany = function(pool, requestbody, response)
         connection.query("insert into company SET ?", company, function(err,resp){
             connection.release();
             if(!err) {
-            	response.end('company Record Inserted Successfully');
+            	response.json({"code" : 200, "status" : "company Record Inserted Successfully"});
+            	
             }  
             else
             	{
@@ -1195,7 +1216,7 @@ exports.updateCompany = function(pool, requestbody, response)
 			CompanyName: requestbody.CompanyName , CompanyAddress: requestbody.CompanyAddress ,CompanyCity: requestbody.CompanyCity,
 			CompanyState: requestbody.CompanyState, CompanyCCode: requestbody.CompanyCCode, CompanyContactPerson: requestbody.CompanyContactPerson, 
 			CompanyEmailId: requestbody.CompanyEmailId, CompanyPrimaryContactNumber: requestbody.CompanyPrimaryContactNumber, CompanySecondaryContactNumber: requestbody.CompanySecondaryContactNumber,
-			CityId: requestbody.CityId
+			CityId: requestbody.CityId, PINCode: requestbody.PINCode
 	};
 	
 	pool.getConnection(function(err,connection){
@@ -1210,7 +1231,8 @@ exports.updateCompany = function(pool, requestbody, response)
         connection.query("Update company SET ? where CompanyId = ?", [company,requestbody.CompanyId], function(err,resp){
             connection.release();
             if(!err) {
-            	response.end('company Record Updated Successfully');
+            	response.json({"code" : 200, "status" : "company Record Updated Successfully"});
+            	
             }  
             else
             	{

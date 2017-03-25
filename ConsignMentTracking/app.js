@@ -293,11 +293,11 @@ app.get("/States", function(request, response) {
 });
 
 app.put("/States", function(request, response) {
-	cnotedataservice.createState(pool, request, response);
+	cnotedataservice.createState(pool, request.body, response);
 });
 
 app.post("/States", function(request, response) {
-	cnotedataservice.updateState(pool, request, response);
+	cnotedataservice.updateState(pool, request.body, response);
 });
 
 app.get('/States/:Name', function(request, response) {
@@ -414,7 +414,9 @@ app.get('/Company/:CompanyId', function(request, response) {
 	cnotedataservice.getCompanyById(pool,request.params.CompanyId, response);
 	});
 
-
+app.del('/Company/:CompanyId', function(request, response){
+	cnotedataservice.deleteCompanyById(pool,request.params.CompanyId, response);
+});
 
 app.get("/SmartMeeting", function(request, response) {
 	cnotedataservice.listSmartMeeting(pool,request, response);
