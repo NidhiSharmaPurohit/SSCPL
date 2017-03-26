@@ -297,7 +297,7 @@ exports.DeleteAirFlight = function(pool, _FlightId, response)
         connection.query("delete  from airflights where FlightId = " + _FlightId ,function(err,rows){
             connection.release();
             if(!err) {
-            	response.json(rows);
+            	response.json({"code" : 200, "status" : " flight record deleted Successfully "});
             }          
         });       
   });
