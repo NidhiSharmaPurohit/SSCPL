@@ -259,7 +259,7 @@ CREATE TABLE `paymentinvoice` (
 
 CREATE TABLE `rate` (
   `RateId` int(11) NOT NULL AUTO_INCREMENT,
-  `CompanyId` int(11) DEFAULT NULL,
+  `CompanyId` int(11) DEFAULT '0',
   `CenterId` int(11) DEFAULT NULL,
   `Rate` double NOT NULL,
   `KG` int(11) NOT NULL,
@@ -267,6 +267,7 @@ CREATE TABLE `rate` (
   `ModeID` int(11) NOT NULL,
   `SourceCityID` int(11) NOT NULL,
   `DestCityID` int(11) NOT NULL,
+  `FlightId` int(11) DEFAULT '0',
   PRIMARY KEY (`RateId`),
   KEY `companyy_CompId_fk` (`CompanyId`),
   KEY `CentreR_CentreId_fk` (`CenterId`),
@@ -274,11 +275,10 @@ CREATE TABLE `rate` (
   KEY `city_SCityId_fk` (`SourceCityID`),
   KEY `city_DCityIdDest_fk` (`DestCityID`),
   CONSTRAINT `CentreR_CentreId_fk` FOREIGN KEY (`CenterId`) REFERENCES `centermaster` (`CenterId`),
-  CONSTRAINT `companyy_CompId_fk` FOREIGN KEY (`CompanyId`) REFERENCES `company` (`CompanyId`),
-  CONSTRAINT `transportmodeR_ModelId_fk` FOREIGN KEY (`ModeID`) REFERENCES `transportmode` (`ModelId`),
   CONSTRAINT `city_DCityIdDest_fk` FOREIGN KEY (`DestCityID`) REFERENCES `city` (`CityId`),
-  CONSTRAINT `city_SCityId_fk` FOREIGN KEY (`SourceCityID`) REFERENCES `city` (`CityId`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+  CONSTRAINT `city_SCityId_fk` FOREIGN KEY (`SourceCityID`) REFERENCES `city` (`CityId`),
+  CONSTRAINT `transportmodeR_ModelId_fk` FOREIGN KEY (`ModeID`) REFERENCES `transportmode` (`ModelId`)
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `smartmeeting` (
   `Nam` varchar(50) DEFAULT NULL,
