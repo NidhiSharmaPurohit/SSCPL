@@ -179,12 +179,12 @@ exports.createAirFlight = function(pool, requestbody, response)
 exports.updateAirFlight = function(pool, requestbody, response)
 {
 
-	var flight = {
-			FlightId: requestbody.FlightId, CompanyId: requestbody.CompanyId , CenterId: requestbody.CenterId ,Rate: requestbody.Rate,
-			KG: requestbody.KG, Statuss: requestbody.Statuss, DestCityID: requestbody.DestCityID,
-			FlightName: requestbody.FlightName, FlightNumber: requestbody.FlightNumber
-			        	
-	};
+	var flight = {			
+	FlightId: requestbody.FlightId, CenterId: requestbody.CenterId ,DestCityID: requestbody.DestCityID,
+	FlightName: requestbody.FlightName, FlightNumber: requestbody.FlightNumber
+	        	
+};
+
 	
 	pool.getConnection(function(err,connection){
         if (err) {
