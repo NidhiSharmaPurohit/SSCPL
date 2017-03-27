@@ -7,7 +7,8 @@ exports.createRate = function(pool, requestbody, response)
 
 	var rate = {
 			CompanyId: requestbody.CompanyId , CenterId: requestbody.CenterId ,Rate: requestbody.Rate,
-			KG: requestbody.KG, Statuss: requestbody.Statuss, ModeID: requestbody.ModeID
+			KG: requestbody.KG, Statuss: requestbody.Statuss, ModeID: requestbody.ModeID, 
+			SourceCityID: requestbody.SourceCityID, DestCityID: requestbody.DestCityID, FlightId: requestbody.FlightId
 			        	
 	};
 	
@@ -23,7 +24,8 @@ exports.createRate = function(pool, requestbody, response)
         connection.query("insert into Rate SET ?", rate, function(err,resp){
             connection.release();
             if(!err) {
-            	response.end('Rate Record Inserted Successfully');
+            	response.json({"code" : 200, "status" : " Rate Record Inserted Successfully "});
+            	
             }  
             else
             	{
@@ -41,7 +43,8 @@ exports.updateRate = function(pool, requestbody, response)
 
 	var rate = {
 			RateId: requestbody.RateId, CompanyId: requestbody.CompanyId , CenterId: requestbody.CenterId ,Rate: requestbody.Rate,
-			KG: requestbody.KG, Statuss: requestbody.Statuss, ModeID: requestbody.ModeID
+			KG: requestbody.KG, Statuss: requestbody.Statuss, ModeID: requestbody.ModeID,
+			SourceCityID: requestbody.SourceCityID, DestCityID: requestbody.DestCityID, FlightId: requestbody.FlightId
 			        	
 	};
 	
@@ -57,7 +60,8 @@ exports.updateRate = function(pool, requestbody, response)
         connection.query("Update Rate SET ? where RateId = ?", [rate, requestbody.RateId], function(err,resp){
             connection.release();
             if(!err) {
-            	response.end('Rate Record Updated Successfully');
+            	response.json({"code" : 200, "status" : " Rate Record Updated Successfully "});
+            	
             }  
             else
             	{
@@ -166,11 +170,14 @@ exports.DeleteRate = function(pool, _RateId, response)
         connection.query("delete  from Rate where RateId = " + _RateId ,function(err,rows){
             connection.release();
             if(!err) {
-            	response.json(rows);
+            	response.json({"code" : 100, "status" : "Rate Record Deleted Successfully"});
             }          
         });       
   });
 };
+
+
+
 
 
 exports.createInvoice = function(pool, requestbody, response)
