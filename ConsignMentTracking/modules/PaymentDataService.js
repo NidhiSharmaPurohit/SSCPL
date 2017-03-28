@@ -170,7 +170,7 @@ exports.DeleteRate = function(pool, _RateId, response)
         connection.query("delete  from Rate where RateId = " + _RateId ,function(err,rows){
             connection.release();
             if(!err) {
-            	response.json({"code" : 100, "status" : "Rate Record Deleted Successfully"});
+            	response.json({"code" : 200, "status" : "Rate Record Deleted Successfully"});
             }          
         });       
   });
@@ -474,7 +474,8 @@ exports.createTax = function(pool, requestbody, response)
         connection.query("insert into tax SET ?", tax, function(err,resp){
             connection.release();
             if(!err) {
-            	response.end('Rate Record Inserted Successfully');
+            	response.json({"code" : 200, "status" : "Rate Record Inserted Successfully"});
+            	
             }  
             else
             	{
@@ -509,7 +510,8 @@ exports.updateTax = function(pool, requestbody, response)
         connection.query("Update tax SET ? where TaxId = ?", [tax, requestbody.TaxId], function(err,resp){
             connection.release();
             if(!err) {
-            	response.end('Tax Record Updated Successfully');
+            	response.json({"code" : 200, "status" : "ax Record Updated Successfully"});
+            	
             }  
             else
             	{
@@ -618,7 +620,7 @@ exports.DeleteTax = function(pool, _TaxId, response)
         connection.query("delete  from Tax where TaxId = " + _TaxId ,function(err,rows){
             connection.release();
             if(!err) {
-            	response.json(rows);
+            	response.json({"code" : 200, "status" : "Tax Record Deleted Successfully"});
             }          
         });       
   });
