@@ -1923,9 +1923,9 @@ exports.getPaymentDetailsWithTaxForCnote = function(pool, _cnnumber, response)
             	if(rows[0] !== null && rows[0].length > 0)
         		{
             		
-        		       connection.query("select * from rate where CompanyId = " + rows[0][0].ShipperCompId + " OR CompanyId = 0 " +  " AND  ModeID = " + rows[0][0].ModeID + 
+        		       connection.query("select * from rate where (CompanyId = " + rows[0][0].ShipperCompId + " OR CompanyId = 0 ) " +  " AND  ModeID = " + rows[0][0].ModeID + 
 					   " AND SourceCityID = " + rows[0][0].OriginCityID + " AND DestCityID = " + rows[0][0].DestCityID + " AND CenterID = " + rows[0][0].CenterID + 
-					   " AND FlightId = " + rows[0][0].FlightId + " OR FlightId = 0 ",
+					   " AND (FlightId = " + rows[0][0].FlightId + " OR FlightId = 0 )",
 					   
 					   function(error,result){
                        
@@ -2121,9 +2121,9 @@ exports.getPaymentDetailsForCnote = function(pool, _cnnumber, response)
             if(!err) {
             	if(rows[0] !== null && rows[0].length > 0)
         		{
-        		       connection.query("select * from rate where CompanyId = " + rows[0][0].ShipperCompId + " OR CompanyId = 0 " + " AND  ModeID = " + rows[0][0].ModeID + 
+        		       connection.query("select * from rate where (CompanyId = " + rows[0][0].ShipperCompId + " OR CompanyId = 0 ) " + " AND  ModeID = " + rows[0][0].ModeID + 
 					   " AND SourceCityID = " + rows[0][0].OriginCityID + " AND DestCityID = " + rows[0][0].DestCityID + " AND CenterID = " + rows[0][0].CenterID +
-					   " AND FlightId = " + rows[0][0].FlightId + " OR FlightId = 0 ",
+					   " AND (FlightId = " + rows[0][0].FlightId + " OR FlightId = 0 )",
 					   
 					   function(error,result){
                        
