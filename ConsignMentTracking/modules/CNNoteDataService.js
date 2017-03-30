@@ -1923,15 +1923,120 @@ exports.getPaymentDetailsWithTaxForCnote = function(pool, _cnnumber, response)
             	if(rows[0] !== null && rows[0].length > 0)
         		{
             		
-        		       connection.query("select * from rate where CompanyId = " + rows[0][0].ShipperCompId +  " AND  ModeID = " + rows[0][0].ModeID + 
-					   " AND SourceCityID = " + rows[0][0].OriginCityID + " AND DestCityID = " + rows[0][0].DestCityID + " AND CenterID = " + rows[0][0].CenterID,
+        		       connection.query("select * from rate where CompanyId = " + rows[0][0].ShipperCompId + " OR CompanyId = 0 " +  " AND  ModeID = " + rows[0][0].ModeID + 
+					   " AND SourceCityID = " + rows[0][0].OriginCityID + " AND DestCityID = " + rows[0][0].DestCityID + " AND CenterID = " + rows[0][0].CenterID + 
+					   " AND FlightId = " + rows[0][0].FlightId + " OR FlightId = 0 ",
 					   
 					   function(error,result){
                        
                        if(!error){
-            	                      rows[0][0].RatePerKG = result[0].Rate;
-            	                      rows[0][0].RateId = result[0].RateId;
-									  rows[0][0].Amount = rows[0][0].ConsignmentWeight * result[0].Rate ;
+                    	             if(result !==null && result.length >0)
+                    	            	 {
+                    	            	   if(result.length === 1)
+                    	            		   {
+            	                                 rows[0][0].RatePerKG = result[0].Rate;
+            	                                 rows[0][0].RateId = result[0].RateId;
+									                             rows[0][0].Amount = rows[0][0].ConsignmentWeight * result[0].Rate ;
+                    	            		   }
+                    	            	   else{
+                    	            		   var minrate = 0;
+                    	            		   var minrateid = 0;
+                    	            		   var fullmatch = false;
+                    	            		   var fullmatchrate = 0;
+                    	            		   var fullmatchrateid =0;
+                    	            		   var flightmatch = false;
+                    	            		   var flightmatchrate = 0;
+                    	            		   var flightmatchrateid = 0;
+                    	            		   var companymatch = false;
+                    	            		   var companymatchrate = 0;
+                    	            		   var companymatchrateid = 0;
+                    	            		   var i =0;
+                    	            		   var j =0;
+                    	            		   var found = false;
+                    	            		   for(i=0; i<result.length;i++){
+                    	            			   if(result[i].CompanyId === rows[0][0].ShipperCompId && result[i].FlightId === rows[0][0].FlightId )
+                    	            				   {
+                    	            				    //rows[0][0].RatePerKG = result[i].Rate;
+                  	                                    //rows[0][0].RateId = result[i].RateId;
+      									                //rows[0][0].Amount = rows[0][0].ConsignmentWeight * result[i].Rate ;
+                    	            				   fullmatch = true;
+                    	            				   fullmatchrate = result[i].Rate;
+                    	            				   fullmatchrateid = result[i].RateId; 
+                    	            				   break;
+                    	            				   }
+                    	            			   else if(result[i].FlightId === rows[0][0].FlightId && rows[0][0].FlightId !==0)
+                    	            				   {
+                    	            				     flightmatch = true;
+                    	            				     flightmatchrate = result[i].Rate;
+                    	            				     flightmatchrateid = result[i].RateId; 
+                    	            				   }
+                    	            			   else if(result[i].CompanyId === rows[0][0].ShipperCompId && result[i].CompanyId !==0)
+                    	            				   {
+                    	            				   companymatch = true;
+                    	            				   companymatchrate = result[i].Rate;
+                    	            				   companymatchrateid = result[i].RateId; 
+                    	            				   }
+                    	            			   else
+                    	            				   {
+                    	            				   
+                    	            				   }
+                    	            		   }
+                    	            		   
+                    	            		   if(fullmatch === false && flightmatch === false && companymatch === false)
+                    	            			   {
+                    	            			      var count = 0;
+                    	            			      for(j=0; j<result.length;j++){
+                    	            			    	  if(count ===0){
+                    	            			    		  minrate = result[j].Rate;
+                    	            			    		  minrateid = result[i].RateId; 
+                    	            			    		  count = count + 1;
+                    	            			    	  }
+                    	            			    	  if(minrate > result[j].Rate){
+                    	            			    		  minrate = result[j].Rate;
+                    	            			    		  minrateid = result[i].RateId; 
+                    	            			    		  count = count + 1; 
+                    	            			    	  }
+                    	            			      }
+                    	            			      
+                    	            			   }
+                    	            		   if(fullmatch === true)
+                    	            			   {
+                    	            			   rows[0][0].RatePerKG = fullmatchrate;
+                                                   rows[0][0].RateId = fullmatchrateid;
+                  					               rows[0][0].Amount = rows[0][0].ConsignmentWeight * rows[0][0].RatePerKG ;
+                  					               found = true;
+                    	            			   }
+                    	            		   else if(flightmatch === true)
+                    	            		   {
+                    	            			   rows[0][0].RatePerKG = flightmatchrate;
+                                                   rows[0][0].RateId = flightmatchrateid;
+                  					               rows[0][0].Amount = rows[0][0].ConsignmentWeight * rows[0][0].RatePerKG ;
+                  					               found = true;
+                    	            		   }
+                    	            		   else if(companymatch === true)
+                    	            			   {
+                    	            			   rows[0][0].RatePerKG = companymatchrate;
+                                                   rows[0][0].RateId = companymatchrateid;
+                  					               rows[0][0].Amount = rows[0][0].ConsignmentWeight * rows[0][0].RatePerKG ;
+                  					               found = true;
+                    	            			   }
+                    	            		   else
+                    	            			   {
+                    	            			      if(minrate !==0)
+                    	            			    	  {
+                    	            			    	   rows[0][0].RatePerKG = minrate;
+                                                           rows[0][0].RateId = minrateid;
+                         					               rows[0][0].Amount = rows[0][0].ConsignmentWeight * rows[0][0].RatePerKG ;
+                         					               found = true;
+                    	            			    	  }
+                    	            			   }
+                    	            		   if(found === false){
+                        	            			 rows[0][0].RatePerKG = result[0].Rate;
+                                                     rows[0][0].RateId = result[0].RateId;
+                  					                 rows[0][0].Amount = rows[0][0].ConsignmentWeight * rows[0][0].RatePerKG ;
+                        	            		   }
+                    	            	   }
+                    	            	 }
 									  
 									  connection.query("select * from tax ", function(exc,taxresult){
 										  if(!exc)
@@ -2016,15 +2121,121 @@ exports.getPaymentDetailsForCnote = function(pool, _cnnumber, response)
             if(!err) {
             	if(rows[0] !== null && rows[0].length > 0)
         		{
-        		       connection.query("select * from rate where CompanyId = " + rows[0][0].ShipperCompId +  " AND  ModeID = " + rows[0][0].ModeID + 
-					   " AND SourceCityID = " + rows[0][0].OriginCityID + " AND DestCityID = " + rows[0][0].DestCityID + " AND CenterID = " + rows[0][0].CenterID,
+        		       connection.query("select * from rate where CompanyId = " + rows[0][0].ShipperCompId + " OR CompanyId = 0 " + " AND  ModeID = " + rows[0][0].ModeID + 
+					   " AND SourceCityID = " + rows[0][0].OriginCityID + " AND DestCityID = " + rows[0][0].DestCityID + " AND CenterID = " + rows[0][0].CenterID +
+					   " AND FlightId = " + rows[0][0].FlightId + " OR FlightId = 0 ",
 					   
 					   function(error,result){
                        
                        if(!error){
-            	                      rows[0][0].RatePerKG = result[0].Rate;
-            	                      rows[0][0].RateId = result[0].RateId;
-									  rows[0][0].Amount = rows[0][0].ConsignmentWeight * result[0].Rate ;
+                    	   
+                    	   if(result !==null && result.length >0)
+      	            	 {
+      	            	   if(result.length === 1)
+      	            		   {
+	                                 rows[0][0].RatePerKG = result[0].Rate;
+	                                 rows[0][0].RateId = result[0].RateId;
+						                       rows[0][0].Amount = rows[0][0].ConsignmentWeight * result[0].Rate ;
+      	            		   }
+      	            	   else{
+      	            		   var minrate = 0;
+      	            		   var minrateid = 0;
+      	            		   var fullmatch = false;
+      	            		   var fullmatchrate = 0;
+      	            		   var fullmatchrateid =0;
+      	            		   var flightmatch = false;
+      	            		   var flightmatchrate = 0;
+      	            		   var flightmatchrateid = 0;
+      	            		   var companymatch = false;
+      	            		   var companymatchrate = 0;
+      	            		   var companymatchrateid = 0;
+      	            		   var i =0;
+      	            		   var j =0;
+      	            		   var found = false;
+      	            		   for(i=0; i<result.length;i++){
+      	            			   if(result[i].CompanyId === rows[0][0].ShipperCompId && result[i].FlightId === rows[0][0].FlightId )
+      	            				   {
+      	            				    //rows[0][0].RatePerKG = result[i].Rate;
+    	                                    //rows[0][0].RateId = result[i].RateId;
+							                //rows[0][0].Amount = rows[0][0].ConsignmentWeight * result[i].Rate ;
+      	            				   fullmatch = true;
+      	            				   fullmatchrate = result[i].Rate;
+      	            				   fullmatchrateid = result[i].RateId; 
+      	            				   break;
+      	            				   }
+      	            			   else if(result[i].FlightId === rows[0][0].FlightId && rows[0][0].FlightId !==0)
+      	            				   {
+      	            				     flightmatch = true;
+      	            				     flightmatchrate = result[i].Rate;
+      	            				     flightmatchrateid = result[i].RateId; 
+      	            				   }
+      	            			   else if(result[i].CompanyId === rows[0][0].ShipperCompId && result[i].CompanyId !==0)
+      	            				   {
+      	            				   companymatch = true;
+      	            				   companymatchrate = result[i].Rate;
+      	            				   companymatchrateid = result[i].RateId; 
+      	            				   }
+      	            			   else
+      	            				   {
+      	            				   
+      	            				   }
+      	            		   }
+      	            		   
+      	            		   if(fullmatch === false && flightmatch === false && companymatch === false)
+      	            			   {
+      	            			      var count = 0;
+      	            			      for(j=0; j<result.length;j++){
+      	            			    	  if(count ===0){
+      	            			    		  minrate = result[j].Rate;
+      	            			    		  minrateid = result[i].RateId; 
+      	            			    		  count = count + 1;
+      	            			    	  }
+      	            			    	  if(minrate > result[j].Rate){
+      	            			    		  minrate = result[j].Rate;
+      	            			    		  minrateid = result[i].RateId; 
+      	            			    		  count = count + 1; 
+      	            			    	  }
+      	            			      }
+      	            			      
+      	            			   }
+      	            		   if(fullmatch === true)
+      	            			   {
+      	            			   rows[0][0].RatePerKG = fullmatchrate;
+                                     rows[0][0].RateId = fullmatchrateid;
+    					               rows[0][0].Amount = rows[0][0].ConsignmentWeight * rows[0][0].RatePerKG ;
+    					               found = true;
+      	            			   }
+      	            		   else if(flightmatch === true)
+      	            		   {
+      	            			   rows[0][0].RatePerKG = flightmatchrate;
+                                     rows[0][0].RateId = flightmatchrateid;
+    					               rows[0][0].Amount = rows[0][0].ConsignmentWeight * rows[0][0].RatePerKG ;
+    					               found = true;
+      	            		   }
+      	            		   else if(companymatch === true)
+      	            			   {
+      	            			   rows[0][0].RatePerKG = companymatchrate;
+                                     rows[0][0].RateId = companymatchrateid;
+    					               rows[0][0].Amount = rows[0][0].ConsignmentWeight * rows[0][0].RatePerKG ;
+    					               found = true;
+      	            			   }
+      	            		   else
+      	            			   {
+      	            			      if(minrate !==0)
+      	            			    	  {
+      	            			    	   rows[0][0].RatePerKG = minrate;
+                                             rows[0][0].RateId = minrateid;
+           					               rows[0][0].Amount = rows[0][0].ConsignmentWeight * rows[0][0].RatePerKG ;
+           					               found = true;
+      	            			    	  }
+      	            			   }
+      	            		   if(found === false){
+          	            			 rows[0][0].RatePerKG = result[0].Rate;
+                                       rows[0][0].RateId = result[0].RateId;
+    					                 rows[0][0].Amount = rows[0][0].ConsignmentWeight * rows[0][0].RatePerKG ;
+          	            		   }
+      	            	   }
+      	            	 }
 									  rows[0][0].TotalAmount = rows[0][0].Amount ;
 									  rows[0][0].Discount = 0;
 									  rows[0][0].TotalAmountDue = rows[0][0].TotalAmount;
