@@ -695,7 +695,7 @@ exports.deletebyCityId = function(pool, _cityId, response)
         connection.query("delete from city where CityId = " + _cityId ,function(err,rows){
             connection.release();
             if(!err) {
-            	response.json(rows);
+            	response.json({"code" : 200, "status" : "City Record Deleted Successfully"});
             }          
         });       
   });
@@ -718,7 +718,7 @@ exports.createCity = function(pool, requestbody, response)
         connection.query("insert into city SET ?", city, function(err,resp){
             connection.release();
             if(!err) {
-            	response.end('City Record Inserted Successfully');
+            	response.json({"code" : 200, "status" : "City Record Inserted Successfully"});
             }  
             else
             	{
@@ -748,7 +748,7 @@ exports.updateCity = function(pool, requestbody, response)
         connection.query("Update city SET ? where CityId = ?", [city,requestbody.CityId] , function(err,resp){
             connection.release();
             if(!err) {
-            	response.end('City Record Inserted Successfully');
+            	response.json({"code" : 200, "status" : "City Record Updated Successfully"});
             }  
             else
             	{
@@ -1180,7 +1180,7 @@ exports.createCompany = function(pool, requestbody, response)
 			CompanyName: requestbody.CompanyName , CompanyAddress: requestbody.CompanyAddress ,CompanyCity: requestbody.CompanyCity,
 			CompanyState: requestbody.CompanyState, CompanyCCode: requestbody.CompanyCCode, CompanyContactPerson: requestbody.CompanyContactPerson, 
 			CompanyEmailId: requestbody.CompanyEmailId, CompanyPrimaryContactNumber: requestbody.CompanyPrimaryContactNumber, CompanySecondaryContactNumber: requestbody.CompanySecondaryContactNumber,
-			CityId: requestbody.CityId, PINCode: requestbody.PINCode
+			CityId: requestbody.CityId, PINCode: requestbody.PINCode, CDCharge : requestbody.CDCharge
 	};
 	
 	pool.getConnection(function(err,connection){
@@ -1216,7 +1216,7 @@ exports.updateCompany = function(pool, requestbody, response)
 			CompanyName: requestbody.CompanyName , CompanyAddress: requestbody.CompanyAddress ,CompanyCity: requestbody.CompanyCity,
 			CompanyState: requestbody.CompanyState, CompanyCCode: requestbody.CompanyCCode, CompanyContactPerson: requestbody.CompanyContactPerson, 
 			CompanyEmailId: requestbody.CompanyEmailId, CompanyPrimaryContactNumber: requestbody.CompanyPrimaryContactNumber, CompanySecondaryContactNumber: requestbody.CompanySecondaryContactNumber,
-			CityId: requestbody.CityId, PINCode: requestbody.PINCode
+			CityId: requestbody.CityId, PINCode: requestbody.PINCode, CDCharge : requestbody.CDCharge
 	};
 	
 	pool.getConnection(function(err,connection){
