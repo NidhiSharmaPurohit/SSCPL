@@ -778,7 +778,7 @@ exports.DeleteCarrierTypeById = function(pool, _Id, response)
         connection.query("delete  from carriertype where Id = " + _Id ,function(err,rows){
             connection.release();
             if(!err) {
-            	response.json(rows);
+            	response.json({"code" : 200, "status" : "CarrierType Record Deleted Successfully"});
             }          
         });       
   });
@@ -798,7 +798,7 @@ exports.DeleteCarrierTypeByCNumber = function(pool, _CNumber, response)
         connection.query("delete  from carriertype where CNumber = '" + _CNumber +"'" ,function(err,rows){
             connection.release();
             if(!err) {
-            	response.json(rows);
+            	response.json({"code" : 200, "status" : "CarrierType Record Deleted Successfully"});
             }          
         });       
   });
@@ -826,7 +826,8 @@ exports.createCarrierType = function(pool, requestbody, response)
         connection.query("insert into carriertype SET ?", carriertype, function(err,resp){
             connection.release();
             if(!err) {
-            	response.end('carriertype Record Inserted Successfully');
+            	response.json({"code" : 200, "status" : "CarrierType Record Inserted Successfully"});
+            	
             }  
             else
             	{
@@ -860,7 +861,8 @@ exports.updateCarrierType = function(pool, requestbody, response)
         connection.query("Update carriertype SET ? where Id = ?", [carriertype,requestbody.Id], function(err,resp){
             connection.release();
             if(!err) {
-            	response.end('carriertype Record Updated Successfully');
+            	response.json({"code" : 200, "status" : "CarrierType Record Updated Successfully"});
+            	
             }  
             else
             	{
@@ -894,7 +896,8 @@ exports.updateCarrierTypeByCNumber = function(pool, requestbody, response)
         connection.query("Update carriertype SET ? where CNumber = ?", [carriertype,requestbody.CNumber], function(err,resp){
             connection.release();
             if(!err) {
-            	response.end('carriertype Record Updated Successfully');
+            	
+            	response.json({"code" : 200, "status" : "CarrierType Record Updated Successfully"});
             }  
             else
             	{
