@@ -67,6 +67,10 @@ app.post('/ManifestCNNotes', function(request, response) {
 	cnotedataservice.updateManifestCNNOtes(pool, request.body, response);
 	});
 
+app.post('/UpdateFlightIdForCNNotes', function(request, response) {
+	cnotedataservice.updateFlightIdforCNNOtes(pool, request.body, response);
+});
+
 app.get('/CNNotes/:cnnumber', function(request, response) {
 	console.log(request.url + ' : querying for ' +
 	request.params.cnnumber);

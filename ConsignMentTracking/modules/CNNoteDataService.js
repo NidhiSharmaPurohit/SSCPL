@@ -146,7 +146,7 @@ exports.deleteCNNOtes = function(pool, _cnnumber, response)
         connection.query("delete from cnnote where CNNumber = '" + _cnnumber + "'" ,function(err,rows){
             connection.release();
             if(!err) {
-            	response.json(rows);
+            	response.json({"code" : 200, "status" : "CNNote Record Deleted Successfully"});
             }          
         });
         
@@ -168,7 +168,7 @@ exports.deleteCNNOtesOfOlderDates = function(pool, _date, response)
         connection.query("delete from cnnote where BookingDate <= '" + _date + "'" ,function(err,rows){
             connection.release();
             if(!err) {
-            	response.json(rows);
+            	response.json({"code" : 200, "status" : "CNNote Records Deleted Successfully"});
             }          
         });
         
@@ -816,7 +816,7 @@ exports.deletebypackagingmodeId = function(pool, _Id, response)
         connection.query("delete from packagingmode where Id = " + _Id ,function(err,rows){
             connection.release();
             if(!err) {
-            	response.json(rows);
+            	response.json({"code" : 200, "status" : "Package Mode Deleted Successfully"});
             }          
         });       
   });
@@ -2290,6 +2290,35 @@ exports.updateManifestCNNOtes = function(pool, requestBody, response)
         console.log('connected as id ' + connection.threadId);
         
         connection.query("Update cnnote SET ActualWeight = " + requestBody.ActualWeight  + " ,FlightId = " + requestBody.FlightId + " where CNNumber = '" + requestBody.CNNumber + "'" ,  function(err,resp){
+            connection.release();
+            if(!err) {
+            	response.json({"code" : 200, "status" : "CNNOteData Updated Successfully" , "CNNNumber" : requestBody.CNNumber});
+            }  
+            else
+            	{
+            	   console.log(err);
+            	   response.json({"code" : 101, "status" : "Error in Updating CNNOteData with Error " + err , "CNNNumber" : requestBody.CNNumber});
+            	 }
+            	
+        }); 
+  });
+};
+
+
+exports.updateFlightIdforCNNOtes = function(pool, requestBody, response)
+{
+	
+	
+	pool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          response.json({"code" : 100, "status" : "Error in connection database" , "CNNNumber" : requestBody.CNNumber});
+          return;
+        }  
+
+        console.log('connected as id ' + connection.threadId);
+        
+        connection.query("Update cnnote SET FlightId = " + requestBody.FlightId + " where CNNumber = '" + requestBody.CNNumber + "'" ,  function(err,resp){
             connection.release();
             if(!err) {
             	response.json({"code" : 200, "status" : "CNNOteData Updated Successfully" , "CNNNumber" : requestBody.CNNumber});
